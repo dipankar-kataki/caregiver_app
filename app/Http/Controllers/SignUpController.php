@@ -6,13 +6,15 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use App\Traits\ApiResponser;
 
 class SignUpController extends Controller
 {
+    use ApiResponser;
+
     public function signup(Request $request){
        
-        $validator = Validator::make($request->all(),
-            [
+        $validator = Validator::make($request->all(),[
                 'firstname' => 'required',
                 'lastname' => 'required',
                 'email' => 'required|email',
@@ -24,8 +26,12 @@ class SignUpController extends Controller
                 'password.required' => 'Password is required',
             ]);
 
-            if($validator->fails()){
-                return response()->json(['success' => 'false','error' => $validator->errors(), 'status' => 400]);
+        if($validator->fails()){
+            return $this->error('Signup failed. Incomplete data insertion.', $validator->errors(), 400);
+        }else{
+            $check_user_exists = User::where('email',$request->email)->exists();
+            if($check_user_exists == true){
+                return $this->error('Email already exists with another user.', null , 409);
             }else{
                 $create = User::create([
                     'firstname' => $request->firstname,
@@ -33,12 +39,12 @@ class SignUpController extends Controller
                     'email' => $request->email,
                     'password' => Hash::make($request->password)
                 ]);
-
                 if($create){
-                    return response()->json(['success' => 'true', 'message' => 'Signup successfull', 'status' => 201]);
+                    return $this->success( 'Signup Successful', null , null, 201);
                 }else{
-                    return response()->json(['success' => 'false', 'message' => 'Something went wrong. Signup failed', 'status' => 500]);
+                    return $this->error('Something went wrong', null ,500);
                 }
             }
+        }
     }
 }
