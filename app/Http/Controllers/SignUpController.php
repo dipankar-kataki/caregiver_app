@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Signup;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -27,7 +27,7 @@ class SignUpController extends Controller
             if($validator->fails()){
                 return response()->json(['success' => 'false','error' => $validator->errors(), 'status' => 400]);
             }else{
-                $create = Signup::create([
+                $create = User::create([
                     'firstname' => $request->firstname,
                     'lastname' => $request->lastname,
                     'email' => $request->email,
