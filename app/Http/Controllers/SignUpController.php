@@ -40,7 +40,7 @@ class SignUpController extends Controller
                     'password' => Hash::make($request->password)
                 ]);
                 if($create){
-                    return $this->success( 'Signup Successful', null , null, 201);
+                    return $this->success( 'Signup Successful', null , 'null', 201);
                 }else{
                     return $this->error('Something went wrong', null ,500);
                 }

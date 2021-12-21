@@ -31,7 +31,7 @@ trait ApiResponser
 			'message' => $message,
 			'data' => $data,
 			'token' => $token,
-			'http-status-code' => $code
+			'http_status_code' => $code
 		]);
 	}
 
@@ -49,7 +49,8 @@ trait ApiResponser
 			'status' => 'Error',
 			'message' => $message,
 			'data' => $data,
-			'http-status-code' => $code
+			'token' => null,
+			'http_status_code' => $code
 		]);
 	}
 
