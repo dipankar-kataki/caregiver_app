@@ -41,15 +41,16 @@ trait ApiResponser
      * @param  string  $message
      * @param  int  $code
      * @param  array|string|null  $data
+	 * @param  string $token
      * @return \Illuminate\Http\JsonResponse
      */
-	protected function error(string $message = null, $data = null, int $code )
+	protected function error(string $message = null, $data = null, string $token = 'null', int $code )
 	{
 		return response()->json([
 			'status' => 'Error',
 			'message' => $message,
 			'data' => $data,
-			'token' => null,
+			'token' => $token,
 			'http_status_code' => $code
 		]);
 	}

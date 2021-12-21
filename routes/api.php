@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\SignUpController;
+use App\Http\Controllers\CaregiverApp\LoginController;
+use App\Http\Controllers\CaregiverApp\RegistrationController;
+use App\Http\Controllers\CaregiverApp\SignUpController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -27,10 +29,17 @@ Route::post('login',[LoginController::class,'login']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     
-    Route::get('/profile', function(Request $request) {
-        return auth()->user();
-    });
+    Route::post('/registration',[RegistrationController::class,'registration']);
+    
 
-    // API route for logout user
-    Route::post('/logout', [LoginController::class, 'logout']);
 });
+
+Route::get('/login-expire',function(){
+    return response()->json([
+        'status' => 'error',
+        'message' => 'Login expired. Please re-login.',
+        'data' => null,
+        'token' => 'null',
+        'http_status_code' => 401
+    ]);
+})->name('login-expire');
