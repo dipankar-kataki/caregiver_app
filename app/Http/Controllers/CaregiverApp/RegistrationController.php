@@ -36,20 +36,29 @@ class RegistrationController extends Controller
         if($validator->fails()){
             return $this->error('Registration failed.', $validator->errors(), 'null', 400);
         }else{
-            $create = Registration::create([
-                'phone' => $phone,
-                'dob' => date_format($dob,'Y-m-d'),
-                'ssn' => $ssn,
-                'gender' => $gender,
-                'address' => $address,
-                'user_id' => auth('sanctum')->user()->id
+            $check_phone_no_exist = Registration::where('phone', $phone)->exists();
+            $check_ssn_exist = Registration::where('ssn', $ssn)->exists();
 
-            ]);
-
-            if($create){
-                return $this->success('Registration successful.', null, 'null', 201);
+            if($check_phone_no_exist == true){
+                return $this->error('Phone number already exists.', null, 'null', 403);
+            }else if($check_ssn_exist == true){
+                return $this->error('Social Security Number already exists.', null, 'null', 403);
             }else{
-                return $this->error('Whoops! Something went wrong. Registration unsuccessful.', null,' null', 500);
+                $create = Registration::create([
+                    'phone' => $phone,
+                    'dob' => date_format($dob,'Y-m-d'),
+                    'ssn' => $ssn,
+                    'gender' => $gender,
+                    'address' => $address,
+                    'user_id' => auth('sanctum')->user()->id
+    
+                ]);
+    
+                if($create){
+                    return $this->success('Registration successful.', null, 'null', 201);
+                }else{
+                    return $this->error('Whoops! Something went wrong. Registration unsuccessful.', null,' null', 500);
+                }
             }
         }
     }
