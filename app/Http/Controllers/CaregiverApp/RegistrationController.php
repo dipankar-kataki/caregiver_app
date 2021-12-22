@@ -42,7 +42,8 @@ class RegistrationController extends Controller
                 'ssn' => $ssn,
                 'gender' => $gender,
                 'address' => $address,
-                'user_id' => Auth::user()->id
+                'user_id' => auth('sanctum')->user()->id
+
             ]);
 
             if($create){
