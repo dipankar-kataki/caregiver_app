@@ -1,8 +1,11 @@
 <?php
 
-use App\Http\Controllers\SignUpController;
+use App\Http\Controllers\CaregiverApp\LoginController;
+use App\Http\Controllers\CaregiverApp\RegistrationController;
+use App\Http\Controllers\CaregiverApp\SignUpController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -15,9 +18,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+
+// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+//     return $request->user();
+// });
 
 
 Route::post('signup',[SignUpController::class,'signup']);
+Route::post('login',[LoginController::class,'login']);
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    
+    Route::post('/registration',[RegistrationController::class,'registration']);
+    
+
+});
+
+Route::get('/login-expire',function(){
+    return response()->json([
+        'status' => 'error',
+        'message' => 'Login expired. Please re-login.',
+        'data' => null,
+        'token' => 'null',
+        'http_status_code' => 401
+    ]);
+})->name('login-expire');
