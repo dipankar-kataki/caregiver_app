@@ -22,17 +22,19 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
-
+/******************************** Login & Signup *******************************/
 
 Route::post('signup',[SignUpController::class,'signup']);
 Route::post('login',[LoginController::class,'login']);
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
-    
-    Route::post('/registration',[RegistrationController::class,'registration']);
-    
 
+/******************************** Internal Pages *******************************/
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::post('/registration',[RegistrationController::class,'registration']);
 });
+
+/******************************** Check If Token Expired *******************************/
 
 Route::get('/login-expire',function(){
     return response()->json([
