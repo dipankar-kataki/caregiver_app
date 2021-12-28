@@ -28,11 +28,11 @@ class SignUpController extends Controller
             ]);
 
         if($validator->fails()){
-            return $this->error('Signup failed. Incomplete data insertion.', $validator->errors(), 400);
+            return $this->error('Signup failed. Incomplete data insertion.', $validator->errors(),'null', 400);
         }else{
             $check_user_exists = User::where('email',$request->email)->exists();
             if($check_user_exists == true){
-                return $this->error('Email already exists with another user.', null , 409);
+                return $this->error('Email already exists with another user.', null , 'null', 409);
             }else{
                 $create = User::create([
                     'firstname' => $request->firstname,
@@ -43,7 +43,7 @@ class SignUpController extends Controller
                 if($create){
                     return $this->success( 'Signup Successful', null , 'null', 201);
                 }else{
-                    return $this->error('Something went wrong', null ,500);
+                    return $this->error('Something went wrong', null , 'null',500);
                 }
             }
         }
