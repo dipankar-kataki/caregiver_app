@@ -40,10 +40,11 @@ class SignUpController extends Controller
                     'email' => $request->email,
                     'password' => Hash::make($request->password)
                 ]);
+                $token = $create->createToken('auth_token')->plainTextToken;
                 if($create){
-                    return $this->success( 'Signup Successful', null , 'null', 201);
+                    return $this->success( 'Signup Successful', null , $token, 201);
                 }else{
-                    return $this->error('Something went wrong', null , 'null',500);
+                    return $this->error('Something went wrong', null , 'null', 500);
                 }
             }
         }

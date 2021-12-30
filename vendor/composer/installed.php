@@ -5,7 +5,7 @@
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
-        'reference' => 'a99a764ffa53037d3d94dd0a5a659e416827e3a9',
+        'reference' => '3d79a11d84fb218b9d29093043274e6d5eace62e',
         'name' => 'laravel/laravel',
         'dev' => true,
     ),
@@ -95,12 +95,12 @@
             'dev_requirement' => true,
         ),
         'facade/ignition' => array(
-            'pretty_version' => '2.17.2',
-            'version' => '2.17.2.0',
+            'pretty_version' => '2.17.4',
+            'version' => '2.17.4.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../facade/ignition',
             'aliases' => array(),
-            'reference' => 'af3cd70d58ca3ef5189ff0e59efbe5a5c043e2d2',
+            'reference' => '95c80bd35ee6858e9e1439b2f6a698295eeb2070',
             'dev_requirement' => true,
         ),
         'facade/ignition-contracts' => array(
@@ -391,7 +391,7 @@
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
-            'reference' => 'a99a764ffa53037d3d94dd0a5a659e416827e3a9',
+            'reference' => '3d79a11d84fb218b9d29093043274e6d5eace62e',
             'dev_requirement' => false,
         ),
         'laravel/sail' => array(
@@ -638,12 +638,12 @@
             'dev_requirement' => true,
         ),
         'phpunit/phpunit' => array(
-            'pretty_version' => '9.5.10',
-            'version' => '9.5.10.0',
+            'pretty_version' => '9.5.11',
+            'version' => '9.5.11.0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../phpunit/phpunit',
             'aliases' => array(),
-            'reference' => 'c814a05837f2edb0d1471d6e3f4ab3501ca3899a',
+            'reference' => '2406855036db1102126125537adb1406f7242fdd',
             'dev_requirement' => true,
         ),
         'psr/container' => array(
@@ -733,8 +733,8 @@
         'psr/log-implementation' => array(
             'dev_requirement' => false,
             'provided' => array(
-                0 => '1.0.0 || 2.0.0 || 3.0.0',
-                1 => '1.0|2.0',
+                0 => '1.0|2.0',
+                1 => '1.0.0 || 2.0.0 || 3.0.0',
             ),
         ),
         'psr/simple-cache' => array(
