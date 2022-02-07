@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateRegistrationsTable extends Migration
+class CreateIdentificationsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,9 @@ class CreateRegistrationsTable extends Migration
      */
     public function up()
     {
-        Schema::create('registrations', function (Blueprint $table) {
+        Schema::create('identifications', function (Blueprint $table) {
             $table->id();
-            $table->string('phone');
-            $table->date('dob');
-            $table->string('ssn');
-            $table->string('gender');
-            $table->string('address');
+            $table->string('image');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
@@ -34,6 +30,6 @@ class CreateRegistrationsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('registrations');
+        Schema::dropIfExists('identifications');
     }
 }

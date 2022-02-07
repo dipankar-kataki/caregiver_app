@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CaregiverApp;
 
 use App\Http\Controllers\Controller;
 use App\Models\Registration;
+use App\Models\User;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -53,8 +54,14 @@ class RegistrationController extends Controller
                     'user_id' => auth('sanctum')->user()->id
     
                 ]);
+
+
     
                 if($create){
+                    User::where('id', auth('sanctum')->user()->id )->update([
+                        'is_registration_completed' => 1
+                    ]);
+                    
                     return $this->success('Registration successful.', null, 'null', 201);
                 }else{
                     return $this->error('Whoops! Something went wrong. Registration unsuccessful.', null,' null', 500);

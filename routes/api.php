@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CaregiverApp\DocumentController;
 use App\Http\Controllers\CaregiverApp\LoginController;
 use App\Http\Controllers\CaregiverApp\RegistrationController;
 use App\Http\Controllers\CaregiverApp\SignUpController;
@@ -32,6 +33,7 @@ Route::post('login',[LoginController::class,'login']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/registration',[RegistrationController::class,'registration']);
+    Route::post('document-upload',[DocumentController::class,'uploadDocument']);
 });
 
 /******************************** Check If Token Expired *******************************/

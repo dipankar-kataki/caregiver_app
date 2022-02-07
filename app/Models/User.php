@@ -42,4 +42,36 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function covid(){
+        return $this->hasMany(Covid::class);
+    }
+
+    public function childAbuse(){
+        return $this->hasMany(ChildAbuse::class);
+    }
+
+    public function criminal(){
+        return $this->hasMany(Criminal::class);
+    }
+
+    public function driving(){
+        return $this->hasMany(Driving::class);
+    }
+
+    public function employment(){
+        return $this->hasMany(EmploymentEligibility::class);
+    }
+
+    public function identification(){
+        return $this->hasMany(Identification::class);
+    }
+
+    public function tuberculosis(){
+        return $this->hasMany(Tuberculosis::class);
+    }
+
+    public function w_4_form(){
+        return $this->hasMany(w_4_form::class);
+    }
 }
