@@ -76,12 +76,12 @@ class DocumentController extends Controller
                     'image' => $file,
                     'user_id' => auth('sanctum')->user()->id
                 ]);
-            }else if($type = 'tuberculosis'){
+            }else if($type == 'tuberculosis'){
                 Tuberculosis::create([
                     'image' => $file,
                     'user_id' => auth('sanctum')->user()->id
                 ]);
-            }else if($type = 'w_4_form'){
+            }else if($type == 'w_4_form'){
                 w_4_form::create([
                     'image' => $file,
                     'user_id' => auth('sanctum')->user()->id
