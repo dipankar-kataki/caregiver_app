@@ -15,6 +15,7 @@ class CreateCriminalsTable extends Migration
     {
         Schema::create('criminals', function (Blueprint $table) {
             $table->id();
+            $table->string('type');
             $table->string('image');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();

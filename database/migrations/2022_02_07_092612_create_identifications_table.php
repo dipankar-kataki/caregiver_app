@@ -15,6 +15,7 @@ class CreateIdentificationsTable extends Migration
     {
         Schema::create('identifications', function (Blueprint $table) {
             $table->id();
+            $table->string('type');
             $table->string('image');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();

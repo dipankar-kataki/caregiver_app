@@ -25,64 +25,78 @@ class DocumentController extends Controller
     public function uploadDocument(Request $request){
 
         $validator = Validator::make($request->all(),[
-            'type' => 'required',
-            'image' => 'required'
+            'documentCategory' => 'required',
+            'document' => 'required|mimes:jpg,png,jpeg,pdf|max:2048'
         ],[
-            'type.required' => 'Document type is required',
-            'image.required' => 'Image is required'
+            'documentCategory.required' => 'Document category is required',
+            'document.required' => 'Document is required'
         ]);
 
         if($validator->fails()){
             return $this->error('Documents upload failed', $validator->errors(), 'null', 400);
         }else{
 
+            $documentCategory = $request->documentCategory;
+            $extension = $request->file('document')->extension();
+            $document = $request->document;
 
-            $type = $request->type;
-            $document = $request->image;
-            $file = '';
-            if($request->hasFile('image')){
-                $new_name = date('d-m-Y-H-i-s') . '_' . $document->getClientOriginalName();
-                $document->move(public_path('caregiver-app/documents/'), $new_name);
-                $file = 'caregiver-app/documents/' . $new_name;
+            $new_name = date('d-m-Y-H-i-s') . '_' . $document->getClientOriginalName();
+            $document->move(public_path('caregiver-app/documents/'), $new_name);
+            $file = 'caregiver-app/documents/' . $new_name;
+
+            $type = '';
+
+            if(($extension == 'png') || ($extension == 'jpg') || ($extension == 'jpeg')){
+                $type = 'image';
+            }else{
+                $type = 'pdf';
             }
 
-            if($type == 'covid'){
+            if($documentCategory == 'covid'){
                 Covid::create([
+                    'type' => $type,
                     'image' => $file,
                     'user_id' => auth('sanctum')->user()->id
                 ]);
-            }else if($type == 'childAbuse'){
+            }else if($documentCategory == 'childAbuse'){
                 ChildAbuse::create([
+                    'type' => $type,
                     'image' => $file,
                     'user_id' => auth('sanctum')->user()->id
                 ]);
-            }else if($type == 'criminal'){
+            }else if($documentCategory == 'criminal'){
                 Criminal::create([
+                    'type' => $type,
                     'image' => $file,
                     'user_id' => auth('sanctum')->user()->id
                 ]);
-            }else if($type == 'driving'){
+            }else if($documentCategory == 'driving'){
                 Driving::create([
+                    'type' => $type,
                     'image' => $file,
                     'user_id' => auth('sanctum')->user()->id
                 ]);
-            }else if($type == 'employment'){
+            }else if($documentCategory == 'employment'){
                 EmploymentEligibility::create([
+                    'type' => $type,
                     'image' => $file,
                     'user_id' => auth('sanctum')->user()->id
                 ]);
-            }else if($type == 'identification'){
+            }else if($documentCategory == 'identification'){
                 Identification::create([
+                    'type' => $type,
                     'image' => $file,
                     'user_id' => auth('sanctum')->user()->id
                 ]);
-            }else if($type == 'tuberculosis'){
+            }else if($documentCategory == 'tuberculosis'){
                 Tuberculosis::create([
+                    'type' => $type,
                     'image' => $file,
                     'user_id' => auth('sanctum')->user()->id
                 ]);
-            }else if($type == 'w_4_form'){
+            }else if($documentCategory == 'w_4_form'){
                 w_4_form::create([
+                    'type' => $type,
                     'image' => $file,
                     'user_id' => auth('sanctum')->user()->id
                 ]);
@@ -93,17 +107,17 @@ class DocumentController extends Controller
             $details = User::where('id', auth('sanctum')->user()->id)->with('covid','childAbuse','criminal','driving','employment','identification','tuberculosis','w_4_form')->first();
 
 
-            // Below code is for base 64 image
+        //     // Below code is for base 64 image
 
-            // $extension = explode('/', explode(':', substr($imageFile, 0, strpos($imageFile, ';')))[1])[1];   // .jpg .png .pdf
-            // $replace = substr($imageFile, 0, strpos($imageFile, ',')+1); 
+        //     // $extension = explode('/', explode(':', substr($imageFile, 0, strpos($imageFile, ';')))[1])[1];   // .jpg .png .pdf
+        //     // $replace = substr($imageFile, 0, strpos($imageFile, ',')+1); 
             
-            // $image = str_replace($replace, '', $imageFile); 
-            // $image = str_replace(' ', '+', $image); 
-            // $imageName = $type.'-'.time().'.'.$extension;
+        //     // $image = str_replace($replace, '', $imageFile); 
+        //     // $image = str_replace(' ', '+', $image); 
+        //     // $imageName = $type.'-'.time().'.'.$extension;
             
-            // Storage::disk('public')->put($imageName, base64_decode($image));
-            // $path = Storage::url($imageName);
+        //     // Storage::disk('public')->put($imageName, base64_decode($image));
+        //     // $path = Storage::url($imageName);
             return $this->success('Document uploaded successfully.',  $details, 'null', 201);
            
         }
