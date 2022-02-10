@@ -20,6 +20,9 @@ class CreateRegistrationsTable extends Migration
             $table->string('ssn');
             $table->string('gender');
             $table->string('address');
+            $table->string('profile_image')->nullable();
+            $table->string('bio')->nullable();
+            $table->integer('experience')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 

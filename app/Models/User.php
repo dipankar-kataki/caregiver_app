@@ -74,4 +74,12 @@ class User extends Authenticatable
     public function w_4_form(){
         return $this->hasMany(w_4_form::class);
     }
+
+    public function profile(){
+        return $this->hasOne(Registration::class);
+    }
+
+    public function education(){
+        return $this->hasMany(Education::class);
+    }
 }

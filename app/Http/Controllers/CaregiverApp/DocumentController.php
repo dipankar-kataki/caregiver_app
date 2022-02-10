@@ -40,6 +40,7 @@ class DocumentController extends Controller
             $extension = $request->file('document')->extension();
             $document = $request->document;
 
+            // Upload file to folder
             $new_name = date('d-m-Y-H-i-s') . '_' . $document->getClientOriginalName();
             $document->move(public_path('caregiver-app/documents/'), $new_name);
             $file = 'caregiver-app/documents/' . $new_name;

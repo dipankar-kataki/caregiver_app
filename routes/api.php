@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CaregiverApp\DocumentController;
 use App\Http\Controllers\CaregiverApp\LoginController;
+use App\Http\Controllers\CaregiverApp\ProfileController;
 use App\Http\Controllers\CaregiverApp\RegistrationController;
 use App\Http\Controllers\CaregiverApp\SignUpController;
 use Illuminate\Http\Request;
@@ -34,6 +35,12 @@ Route::post('login',[LoginController::class,'login']);
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/registration',[RegistrationController::class,'registration']);
     Route::post('document-upload',[DocumentController::class,'uploadDocument']);
+    
+    Route::prefix('profile')->group(function(){
+        Route::get('show-profile',[ProfileController::class,'index']);
+        Route::post('edit-profile',[ProfileController::class,'editProfile']);
+    });
+    
 });
 
 /******************************** Check If Token Expired *******************************/
