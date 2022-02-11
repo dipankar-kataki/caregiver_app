@@ -57,7 +57,7 @@ class ProfileController extends Controller
                 'experience' => $request->experience
             ]);
 
-            $education = Education::where('user_id', auth('sanctum')->user()->id)->exists();
+            $education = Education::where('id', $request->id)->where('user_id', auth('sanctum')->user()->id)->exists();
 
             if($education){
                 Education::where('id', $request->id)->where('user_id', auth('sanctum')->user()->id)->update([

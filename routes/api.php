@@ -34,6 +34,8 @@ Route::post('login',[LoginController::class,'login']);
 
 Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('/registration',[RegistrationController::class,'registration']);
+
+    Route::get('get-document',[DocumentController::class,'index']);
     Route::post('document-upload',[DocumentController::class,'uploadDocument']);
     
     Route::prefix('profile')->group(function(){

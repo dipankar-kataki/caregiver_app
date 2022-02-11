@@ -22,6 +22,13 @@ use Illuminate\Support\Str;
 class DocumentController extends Controller
 {
     use ApiResponser;
+
+
+    public function index(Request $request){
+        $details = User::where('id', auth('sanctum')->user()->id)->with('covid','childAbuse','criminal','driving','employment','identification','tuberculosis','w_4_form')->first();
+        return $this->success('Document fetched successfully.',  $details, 'null', 200);
+    }
+
     public function uploadDocument(Request $request){
 
         $validator = Validator::make($request->all(),[
