@@ -28,20 +28,34 @@
                             <div class="brand-logo">
                                 <img src="{{ asset('admin/assets/images/logo.svg') }}">
                             </div>
-                            <h4>Hello! let's get started</h4>
+                            {{-- Error --}}
+                            @if (\Session::has('error'))
+                                <div class="alert alert-danger">
+                                    <p class="mb-0">{!! \Session::get('error') !!}</p>
+                                </div>
+                            @endif
+
                             <h6 class="font-weight-light">Sign in to continue.</h6>
-                            <form class="pt-3">
+                            <form class="pt-3" method="POST">
+                                @csrf
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control-lg" id="exampleInputEmail1"
-                                        placeholder="Username">
+                                    <input type="email" class="form-control form-control-lg" id="email" name="email"
+                                        placeholder="Email">
+                                    @error('email')
+                                        <div class="error">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control form-control-lg"
-                                        id="exampleInputPassword1" placeholder="Password">
+                                    <input type="password" class="form-control form-control-lg" id="password"
+                                        name="password" placeholder="Password">
+                                    @error('password')
+                                        <div class="error">{{ $message }}</div>
+                                    @enderror
                                 </div>
                                 <div class="mt-3">
-                                    <a class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn"
-                                        href="../../index.html">SIGN IN</a>
+                                    <button type="submit"
+                                        class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn">SIGN
+                                        IN</button>
                                 </div>
                                 <div class="my-2 d-flex justify-content-between align-items-center">
                                     <div class="form-check">
@@ -50,8 +64,8 @@
                                     </div>
                                     <a href="#" class="auth-link text-black">Forgot password?</a>
                                 </div>
-                                <div class="text-center mt-4 font-weight-light"> Go to <a
-                                        href="/" class="text-primary">Home</a>
+                                <div class="text-center mt-4 font-weight-light"> Go to <a href="/"
+                                        class="text-primary">Home</a>
                                 </div>
                             </form>
                         </div>
