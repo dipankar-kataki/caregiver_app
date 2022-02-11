@@ -19,13 +19,6 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-
-// Admim routes
-// Route::prefix('admin')->group(function () {
-//     Route::get('login', [AuthController::class, 'login'])->name('auth.login');
-//     Route::get('dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
-// });
-
 Route::match(['get', 'post'], 'login', [AuthController::class, 'login'])->name('auth.login');
 Route::get('logout', [AuthController::class, 'logout'])->name('auth.logout');
 
