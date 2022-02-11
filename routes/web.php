@@ -19,9 +19,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::match(['get', 'post'], 'login', [AuthController::class, 'login'])->name('auth.login');
+Route::get('logout', [AuthController::class, 'logout'])->name('auth.logout');
 
-// Admim routes
-Route::prefix('admin')->group(function () {
-    Route::get('login', [AuthController::class, 'login'])->name('auth.login');
+Route::group([
+        'prefix' => 'web',
+        'middleware' => 'auth'
+    ], function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 });

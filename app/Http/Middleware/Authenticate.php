@@ -15,7 +15,12 @@ class Authenticate extends Middleware
     protected function redirectTo($request)
     {
         if (! $request->expectsJson()) {
-            return route('login-expire');
+            if($request->route()->getPrefix() == '/web'){
+                return route('auth.login');
+            } else{
+                return route('login-expire');
+            }
+
         }
     }
 }
