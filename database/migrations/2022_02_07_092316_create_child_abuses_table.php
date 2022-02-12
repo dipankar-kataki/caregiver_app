@@ -16,6 +16,7 @@ class CreateChildAbusesTable extends Migration
         Schema::create('child_abuses', function (Blueprint $table) {
             $table->id();
             $table->string('type');
+            $table->string('name');
             $table->string('image');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();

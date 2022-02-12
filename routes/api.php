@@ -42,6 +42,17 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('show-profile',[ProfileController::class,'index']);
         Route::post('edit-profile',[ProfileController::class,'editProfile']);
     });
+    Route::get('logout',function(){
+        auth()->user()->tokens()->delete();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Logout successful.',
+            'data' => null,
+            'token' => 'null',
+            'http_status_code' => 200
+        ]);
+    });
     
 });
 

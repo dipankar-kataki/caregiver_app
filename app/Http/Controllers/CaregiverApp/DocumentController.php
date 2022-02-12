@@ -26,6 +26,7 @@ class DocumentController extends Controller
 
     public function index(Request $request){
         $details = User::where('id', auth('sanctum')->user()->id)->with('covid','childAbuse','criminal','driving','employment','identification','tuberculosis','w_4_form')->first();
+
         return $this->success('Document fetched successfully.',  $details, 'null', 200);
     }
 
@@ -63,48 +64,56 @@ class DocumentController extends Controller
             if($documentCategory == 'covid'){
                 Covid::create([
                     'type' => $type,
+                    'name' => $document->getClientOriginalName(),
                     'image' => $file,
                     'user_id' => auth('sanctum')->user()->id
                 ]);
             }else if($documentCategory == 'childAbuse'){
                 ChildAbuse::create([
                     'type' => $type,
+                    'name' => $document->getClientOriginalName(),
                     'image' => $file,
                     'user_id' => auth('sanctum')->user()->id
                 ]);
             }else if($documentCategory == 'criminal'){
                 Criminal::create([
                     'type' => $type,
+                    'name' => $document->getClientOriginalName(),
                     'image' => $file,
                     'user_id' => auth('sanctum')->user()->id
                 ]);
             }else if($documentCategory == 'driving'){
                 Driving::create([
                     'type' => $type,
+                    'name' => $document->getClientOriginalName(),
                     'image' => $file,
                     'user_id' => auth('sanctum')->user()->id
                 ]);
             }else if($documentCategory == 'employment'){
                 EmploymentEligibility::create([
                     'type' => $type,
+                    'name' => $document->getClientOriginalName(),
                     'image' => $file,
                     'user_id' => auth('sanctum')->user()->id
                 ]);
             }else if($documentCategory == 'identification'){
                 Identification::create([
                     'type' => $type,
+                    'name' => $document->getClientOriginalName(),
                     'image' => $file,
                     'user_id' => auth('sanctum')->user()->id
                 ]);
             }else if($documentCategory == 'tuberculosis'){
                 Tuberculosis::create([
                     'type' => $type,
+                    'name' => $document->getClientOriginalName(),
                     'image' => $file,
                     'user_id' => auth('sanctum')->user()->id
                 ]);
             }else if($documentCategory == 'w_4_form'){
                 w_4_form::create([
                     'type' => $type,
+                    'name' => $document->getClientOriginalName(),
                     'image' => $file,
                     'user_id' => auth('sanctum')->user()->id
                 ]);

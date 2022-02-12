@@ -16,7 +16,18 @@ class ProfileController extends Controller
     public function index(Request $request){
 
         $details = User::with('profile','education')->where('id',auth('sanctum')->user()->id)->first();
-        return $this->success('Profile Details.', $details, 'null', 200);
+        $profile = [
+           
+            'firstname' => $details->firstname,
+            'lastname' => $details->lastname,
+            'work_type' => $details->profile->work_type,
+            'rating' => $details->profile->rating,
+            'experience' => $details->profile->experience,
+            'age' => $details->profile->dob,
+            'total_care_completed' => $details->profile->total_care_completed,
+            'total_reviews' => $details->profile->total_reviews,
+        ];
+        return $this->success('Profile Details.', $profile, 'null', 200);
     }
 
     public function editProfile(Request $request){

@@ -23,6 +23,10 @@ class CreateRegistrationsTable extends Migration
             $table->string('profile_image')->nullable();
             $table->string('bio')->nullable();
             $table->integer('experience')->nullable();
+            $table->string('work_type')->nullable();
+            $table->integer('total_care_completed')->nullable();
+            $table->integer('total_reviews')->nullable();
+            $table->integer('rating')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 

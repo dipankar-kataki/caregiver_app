@@ -16,6 +16,7 @@ class CreateW4FormsTable extends Migration
         Schema::create('w_4_forms', function (Blueprint $table) {
             $table->id();
             $table->string('type');
+            $table->string('name');
             $table->string('image');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();

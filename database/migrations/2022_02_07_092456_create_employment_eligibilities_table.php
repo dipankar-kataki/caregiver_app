@@ -16,6 +16,7 @@ class CreateEmploymentEligibilitiesTable extends Migration
         Schema::create('employment_eligibilities', function (Blueprint $table) {
             $table->id();
             $table->string('type');
+            $table->string('name');
             $table->string('image');
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
