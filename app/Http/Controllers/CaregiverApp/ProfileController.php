@@ -16,13 +16,15 @@ class ProfileController extends Controller
     use ApiResponser;
     public function index(Request $request){
         $details = User::with('profile')->where('id',auth('sanctum')->user()->id)->first();
+        $dobFormat = $diff = date_diff(date_create( $details->profile->dob), date_create(date('Y-m-d')));
         $profile = [
             'firstname' => $details->firstname,
             'lastname' => $details->lastname,
+            'profile_image' => $details->profile->profile_image,
             'work_type' => $details->profile->work_type,
             'rating' => $details->profile->rating,
             'experience' => $details->profile->experience,
-            'age' =>  date("m-d-Y", strtotime($details->profile->dob)),
+            'age' =>  $dobFormat->format('%y'),
             'total_care_completed' => $details->profile->total_care_completed,
             'total_reviews' => $details->profile->total_reviews,
         ];
