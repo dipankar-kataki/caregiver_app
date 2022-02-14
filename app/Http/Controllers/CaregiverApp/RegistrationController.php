@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Registration;
 use App\Models\User;
 use App\Traits\ApiResponser;
+use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
@@ -15,7 +17,7 @@ class RegistrationController extends Controller
     use ApiResponser;
     public function registration(Request $request){
         $phone = $request->phone;
-        $dob = date_create($request->dob);
+        $dob = $request->dob;
         $ssn = $request->ssn;
         $gender = $request->gender;
         $address = $request->address;
@@ -45,9 +47,10 @@ class RegistrationController extends Controller
             }else if($check_ssn_exist == true){
                 return $this->error('Social Security Number already exists.', null, 'null', 403);
             }else{
+                $create =true;
                 $create = Registration::create([
                     'phone' => $phone,
-                    'dob' => date_format($dob,'Y-m-d'),
+                    'dob' => DateTime::createFromFormat('m-d-Y',$dob),
                     'ssn' => $ssn,
                     'gender' => $gender,
                     'address' => $address,

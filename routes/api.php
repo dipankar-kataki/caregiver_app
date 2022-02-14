@@ -41,7 +41,18 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::prefix('profile')->group(function(){
         Route::get('show-profile',[ProfileController::class,'index']);
         Route::post('edit-profile',[ProfileController::class,'editProfile']);
+        Route::get('get-bio',[ProfileController::class,'getBio']);
+        Route::prefix('address')->group(function(){
+            Route::get('get-address',[ProfileController::class,'getAddress']);
+            Route::post('edit-address',[ProfileController::class,'editAddress']);
+        });
+        Route::prefix('education')->group(function(){
+            Route::get('get-education',[ProfileController::class,'getEducation']);
+            Route::post('edit-education',[ProfileController::class,'editEducation']);
+        }); 
     });
+
+
     Route::get('logout',function(){
         auth()->user()->tokens()->delete();
 

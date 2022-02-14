@@ -21,7 +21,7 @@ class CreateRegistrationsTable extends Migration
             $table->string('gender');
             $table->string('address');
             $table->string('profile_image')->nullable();
-            $table->string('bio')->nullable();
+            $table->text('bio')->nullable();
             $table->integer('experience')->nullable();
             $table->string('work_type')->nullable();
             $table->integer('total_care_completed')->nullable();
