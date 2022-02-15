@@ -16,19 +16,29 @@ class ProfileController extends Controller
     use ApiResponser;
     public function index(Request $request){
         $details = User::with('profile')->where('id',auth('sanctum')->user()->id)->first();
-        $dobFormat = $diff = date_diff(date_create( $details->profile->dob), date_create(date('Y-m-d')));
-        $profile = [
-            'firstname' => $details->firstname,
-            'lastname' => $details->lastname,
-            'profile_image' => $details->profile->profile_image,
-            'work_type' => $details->profile->work_type,
-            'rating' => $details->profile->rating,
-            'experience' => $details->profile->experience,
-            'age' =>  $dobFormat->format('%y'),
-            'total_care_completed' => $details->profile->total_care_completed,
-            'total_reviews' => $details->profile->total_reviews,
-        ];
-        return $this->success('Profile Details.', $profile, 'null', 200);
+        
+
+        if(($details != null ) && ($details->profile == null)){
+            $profile = [
+                'firstname' => $details->firstname,
+                'lastname' => $details->lastname,
+            ];
+            return $this->success('Profile Details.', $profile, 'null', 200);
+        }else{
+            $dobFormat = $diff = date_diff(date_create( $details->profile->dob), date_create(date('Y-m-d')));
+            $profile = [
+                'firstname' => $details->firstname,
+                'lastname' => $details->lastname,
+                'profile_image' => $details->profile->profile_image,
+                'work_type' => $details->profile->work_type,
+                'rating' => $details->profile->rating,
+                'experience' => $details->profile->experience,
+                'age' =>  $dobFormat->format('%y'),
+                'total_care_completed' => $details->profile->total_care_completed,
+                'total_reviews' => $details->profile->total_reviews,
+            ];
+            return $this->success('Profile Details.', $profile, 'null', 200);
+        }
     }
 
     public function editProfile(Request $request){
@@ -70,38 +80,93 @@ class ProfileController extends Controller
             if(($updateUser ==  true) && ($updateReg == true)){
                 return $this->success('Profile updated successfully', null, 'null', 201);
             }else{
-                return $this->success('Whoops!, Updated failed', null, 'null', 200);
+                return $this->error('Whoops!, Updated failed', null, 'null', 200);
             }
             
+        }
+    }
+
+    public function uploadProfilePhoto(Request $request){
+        $validator = Validator::make($request->all(), [
+            'profilePic' => 'required|image|mimes:jpg,png,jpeg|max:1024'
+        ],[
+            'profilePic.required' => 'Please choose an image to upload.'
+        ]);
+
+        if($validator->fails()){
+            return $this->error('Whoops!, Updated failed', $validator->errors(), 'null', 200);
+        }else{
+            $profilePic = $request->profilePic;
+            $file = '';
+
+            if($request->hasFile('profilePic')){
+                $new_name = date('d-m-Y-H-i-s') . '_' . $profilePic->getClientOriginalName();
+                $profilePic->move(public_path('caregiver-app/profile/'), $new_name);
+                $file = 'caregiver-app/profile/' . $new_name;
+            }
+
+            $update = Registration::where('user_id', auth('sanctum')->user()->id)->update([
+                'profile_image' => $file
+            ]);
+
+            
+
+            if($update){
+                return $this->success('Profile image updated successfully', ['profile_image' => $file], 'null', 201);
+            }else{
+                return $this->error('Whoops!, Failed to add profile image', null, 'null', 200);
+            }
         }
     }
 
 
     public function getBio(Request $request){
         $details = Registration::where('user_id', auth('sanctum')->user()->id)->first();
-        return $this->success('Bio details', $details->bio, 'null', 200);
+        if($details == null){
+            return $this->error('Whoops!, No details found.', null, 'null', 400);
+        }else{
+            return $this->success('Bio details', $details->bio, 'null', 200);
+        }
     }
 
     public function getAddress(Request $request){
         $details = Registration::where('user_id', auth('sanctum')->user()->id)->first();
-        return $this->success('Address details', $details->address, 'null', 200);
+        if($details == null){
+            return $this->error('Whoops!, No details found.', null, 'null', 400);
+        }else{
+            return $this->success('Address details', $details->address, 'null', 200);
+        }
     }
 
     public function editAddress(Request $request){
-        $update = Registration::where('user_id', auth('sanctum')->user()->id)->update([
-            'address' => $request->address
+
+        $validator = Validator::make($request->all(),[
+            'address' => 'required'
         ]);
 
-        if($update){
-            return $this->success('Address updated successfully', null, 'null', 201);
+        if($validator->fails()){
+            return $this->error('Whoops!, Updated failed', $validator->errors(), 'null', 200);
         }else{
-            return $this->success('Whoops!, Updated failed', null, 'null', 200);
+            $update = Registration::where('user_id', auth('sanctum')->user()->id)->update([
+                'address' => $request->address
+            ]);
+    
+            if($update){
+                return $this->success('Address updated successfully', null, 'null', 201);
+            }else{
+                return $this->error('Whoops!, Updated failed', null, 'null', 200);
+            }
         }
+        
     }
 
     public function getEducation(Request $request){
         $details = Education::where('user_id', auth('sanctum')->user()->id)->get();
-        return $this->success('Address details', $details, 'null', 200);
+        if($details == null){
+            return $this->error('Whoops!, No details found.', null, 'null', 400);
+        }else{
+            return $this->success('Education details', $details, 'null', 200);
+        }
     }
 
 
@@ -134,7 +199,7 @@ class ProfileController extends Controller
                 if($update){
                     return $this->success('Education updated successfully', null, 'null', 201);
                 }else{
-                    return $this->success('Whoops!, Updated failed', null, 'null', 200);
+                    return $this->error('Whoops!, Updated failed', null, 'null', 200);
                 }
             }else{
                 
@@ -151,7 +216,7 @@ class ProfileController extends Controller
                 if($create){
                     return $this->success('Education added successfully', null, 'null', 201);
                 }else{
-                    return $this->success('Whoops!, Updated failed', null, 'null', 200);
+                    return $this->error('Whoops!, Updated failed', null, 'null', 200);
                 }
                 
             }

@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\Route;
 // Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 //     return $request->user();
 // });
+
+
 /******************************** Login & Signup *******************************/
 
 Route::post('signup',[SignUpController::class,'signup']);
@@ -39,13 +41,20 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::post('document-upload',[DocumentController::class,'uploadDocument']);
     
     Route::prefix('profile')->group(function(){
+
+        /************************************* General Profile Api's ********************************************* */
         Route::get('show-profile',[ProfileController::class,'index']);
         Route::post('edit-profile',[ProfileController::class,'editProfile']);
+        Route::post('upload-photo',[ProfileController::class,'uploadProfilePhoto']);
         Route::get('get-bio',[ProfileController::class,'getBio']);
+
+        /************************************* Address Api's ********************************************* */
         Route::prefix('address')->group(function(){
             Route::get('get-address',[ProfileController::class,'getAddress']);
             Route::post('edit-address',[ProfileController::class,'editAddress']);
         });
+
+        /************************************* Education Api's ********************************************* */
         Route::prefix('education')->group(function(){
             Route::get('get-education',[ProfileController::class,'getEducation']);
             Route::post('edit-education',[ProfileController::class,'editEducation']);
@@ -53,6 +62,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     });
 
 
+    /************************************* Logout Api's ********************************************* */
     Route::get('logout',function(){
         auth()->user()->tokens()->delete();
 
