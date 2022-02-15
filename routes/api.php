@@ -43,8 +43,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     Route::prefix('profile')->group(function(){
 
         /************************************* General Profile Api's ********************************************* */
-        Route::get('show-profile',[ProfileController::class,'index']);
+        Route::get('get-profile-header',[ProfileController::class,'index']);
         Route::post('edit-profile',[ProfileController::class,'editProfile']);
+        Route::get('get-basic-details',[ProfileController::class,'getBasicDetails']);
         Route::post('upload-photo',[ProfileController::class,'uploadProfilePhoto']);
         Route::get('get-bio',[ProfileController::class,'getBio']);
 

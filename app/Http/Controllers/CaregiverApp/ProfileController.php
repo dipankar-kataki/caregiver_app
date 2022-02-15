@@ -77,12 +77,50 @@ class ProfileController extends Controller
                 'work_type' => $request->work_type
             ]);
 
+            $details = User::with('profile')->where('id',auth('sanctum')->user()->id)->first();
+            $profile = [
+                'bio' => $details->profile->bio,
+                'firstname' => $details->firstname,
+                'lastname' => $details->lastname,
+                'gender' => $details->profile->gender,
+                'dob' => $details->profile->dob,
+                'phone' => $details->profile->phone,
+                'ssn' => $details->profile->ssn,
+                'experience' => $details->profile->experience,
+                'work_type' => $details->profile->work_type
+            ];
+
             if(($updateUser ==  true) && ($updateReg == true)){
-                return $this->success('Profile updated successfully', null, 'null', 201);
+                return $this->success('Profile updated successfully', $profile, 'null', 201);
             }else{
                 return $this->error('Whoops!, Updated failed', null, 'null', 200);
             }
             
+        }
+    }
+
+    public function getBasicDetails(){
+
+        $details = User::with('profile')->where('id',auth('sanctum')->user()->id)->first();
+        if(($details != null ) && ($details->profile == null)){
+            $profile = [
+                'firstname' => $details->firstname,
+                'lastname' => $details->lastname,
+            ];
+            return $this->success('Profile Details.', $profile, 'null', 200);
+        }else{
+            $profile = [
+                'bio' => $details->profile->bio,
+                'firstname' => $details->firstname,
+                'lastname' => $details->lastname,
+                'gender' => $details->profile->gender,
+                'dob' => $details->profile->dob,
+                'phone' => $details->profile->phone,
+                'ssn' => $details->profile->ssn,
+                'experience' => $details->profile->experience,
+                'work_type' => $details->profile->work_type
+            ];
+            return $this->success('Profile Details.', $profile, 'null', 200);
         }
     }
 
