@@ -15,11 +15,11 @@ class CreateRegistrationsTable extends Migration
     {
         Schema::create('registrations', function (Blueprint $table) {
             $table->id();
-            $table->string('phone');
-            $table->date('dob');
-            $table->string('ssn');
-            $table->string('gender');
-            $table->string('address');
+            $table->string('phone')->nullable();
+            $table->date('dob')->nullable();
+            $table->string('ssn')->nullable();
+            $table->string('gender')->nullable();
+            $table->string('address')->nullable();
             $table->string('profile_image')->nullable();
             $table->text('bio')->nullable();
             $table->integer('experience')->nullable();

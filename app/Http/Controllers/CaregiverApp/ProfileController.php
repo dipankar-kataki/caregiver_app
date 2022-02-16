@@ -50,6 +50,9 @@ class ProfileController extends Controller
             'dob' => 'required',
             'ssn' => 'required',
             'gender' => 'required',
+            'bio' => 'required',
+            'experience' => 'required',
+            'work_type' => 'required'
         ],[
             'firstname.required' => 'Firstname cannot be empty.',
             'lastname.required' => 'Lastname cannot be empty.',
@@ -57,6 +60,9 @@ class ProfileController extends Controller
             'dob.required' => 'Date of Birth is required. Please enter a valid dob.',
             'ssn.required' => 'Social Security Number is required. Please enter a valid SSN.',
             'gender.required' => 'Gender is required. Please select appropriate gender.',
+            'bio' => 'Bio is required',
+            'experience' => 'Experience is required',
+            'work_type' => 'Work type is required'
         ]);
 
         if($validator->fails()){
@@ -67,33 +73,93 @@ class ProfileController extends Controller
                 'lastname' => $request->lastname
             ]);
 
-            $updateReg = Registration::where('user_id', auth('sanctum')->user()->id)->update([
-                'phone' => $request->phone,
-                'dob' => DateTime::createFromFormat('m-d-Y',$request->dob),
-                'ssn' => $request->ssn,
-                'gender' => $request->gender,
-                'bio' => $request->bio,
-                'experience' => $request->experience,
-                'work_type' => $request->work_type
-            ]);
-
             $details = User::with('profile')->where('id',auth('sanctum')->user()->id)->first();
-            $profile = [
-                'bio' => $details->profile->bio,
-                'firstname' => $details->firstname,
-                'lastname' => $details->lastname,
-                'gender' => $details->profile->gender,
-                'dob' => $details->profile->dob,
-                'phone' => $details->profile->phone,
-                'ssn' => $details->profile->ssn,
-                'experience' => $details->profile->experience,
-                'work_type' => $details->profile->work_type
-            ];
+            $check_phone_no_exist = Registration::where('phone', $request->phone)->exists();
+            $check_ssn_exist = Registration::where('ssn', $request->ssn)->exists();
 
-            if(($updateUser ==  true) && ($updateReg == true)){
-                return $this->success('Profile updated successfully', $profile, 'null', 201);
+            if($check_phone_no_exist == true){
+                return $this->error('Phone number already exists.', null, 'null', 403);
+            }else if($check_ssn_exist == true){
+                return $this->error('Social Security Number already exists.', null, 'null', 403);
             }else{
-                return $this->error('Whoops!, Updated failed', null, 'null', 200);
+                if($details->profile == null){
+                    $create = Registration::create([
+                        'phone' => $request->phone,
+                        'dob' => DateTime::createFromFormat('m-d-Y',$request->dob),
+                        'ssn' => $request->ssn,
+                        'gender' => $request->gender,
+                        'bio' => $request->bio,
+                        'experience' => $request->experience,
+                        'work_type' => $request->work_type,
+                        'user_id' => auth('sanctum')->user()->id
+        
+                    ]);
+    
+                    if($create){
+                        $details = User::with('profile')->where('id',auth('sanctum')->user()->id)->first();
+                        $profile = [
+                            'bio' => $details->profile->bio ,
+                            'firstname' => $details->firstname,
+                            'lastname' => $details->lastname,
+                            'gender' => $details->profile->gender,
+                            'dob' => $details->profile->dob,
+                            'phone' => $details->profile->phone,
+                            'ssn' => $details->profile->ssn,
+                            'experience' => $details->profile->experience,
+                            'work_type' => $details->profile->work_type
+                        ];
+    
+                        if(($details->is_registration_completed == 0) && ($details->profile->address != null)){
+                            User::where('id', auth('sanctum')->user()->id )->update([
+                                'is_registration_completed' => 1
+                            ]);
+                        }else{
+                            User::where('id', auth('sanctum')->user()->id )->update([
+                                'is_registration_completed' => 0
+                            ]);
+                        }
+                        return $this->success('Profile updated successfully', $profile, 'null', 201);
+                    }else{
+                        return $this->error('Whoops!, Updated failed', null, 'null', 200);
+                    }
+                }else{
+                    $updateReg = Registration::where('user_id', auth('sanctum')->user()->id)->update([
+                        'phone' => $request->phone,
+                        'dob' => DateTime::createFromFormat('m-d-Y',$request->dob),
+                        'ssn' => $request->ssn,
+                        'gender' => $request->gender,
+                        'bio' => $request->bio,
+                        'experience' => $request->experience,
+                        'work_type' => $request->work_type
+                    ]);
+    
+                    $details = User::with('profile')->where('id',auth('sanctum')->user()->id)->first();
+                    if(($updateUser ==  true) && ($updateReg == true)){
+                        $profile = [
+                            'bio' => $details->profile->bio ,
+                            'firstname' => $details->firstname,
+                            'lastname' => $details->lastname,
+                            'gender' => $details->profile->gender,
+                            'dob' => $details->profile->dob,
+                            'phone' => $details->profile->phone,
+                            'ssn' => $details->profile->ssn,
+                            'experience' => $details->profile->experience,
+                            'work_type' => $details->profile->work_type
+                        ];
+                        if(($details->is_registration_completed == 0) && ($details->profile->address != null)){
+                            User::where('id', auth('sanctum')->user()->id )->update([
+                                'is_registration_completed' => 1
+                            ]);
+                        }else{
+                            User::where('id', auth('sanctum')->user()->id )->update([
+                                'is_registration_completed' => 0
+                            ]);
+                        }
+                        return $this->success('Profile updated successfully', $profile, 'null', 201);
+                    }else{
+                        return $this->error('Whoops!, Updated failed', null, 'null', 200);
+                    }
+                }
             }
             
         }
@@ -170,7 +236,7 @@ class ProfileController extends Controller
     public function getAddress(Request $request){
         $details = Registration::where('user_id', auth('sanctum')->user()->id)->first();
         if($details == null){
-            return $this->error('Whoops!, No details found.', null, 'null', 400);
+            return $this->success('Whoops!, No details found.', null, 'null', 400);
         }else{
             return $this->success('Address details', $details->address, 'null', 200);
         }
@@ -185,14 +251,52 @@ class ProfileController extends Controller
         if($validator->fails()){
             return $this->error('Whoops!, Updated failed', $validator->errors(), 'null', 200);
         }else{
-            $update = Registration::where('user_id', auth('sanctum')->user()->id)->update([
-                'address' => $request->address
-            ]);
-    
-            if($update){
-                return $this->success('Address updated successfully', null, 'null', 201);
+            $details = User::with('profile')->where('id',auth('sanctum')->user()->id)->first();
+            if($details->profile == null){
+                $create = Registration::create([
+                    'address' => $request->address,
+                    'user_id' => auth('sanctum')->user()->id
+                ]);
+                if($create){
+
+                    $details = User::with('profile')->where('id',auth('sanctum')->user()->id)->first();
+                    $address = [
+                        'address' => $details->profile->address
+                    ];
+                    if((($details->profile->phone == null) || ($details->profile->gender == null) || ($details->profile->dob == null) || ($details->profile->ssn == null)) && ($details->is_registration_completed == 0) ){
+                        User::where('id', auth('sanctum')->user()->id )->update([
+                            'is_registration_completed' => 0
+                        ]);
+                    }else{
+                        User::where('id', auth('sanctum')->user()->id )->update([
+                            'is_registration_completed' => 1
+                        ]);
+                    }
+                    return $this->success('Address updated successfully', $address, 'null', 201);
+                }
             }else{
-                return $this->error('Whoops!, Updated failed', null, 'null', 200);
+                $update = Registration::where('user_id', auth('sanctum')->user()->id)->update([
+                    'address' => $request->address
+                ]);
+                if($update){
+                
+                    $details = User::with('profile')->where('id',auth('sanctum')->user()->id)->first();
+                    $address = [
+                        'address' => $details->profile->address
+                    ];
+                    if((($details->profile->phone == null) || ($details->profile->gender == null) || ($details->profile->dob == null) || ($details->profile->ssn == null)) && ($details->is_registration_completed == 0) ){
+                        User::where('id', auth('sanctum')->user()->id )->update([
+                            'is_registration_completed' => 0
+                        ]);
+                    }else{
+                        User::where('id', auth('sanctum')->user()->id )->update([
+                            'is_registration_completed' => 1
+                        ]);
+                    }
+                    return $this->success('Address updated successfully', $address, 'null', 201);
+                }else{
+                    return $this->error('Whoops!, Updated failed', null, 'null', 200);
+                }
             }
         }
         
@@ -259,5 +363,16 @@ class ProfileController extends Controller
                 
             }
         }
+    }
+
+    public function profileCompletionStatus(){
+        $details = User::where('id',auth('sanctum')->user()->id)->first();
+        $profile_completion_status = [
+            'is_registration_completed' => $details->is_registration_completed,
+            'is_questions_answered' => $details->is_questions_answered,
+            'is_documents_uploaded' => $details->is_documents_uploaded
+        ];
+
+        return $this->success('Profile completion status fetched successfully.', $profile_completion_status, 'null', 200);
     }
 }

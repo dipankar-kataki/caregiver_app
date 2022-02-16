@@ -48,6 +48,7 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::get('get-basic-details',[ProfileController::class,'getBasicDetails']);
         Route::post('upload-photo',[ProfileController::class,'uploadProfilePhoto']);
         Route::get('get-bio',[ProfileController::class,'getBio']);
+        Route::get('get-profile-completion-status',[ProfileController::class,'profileCompletionStatus']);
 
         /************************************* Address Api's ********************************************* */
         Route::prefix('address')->group(function(){
@@ -62,6 +63,9 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
         }); 
     });
 
+    /************************************* Password Change Api ********************************************* */
+
+    Route::post('change-password',[LoginController::class,'changePassword']);
 
     /************************************* Logout Api's ********************************************* */
     Route::get('logout',function(){
