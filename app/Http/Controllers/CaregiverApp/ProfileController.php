@@ -74,8 +74,8 @@ class ProfileController extends Controller
             ]);
 
             $details = User::with('profile')->where('id',auth('sanctum')->user()->id)->first();
-            $check_phone_no_exist = Registration::where('phone', $request->phone)->exists();
-            $check_ssn_exist = Registration::where('ssn', $request->ssn)->exists();
+            $check_phone_no_exist = Registration::where('phone', $request->phone)->where('user_id', '!=', auth('sanctum')->user()->id)->exists();
+            $check_ssn_exist = Registration::where('ssn', $request->ssn)->where('user_id', '!=', auth('sanctum')->user()->id)->exists();
 
             if($check_phone_no_exist == true){
                 return $this->error('Phone number already exists.', null, 'null', 403);
