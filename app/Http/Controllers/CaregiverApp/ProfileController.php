@@ -7,6 +7,7 @@ use App\Models\Education;
 use App\Models\Registration;
 use App\Models\User;
 use App\Traits\ApiResponser;
+use Carbon\Carbon;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -102,7 +103,7 @@ class ProfileController extends Controller
                             'firstname' => $details->firstname,
                             'lastname' => $details->lastname,
                             'gender' => $details->profile->gender,
-                            'dob' => $details->profile->dob,
+                            'dob' => Carbon::parse($details->profile->dob)->format('m-d-Y'),
                             'phone' => $details->profile->phone,
                             'ssn' => $details->profile->ssn,
                             'experience' => $details->profile->experience,
@@ -140,7 +141,7 @@ class ProfileController extends Controller
                             'firstname' => $details->firstname,
                             'lastname' => $details->lastname,
                             'gender' => $details->profile->gender,
-                            'dob' => $details->profile->dob,
+                            'dob' => Carbon::parse($details->profile->dob)->format('m-d-Y'),
                             'phone' => $details->profile->phone,
                             'ssn' => $details->profile->ssn,
                             'experience' => $details->profile->experience,
