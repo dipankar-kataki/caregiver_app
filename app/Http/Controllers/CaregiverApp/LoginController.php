@@ -50,11 +50,11 @@ class LoginController extends Controller
             return $this->error('Whoops! Not able to change password', $validator->errors(), 'null', 200);
         }else{
             if($request->new_password != $request->confirm_password){
-                return $this->success('Whoops! Confirm password not matched.', null, 'null', 200);
+                return $this->error('Whoops! Confirm password not matched.', null, 'null', 200);
             }else{
                 $details = User::where('id', auth('sanctum')->user()->id)->first();
                 if(! (Hash::check($request->old_password, $details->password))){
-                    return $this->success('Whoops! Old password not matched with your active password.', null, 'null', 200);
+                    return $this->error('Enter a valid password.', null, 'null', 200);
                 }else{
                     
                     $update = User::where('id', auth('sanctum')->user()->id)->update([
@@ -64,7 +64,7 @@ class LoginController extends Controller
                     if($update){
                         return $this->success('Password changed successfully.', null, 'null', 200);
                     }else{
-                        return $this->success('Whoops! Something went wrong. Failed to change password.', null, 'null', 200);
+                        return $this->error('Whoops! Something went wrong. Failed to change password.', null, 'null', 200);
                     }
                 }
             }
