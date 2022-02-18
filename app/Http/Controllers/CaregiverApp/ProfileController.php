@@ -340,7 +340,8 @@ class ProfileController extends Controller
                 ]);
     
                 if($update){
-                    return $this->success('Education updated successfully', null, 'null', 201);
+                    $details = Education::where('user_id', auth('sanctum')->user()->id)->get();
+                    return $this->success('Education updated successfully', $details, 'null', 201);
                 }else{
                     return $this->error('Whoops!, Updated failed', null, 'null', 200);
                 }
@@ -357,7 +358,8 @@ class ProfileController extends Controller
                 ]);
 
                 if($create){
-                    return $this->success('Education added successfully', null, 'null', 201);
+                    $details = Education::where('user_id', auth('sanctum')->user()->id)->get();
+                    return $this->success('Education added successfully', $details, 'null', 201);
                 }else{
                     return $this->error('Whoops!, Updated failed', null, 'null', 200);
                 }
