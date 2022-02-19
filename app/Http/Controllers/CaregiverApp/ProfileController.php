@@ -31,6 +31,7 @@ class ProfileController extends Controller
                 'firstname' => $details->firstname,
                 'lastname' => $details->lastname,
                 'profile_image' => $details->profile->profile_image,
+                'bio' => $details->profile->bio,
                 'work_type' => $details->profile->work_type,
                 'rating' => $details->profile->rating,
                 'experience' => $details->profile->experience,
