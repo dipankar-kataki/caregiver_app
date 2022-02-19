@@ -17,12 +17,35 @@ class ProfileController extends Controller
     use ApiResponser;
     public function index(Request $request){
         $details = User::with('profile')->where('id',auth('sanctum')->user()->id)->first();
-        
+        $reg = '';
+        $question = '';
+        $docs = '';
+
+        if($details->is_registration_completed == 0){
+            $reg = 0;
+        }else{
+            $reg = 30;
+        }
+
+        if($details->is_questions_answered == 0){
+            $question = 0;
+        }else{
+            $question = 30;
+        }
+
+        if($details->is_documents_uploaded == 0){
+            $docs = 0;
+        }else{
+            $docs = 30;
+        }
+        $total_percet_sum = ($reg + $question + $docs) + 10;
+        $total_profile_percentage = ($total_percet_sum / 100 ) * 100;
 
         if(($details != null ) && ($details->profile == null)){
             $profile = [
                 'firstname' => $details->firstname,
                 'lastname' => $details->lastname,
+                'total_percent' =>  $total_profile_percentage
             ];
             return $this->success('Profile Details.', $profile, 'null', 200);
         }else{
@@ -38,6 +61,7 @@ class ProfileController extends Controller
                 'age' =>  $dobFormat->format('%y'),
                 'total_care_completed' => $details->profile->total_care_completed,
                 'total_reviews' => $details->profile->total_reviews,
+                'total_percent' =>  $total_profile_percentage
             ];
             return $this->success('Profile Details.', $profile, 'null', 200);
         }
@@ -182,7 +206,7 @@ class ProfileController extends Controller
                 'firstname' => $details->firstname,
                 'lastname' => $details->lastname,
                 'gender' => $details->profile->gender,
-                'dob' => $details->profile->dob,
+                'dob' => Carbon::parse($details->profile->dob)->format('m-d-Y'),
                 'phone' => $details->profile->phone,
                 'ssn' => $details->profile->ssn,
                 'experience' => $details->profile->experience,
@@ -374,7 +398,8 @@ class ProfileController extends Controller
         $profile_completion_status = [
             'is_registration_completed' => $details->is_registration_completed,
             'is_questions_answered' => $details->is_questions_answered,
-            'is_documents_uploaded' => $details->is_documents_uploaded
+            'is_documents_uploaded' => $details->is_documents_uploaded,
+            
         ];
 
         return $this->success('Profile completion status fetched successfully.', $profile_completion_status, 'null', 200);
