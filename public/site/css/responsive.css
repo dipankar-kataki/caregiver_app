@@ -60,6 +60,11 @@
   #becomeCaregiver .btnJoin{
     color: #fff;
   }
+
+  #blogDetails img{
+    height: auto;
+    width: 100%;
+  }
 }
 
 @media (max-width: 767.98px) {
