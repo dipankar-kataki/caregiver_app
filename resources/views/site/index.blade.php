@@ -160,7 +160,8 @@
                                     lead-in to additional content. This content is a little bit longer.</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href='{{route('site.blog', ['id'=>Crypt::encrypt(1)])}}';">View</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                            onclick="location.href='{{ route('site.blog', ['id' => Crypt::encrypt(1)]) }}';">View</button>
                                     </div>
                                     <small class="text-muted">9 mins</small>
                                 </div>
@@ -178,7 +179,8 @@
                                     lead-in to additional content. This content is a little bit longer.</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href='{{route('site.blog', ['id'=>Crypt::encrypt(1)])}}';">View</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                            onclick="location.href='{{ route('site.blog', ['id' => Crypt::encrypt(1)]) }}';">View</button>
                                     </div>
                                     <small class="text-muted">9 mins</small>
                                 </div>
@@ -196,7 +198,8 @@
                                     lead-in to additional content. This content is a little bit longer.</p>
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div class="btn-group">
-                                        <button type="button" class="btn btn-sm btn-outline-secondary" onclick="location.href='{{route('site.blog', ['id'=>Crypt::encrypt(1)])}}';">View</button>
+                                        <button type="button" class="btn btn-sm btn-outline-secondary"
+                                            onclick="location.href='{{ route('site.blog', ['id' => Crypt::encrypt(1)]) }}';">View</button>
                                     </div>
                                     <small class="text-muted">9 mins</small>
                                 </div>
@@ -361,16 +364,27 @@
 @section('customJs')
     <script>
         $(document).ready(function() {
+            jQuery.validator.addMethod("customEmail", function(value, element) {
+                return this.optional(element) || /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i.test(
+                    value);
+            }, "Please enter a valid email address!");
+
             $("#contactForm").validate({
                 rules: {
                     name: "required",
-                    email: "required",
+                    email: {
+                        required: true,
+                        customEmail: true
+                    },
                     subject: "required",
                     message: "required",
                 },
                 messages: {
                     name: "Please enter your name",
-                    email: "Please enter your email",
+                    email: {
+                        required: "Please enter your email",
+                        customEmail: "Please enter a valid email address",
+                    },
                     subject: "Please enter subject",
                     message: "Please enter your message",
                 },
