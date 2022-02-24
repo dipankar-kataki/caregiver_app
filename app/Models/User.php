@@ -22,6 +22,7 @@ class User extends Authenticatable
         'lastname',
         'email',
         'password',
+        'role'
     ];
 
     /**
@@ -81,5 +82,9 @@ class User extends Authenticatable
 
     public function education(){
         return $this->hasMany(Education::class);
+    }
+
+    public function address(){
+        return $this->hasOne(Address::class);
     }
 }

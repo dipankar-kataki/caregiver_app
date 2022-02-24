@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CaregiverApp;
 
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 use App\Models\Registration;
 use App\Models\User;
 use App\Traits\ApiResponser;
@@ -20,20 +21,29 @@ class RegistrationController extends Controller
         $dob = $request->dob;
         $ssn = $request->ssn;
         $gender = $request->gender;
-        $address = $request->address;
+        $street = $request->street;
+        $city = $request->city;
+        $state = $request->state;
+        $zip_code = $request->zip_code;
 
         $validator = Validator::make($request->all(),[
             'phone' => 'required',
             'dob' => 'required',
             'ssn' => 'required',
             'gender' => 'required',
-            'address' => 'required'
+            'street' => 'required',
+            'city' => 'required',
+            'state' => 'required',
+            'zip_code' => 'required'
         ],[
             'phone.required' => 'Phone number is required. Please enter a valid phone number.',
             'dob.required' => 'Date of Birth is required. Please enter a valid dob.',
             'ssn.required' => 'Social Security Number is required. Please enter a valid SSN.',
             'gender.required' => 'Gender is required. Please select appropriate gender.',
-            'address.required' => 'Address is required. Please enter a valid address.'
+            'street.required' => 'Street is required. Please enter a valid street address.',
+            'city.required' => 'City is required. Please enter a valid city.',
+            'state.required' => 'State is required. Please enter a valid state.',
+            'zip_code.required' => 'Zip Code is required. Please enter a valid zip code.',
         ]);
 
         if($validator->fails()){
@@ -47,20 +57,25 @@ class RegistrationController extends Controller
             }else if($check_ssn_exist == true){
                 return $this->error('Social Security Number already exists.', null, 'null', 403);
             }else{
-                $create =true;
-                $create = Registration::create([
+                $createReg = Registration::create([
                     'phone' => $phone,
                     'dob' => DateTime::createFromFormat('m-d-Y',$dob),
                     'ssn' => $ssn,
                     'gender' => $gender,
-                    'address' => $address,
                     'user_id' => auth('sanctum')->user()->id
-    
+                ]);
+
+                $createAdd = Address::create([
+                    'street' => $request->street,
+                    'city' => $request->city,
+                    'state' => $request->state,
+                    'zip_code' => $request->zip_code,
+                    'user_id' => auth('sanctum')->user()->id
                 ]);
 
 
     
-                if($create){
+                if($createReg && $createAdd){
                     User::where('id', auth('sanctum')->user()->id )->update([
                         'is_registration_completed' => 1
                     ]);

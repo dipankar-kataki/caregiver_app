@@ -19,7 +19,7 @@ class SignUpController extends Controller
                 'firstname' => 'required',
                 'lastname' => 'required',
                 'email' => 'required|email',
-                'password' => 'required',
+                'password' => 'required | min:6',
             ],[
                 'firstname.required' => 'First Name is required',
                 'lastname.required' => 'Last Name is required',
@@ -38,7 +38,8 @@ class SignUpController extends Controller
                     'firstname' => $request->firstname,
                     'lastname' => $request->lastname,
                     'email' => $request->email,
-                    'password' => Hash::make($request->password)
+                    'password' => Hash::make($request->password),
+                    'role' => 2
                 ]);
                 $token = $create->createToken('auth_token')->plainTextToken;
                 if($create){

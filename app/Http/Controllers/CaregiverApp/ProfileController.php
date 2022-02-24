@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CaregiverApp;
 
 use App\Http\Controllers\Controller;
+use App\Models\Address;
 use App\Models\Education;
 use App\Models\Registration;
 use App\Models\User;
@@ -94,12 +95,26 @@ class ProfileController extends Controller
         if($validator->fails()){
             return $this->error('Whoops! Profile not updated.', $validator->errors(), 'null', 400);
         }else{
+
+            $details = User::with('profile','address')->where('id',auth('sanctum')->user()->id)->first();
+
             $updateUser = User::where('id', auth('sanctum')->user()->id)->update([
                 'firstname' => $request->firstname,
                 'lastname' => $request->lastname
             ]);
 
-            $details = User::with('profile')->where('id',auth('sanctum')->user()->id)->first();
+            if($updateUser){
+                if(($details->is_registration_completed == 0) && (($details->address->street == null) || ($details->address->city == null) || ($details->address->state == null) || ($details->address->zip_code == null))){
+                    User::where('id', auth('sanctum')->user()->id )->update([
+                        'is_registration_completed' => 0
+                    ]);
+                }else{
+                    User::where('id', auth('sanctum')->user()->id )->update([
+                        'is_registration_completed' => 1
+                    ]);
+                }
+            }
+
             $check_phone_no_exist = Registration::where('phone', $request->phone)->where('user_id', '!=', auth('sanctum')->user()->id)->exists();
             $check_ssn_exist = Registration::where('ssn', $request->ssn)->where('user_id', '!=', auth('sanctum')->user()->id)->exists();
 
@@ -122,7 +137,7 @@ class ProfileController extends Controller
                     ]);
     
                     if($create){
-                        $details = User::with('profile')->where('id',auth('sanctum')->user()->id)->first();
+                        $details = User::with('profile','address')->where('id',auth('sanctum')->user()->id)->first();
                         $profile = [
                             'bio' => $details->profile->bio ,
                             'firstname' => $details->firstname,
@@ -135,13 +150,13 @@ class ProfileController extends Controller
                             'work_type' => $details->profile->work_type
                         ];
     
-                        if(($details->is_registration_completed == 0) && ($details->profile->address != null)){
+                        if(($details->is_registration_completed == 0) && (($details->address == null))){
                             User::where('id', auth('sanctum')->user()->id )->update([
-                                'is_registration_completed' => 1
+                                'is_registration_completed' => 0
                             ]);
                         }else{
                             User::where('id', auth('sanctum')->user()->id )->update([
-                                'is_registration_completed' => 0
+                                'is_registration_completed' => 1
                             ]);
                         }
                         return $this->success('Profile updated successfully', $profile, 'null', 201);
@@ -158,9 +173,9 @@ class ProfileController extends Controller
                         'experience' => $request->experience,
                         'work_type' => $request->work_type
                     ]);
-    
-                    $details = User::with('profile')->where('id',auth('sanctum')->user()->id)->first();
+
                     if(($updateUser ==  true) && ($updateReg == true)){
+                        $details = User::with('profile','address')->where('id',auth('sanctum')->user()->id)->first();
                         $profile = [
                             'bio' => $details->profile->bio ,
                             'firstname' => $details->firstname,
@@ -172,13 +187,13 @@ class ProfileController extends Controller
                             'experience' => $details->profile->experience,
                             'work_type' => $details->profile->work_type
                         ];
-                        if(($details->is_registration_completed == 0) && ($details->profile->address != null)){
+                        if(($details->is_registration_completed == 0) && ($details->address->street == null)){
                             User::where('id', auth('sanctum')->user()->id )->update([
-                                'is_registration_completed' => 1
+                                'is_registration_completed' => 0
                             ]);
                         }else{
                             User::where('id', auth('sanctum')->user()->id )->update([
-                                'is_registration_completed' => 0
+                                'is_registration_completed' => 1
                             ]);
                         }
                         return $this->success('Profile updated successfully', $profile, 'null', 201);
@@ -260,36 +275,49 @@ class ProfileController extends Controller
     }
 
     public function getAddress(Request $request){
-        $details = Registration::where('user_id', auth('sanctum')->user()->id)->first();
+        $details = Address::where('user_id', auth('sanctum')->user()->id)->first();
         if($details == null){
             return $this->success('Whoops!, No details found.', null, 'null', 400);
         }else{
-            return $this->success('Address details', $details->address, 'null', 200);
+            return $this->success('Address details', $details, 'null', 200);
         }
     }
 
     public function editAddress(Request $request){
 
         $validator = Validator::make($request->all(),[
-            'address' => 'required'
+            'street' => 'required',
+            'city' => 'required',
+            'state' => 'required',
+            'zip_code' => 'required'
+        ],[
+            'street.required' => 'Street is required. Please enter a valid street address.',
+            'city.required' => 'City is required. Please enter a valid city.',
+            'state.required' => 'State is required. Please enter a valid state.',
+            'zip_code.required' => 'Zip Code is required. Please enter a valid zip code.',
         ]);
 
         if($validator->fails()){
             return $this->error('Whoops!, Updated failed', $validator->errors(), 'null', 200);
         }else{
-            $details = User::with('profile')->where('id',auth('sanctum')->user()->id)->first();
-            if($details->profile == null){
-                $create = Registration::create([
-                    'address' => $request->address,
+            $details = User::with('profile','address')->where('id',auth('sanctum')->user()->id)->first();
+            if($details->address == null){
+                $create = Address::create([
+                    'street' => $request->street,
+                    'city' => $request->city,
+                    'state' => $request->state,
+                    'zip_code' => $request->zip_code,
                     'user_id' => auth('sanctum')->user()->id
                 ]);
                 if($create){
 
-                    $details = User::with('profile')->where('id',auth('sanctum')->user()->id)->first();
                     $address = [
-                        'address' => $details->profile->address
+                        'street' => $details->address->street,
+                        'city' => $details->address->city,
+                        'state' => $details->address->state,
+                        'zip_code' => $details->address->zip_code,
                     ];
-                    if((($details->profile->phone == null) || ($details->profile->gender == null) || ($details->profile->dob == null) || ($details->profile->ssn == null)) && ($details->is_registration_completed == 0) ){
+                    if(($details->profile == null) && ($details->is_registration_completed == 0) ){
                         User::where('id', auth('sanctum')->user()->id )->update([
                             'is_registration_completed' => 0
                         ]);
@@ -301,16 +329,21 @@ class ProfileController extends Controller
                     return $this->success('Address updated successfully', $address, 'null', 201);
                 }
             }else{
-                $update = Registration::where('user_id', auth('sanctum')->user()->id)->update([
-                    'address' => $request->address
+                $update = Address::where('user_id', auth('sanctum')->user()->id)->update([
+                    'street' => $request->street,
+                    'city' => $request->city,
+                    'state' => $request->state,
+                    'zip_code' => $request->zip_code,
                 ]);
                 if($update){
-                
-                    $details = User::with('profile')->where('id',auth('sanctum')->user()->id)->first();
+                    $details = User::with('profile','address')->where('id',auth('sanctum')->user()->id)->first();
                     $address = [
-                        'address' => $details->profile->address
+                        'street' => $details->address->street,
+                        'city' => $details->address->city,
+                        'state' => $details->address->state,
+                        'zip_code' => $details->address->zip_code,
                     ];
-                    if((($details->profile->phone == null) || ($details->profile->gender == null) || ($details->profile->dob == null) || ($details->profile->ssn == null)) && ($details->is_registration_completed == 0) ){
+                    if((($details->profile == null)) && ($details->is_registration_completed == 0) ){
                         User::where('id', auth('sanctum')->user()->id )->update([
                             'is_registration_completed' => 0
                         ]);

@@ -15,7 +15,7 @@ class AddIsAdminToUsersTable extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            $table->boolean('is_admin')->default(0)->after('password');
+            $table->boolean('role')->after('password');
         });
     }
 
