@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Site\SiteController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,9 +16,10 @@ use App\Http\Controllers\Admin\AuthController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('', [SiteController::class, 'index'])->name('site.index');
+Route::get('blog/{id?}', [SiteController::class, 'blogs'])->name('site.blog');
+Route::post('contact', [SiteController::class, 'contact'])->name('site.contact');
+
 
 Route::match(['get', 'post'], 'login', [AuthController::class, 'login'])->name('auth.login');
 Route::get('logout', [AuthController::class, 'logout'])->name('auth.logout');
