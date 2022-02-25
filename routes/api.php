@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CaregiverApp\DocumentController;
+use App\Http\Controllers\CaregiverApp\ForgotPasswordController;
 use App\Http\Controllers\CaregiverApp\LoginController;
 use App\Http\Controllers\CaregiverApp\ProfileController;
 use App\Http\Controllers\CaregiverApp\RegistrationController;
@@ -30,6 +31,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('signup',[SignUpController::class,'signup']);
 Route::post('login',[LoginController::class,'login']);
+Route::post('forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
 
 
 /******************************** Internal Pages *******************************/
