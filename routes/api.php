@@ -31,7 +31,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('signup',[SignUpController::class,'signup']);
 Route::post('login',[LoginController::class,'login']);
-Route::post('forgot-password', [ForgotPasswordController::class, 'forgotPassword']);
+Route::prefix('forgot-password')->group(function(){
+    Route::post('send-reset-link', [ForgotPasswordController::class, 'sendResetLink']);
+    Route::post('update-password', [ForgotPasswordController::class, 'updatePassword']);
+});
+
 
 
 /******************************** Internal Pages *******************************/
