@@ -41,13 +41,13 @@
 
     <!-- Services -->
     <div class="container" id="servicesBlock">
-        <h1 class="fw-light text-center">Services we offer</h1>
+        <h1 class="fw-light text-center mb-4">Services we offer</h1>
         <div class="owl-carousel owl-theme servicesSlider">
             <div class="item">
                 <div class="card">
-                    <img src="{{ asset('site/image/banner/baby-care-logo.jpg') }}" width="300" alt="Elderly Care">
+                    <img src="{{ asset('site/image/services/ElderlyCare.png') }}" width="300" alt="Elderly Care">
                     <div class="card-body">
-                        <h5 class="card-title">Elderly Care</h5>
+                        <h5 class="card-title text-center">Elderly Care</h5>
                         <p class="card-text">Elderly people are always fascinated by a trusted companion. Old age
                             and
                             illness are what make the life of the elderly quite challenging. The urge to be cared for
@@ -59,9 +59,9 @@
 
             <div class="item">
                 <div class="card">
-                    <img src="{{ asset('site/image/banner/baby-care-logo.jpg') }}" width="300" alt="Baby Care">
+                    <img src="{{ asset('site/image/services/BabyCare.png') }}" width="300" alt="Baby Care">
                     <div class="card-body">
-                        <h5 class="card-title">Baby Care</h5>
+                        <h5 class="card-title text-center">Baby Care</h5>
                         <p class="card-text">A newborn constantly seeks attention and care. Managing babies and
                             work at
                             a time can be an untiring task. Juggling work and looking after the newborn is a big
@@ -73,9 +73,9 @@
 
             <div class="item">
                 <div class="card">
-                    <img src="{{ asset('site/image/banner/baby-care-logo.jpg') }}" width="300" alt="Disabled-Care">
+                    <img src="{{ asset('site/image/services/DisabledCare.png') }}" width="300" alt="Disabled-Care">
                     <div class="card-body">
-                        <h5 class="card-title">Disabled-Care</h5>
+                        <h5 class="card-title text-center">Disabled-Care</h5>
                         <p class="card-text">Our motivated caregivers provide utmost tenderness to the
                             specially-abled
                             individual. Assisting them in their day-to-day activities, making them learn the basic life
@@ -87,9 +87,9 @@
 
             <div class="item">
                 <div class="card">
-                    <img src="{{ asset('site/image/banner/baby-care-logo.jpg') }}" width="300" alt="Patients Care">
+                    <img src="{{ asset('site/image/services/PatientsCare.png') }}" width="300" alt="Patients Care">
                     <div class="card-body">
-                        <h5 class="card-title">Patients Care</h5>
+                        <h5 class="card-title text-center">Patients Care</h5>
                         <p class="card-text">Recovering from a prolonged illness takes its due course of time. Good
                             care
                             at home after hospital leads to a quick and smooth path for a patient's recovery. A

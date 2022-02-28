@@ -3,9 +3,7 @@
         <div class="row flex-column-reverse flex-md-row g-0">
             <div class="col-sm-6 leftBlock">
                 <h1>Everything you need is now in your pocket</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum libero, sit veniam sequi odio
-                    delectus? Accusamus perspiciatis, voluptate deserunt voluptatem quas quos ullam eum repellendus,
-                    iusto aspernatur quo atque debitis?</p>
+                <p>Care and Compassion at just a touch away. A platform where you can connect with our nurturers and experience the little joys in life. </p>
 
                 <div class="downloadButtons"><button
                         class="btn android mb-2 me-2 d-flex justify-content-center align-items-center"><i

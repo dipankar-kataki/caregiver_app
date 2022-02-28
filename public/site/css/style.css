@@ -48,13 +48,19 @@
   align-items: center;
 }
 
-#banner .leftBlock,
 #banner .rightBlock {
   padding: 40px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+}
+
+#banner .leftBlock{
+  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 #banner .rightBlock img {
@@ -111,6 +117,10 @@
 
 #servicesBlock .card{
     border: none;
+}
+
+#servicesBlock .servicesSlider .item .card p{
+  text-align: justify;
 }
 
 #servicesBlock .owl-carousel .owl-item img {
