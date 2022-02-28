@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Site;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Mail\GetInTouchMail;
+use Exception;
+use Illuminate\Support\Facades\Mail;
 
 class SiteController extends Controller
 {
@@ -30,17 +33,36 @@ class SiteController extends Controller
             ]
         );
 
+        $details = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'subject' => $request->subject,
+            'message' => $request->message,
+        ];
+
+        try {
+            Mail::to('alok.deka@ekodus.com')->send(new GetInTouchMail($details));
+            $icon = "success";
+            $title = "Success";
+            $text = "Email is sent";
+        } catch (Exception $e) {
+            $icon = "error";
+            $title = "Error";
+            $text = $e;
+        }
+
         return response()->json([
-			'icon' => 'Success',
-			'title' => 'Success',
-			'text' => 'Your query has been submitted'
-		]);
+            'icon' => $icon,
+            'title' => $title,
+            'text' => $text
+        ]);
     }
 
-    public function blogs(Request $request, $id=null){
-        if(!$id){
+    public function blogs(Request $request, $id = null)
+    {
+        if (!$id) {
             return view('site.blog.index');
-        } else{
+        } else {
             return view('site.blog.blogDetails');
         }
     }

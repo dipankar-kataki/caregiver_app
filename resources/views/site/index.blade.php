@@ -354,7 +354,7 @@
                             </div>
                         @enderror
                     </div>
-                    <button type="submit" class="btn shadow-none">Submit</button>
+                    <button type="submit" class="btn shadow-none" id="submitForm">Submit</button>
                 </form>
             </div>
         </div>
@@ -364,6 +364,7 @@
 @section('customJs')
     <script>
         $(document).ready(function() {
+            
             jQuery.validator.addMethod("customEmail", function(value, element) {
                 return this.optional(element) || /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i.test(
                     value);
@@ -402,6 +403,8 @@
                 },
 
                 submitHandler: function(form) {
+                    $("#submitForm").text("Sending...");
+                    $('#submitForm').prop("disabled", true);
                     const route = '{{ route('site.contact') }}';
                     $.ajax({
                         cache: false,
@@ -415,6 +418,8 @@
                                 title: data.title,
                                 text: data.text,
                             }).then(() => {
+                                $("#submitForm").text("Submit");
+                                $('#submitForm').prop("disabled", false);
                                 $("#contactForm")[0].reset();
                             })
                         },
