@@ -4,7 +4,7 @@
 
 <head>
     <meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
-    <title>Reset Password e-Mail</title>
+    <title>Reset Password Confirmation e-Mail</title>
     <meta name="description" content="Reset Password Email Template.">
     <style type="text/css">
         a:hover {text-decoration: underline !important;}
@@ -41,20 +41,16 @@
                                 </tr>
                                 <tr>
                                     <td style="padding:0 35px;">
-                                        <h3>Hello, {{$name}}</h3>
-                                        <h3 style="color:#1e1e2d; font-weight:500; margin:0;font-size:32px;font-family:'Rubik',sans-serif;">You have
-                                            requested to reset your password</h3>
+                                        <h3 style="color:#1e1e2d; font-weight:500; margin:0;font-size:32px;font-family:'Rubik',sans-serif;">Your have successfully changed your password.</h3>
                                         <span
                                             style="display:inline-block; vertical-align:middle; margin:29px 0 26px; border-bottom:1px solid #cecece; width:100px;"></span>
-                                        <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
+                                        {{-- <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
                                             We cannot simply send you your old password. A unique OTP to reset your
                                             password has been generated for you. To reset your password, enter the
                                             following six digit OTP.
 
                                             
-                                        </p>
-                                        <a href="javascript:void(0);"
-                                            style="background:#20e277;text-decoration:none !important; font-weight:500; margin-top:35px; color:rgb(29, 28, 28);text-transform:uppercase; font-size:20px;padding:10px 24px;display:inline-block;border-radius:50px;"> OTP : {{$otp}}</a>
+                                        </p> --}}
                                     </td>
                                 </tr>
                                 <tr>
