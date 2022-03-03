@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AgencyApp\AuthController;
+use App\Http\Controllers\AgencyApp\CreateJobController;
 use App\Http\Controllers\CaregiverApp\DocumentController;
 use App\Http\Controllers\CaregiverApp\ForgotPasswordController;
 use App\Http\Controllers\CaregiverApp\LoginController;
@@ -26,76 +28,91 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
+/**********************************  Caregiver Api's *********************************************/
 
-/******************************** Login & Signup *******************************/
+    /******************************** Login & Signup *******************************/
 
-Route::post('signup',[SignUpController::class,'signup']);
-Route::post('login',[LoginController::class,'login']);
-Route::prefix('forgot-password')->group(function(){
-    Route::post('send-reset-link', [ForgotPasswordController::class, 'sendResetLink']);
-    Route::post('update-password', [ForgotPasswordController::class, 'updatePassword']);
-});
+    Route::post('signup',[SignUpController::class,'signup']);
+    Route::post('login',[LoginController::class,'login']);
+    Route::prefix('forgot-password')->group(function(){
+        Route::post('send-reset-link', [ForgotPasswordController::class, 'sendResetLink']);
+        Route::post('update-password', [ForgotPasswordController::class, 'updatePassword']);
+    });
 
 
 
-/******************************** Internal Pages *******************************/
+    /******************************** Internal Pages *******************************/
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
-    Route::post('/registration',[RegistrationController::class,'registration']);
+    Route::group(['middleware' => ['auth:sanctum']], function () {
+        Route::post('/registration',[RegistrationController::class,'registration']);
 
-    Route::get('get-document',[DocumentController::class,'index']);
-    Route::post('document-upload',[DocumentController::class,'uploadDocument']);
-    
-    Route::prefix('profile')->group(function(){
+        Route::get('get-document',[DocumentController::class,'index']);
+        Route::post('document-upload',[DocumentController::class,'uploadDocument']);
+        
+        Route::prefix('profile')->group(function(){
 
-        /************************************* General Profile Api's ********************************************* */
-        Route::get('get-profile-header',[ProfileController::class,'index']);
-        Route::post('edit-profile',[ProfileController::class,'editProfile']);
-        Route::get('get-basic-details',[ProfileController::class,'getBasicDetails']);
-        Route::post('upload-photo',[ProfileController::class,'uploadProfilePhoto']);
-        Route::get('get-bio',[ProfileController::class,'getBio']);
-        Route::get('get-profile-completion-status',[ProfileController::class,'profileCompletionStatus']);
+            /************************************* General Profile Api's ********************************************* */
+            Route::get('get-profile-header',[ProfileController::class,'index']);
+            Route::post('edit-profile',[ProfileController::class,'editProfile']);
+            Route::get('get-basic-details',[ProfileController::class,'getBasicDetails']);
+            Route::post('upload-photo',[ProfileController::class,'uploadProfilePhoto']);
+            Route::get('get-bio',[ProfileController::class,'getBio']);
+            Route::get('get-profile-completion-status',[ProfileController::class,'profileCompletionStatus']);
 
-        /************************************* Address Api's ********************************************* */
-        Route::prefix('address')->group(function(){
-            Route::get('get-address',[ProfileController::class,'getAddress']);
-            Route::post('edit-address',[ProfileController::class,'editAddress']);
+            /************************************* Address Api's ********************************************* */
+            Route::prefix('address')->group(function(){
+                Route::get('get-address',[ProfileController::class,'getAddress']);
+                Route::post('edit-address',[ProfileController::class,'editAddress']);
+            });
+
+            /************************************* Education Api's ********************************************* */
+            Route::prefix('education')->group(function(){
+                Route::get('get-education',[ProfileController::class,'getEducation']);
+                Route::post('edit-education',[ProfileController::class,'editEducation']);
+            }); 
         });
 
-        /************************************* Education Api's ********************************************* */
-        Route::prefix('education')->group(function(){
-            Route::get('get-education',[ProfileController::class,'getEducation']);
-            Route::post('edit-education',[ProfileController::class,'editEducation']);
-        }); 
+        /************************************* Password Change Api ********************************************* */
+
+        Route::post('change-password',[LoginController::class,'changePassword']);
+
+        /************************************* Logout Api's ********************************************* */
+        Route::get('logout',function(){
+            auth()->user()->tokens()->delete();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Logout successful.',
+                'data' => null,
+                'token' => 'null',
+                'http_status_code' => 200
+            ]);
+        });
+        
     });
 
-    /************************************* Password Change Api ********************************************* */
+    /******************************** Check If Token Expired *******************************/
 
-    Route::post('change-password',[LoginController::class,'changePassword']);
-
-    /************************************* Logout Api's ********************************************* */
-    Route::get('logout',function(){
-        auth()->user()->tokens()->delete();
-
+    Route::get('/login-expire',function(){
         return response()->json([
-            'status' => 'success',
-            'message' => 'Logout successful.',
+            'status' => 'error',
+            'message' => 'Login expired. Please re-login.',
             'data' => null,
             'token' => 'null',
-            'http_status_code' => 200
+            'http_status_code' => 401
         ]);
+    })->name('login-expire');
+
+
+
+    /**********************************  Agency Api's *********************************************/
+
+    Route::prefix('agency')->group(function(){
+        Route::prefix('auth')->group(function(){
+            Route::post('signup',[ AuthController::class, 'signup']);
+        });
+        Route::prefix('job')->group(function(){
+            Route::post('create-job', [CreateJobController::class, 'createJob']);
+        });
+        
     });
-    
-});
-
-/******************************** Check If Token Expired *******************************/
-
-Route::get('/login-expire',function(){
-    return response()->json([
-        'status' => 'error',
-        'message' => 'Login expired. Please re-login.',
-        'data' => null,
-        'token' => 'null',
-        'http_status_code' => 401
-    ]);
-})->name('login-expire');
