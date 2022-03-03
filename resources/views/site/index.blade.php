@@ -20,7 +20,7 @@
                     loading="lazy">
             </div>
             <div class="col-lg-6 rightBlock">
-                <p class="text-uppercase fw-bold">Welcome to Peace Care</p>
+                <p class="text-uppercase fw-bold">Welcome to Peaceworc</p>
                 <h1 class="display-5 fw-bold lh-1 mb-3">We Make A Difference in Your Life</h1>
                 <ul>
                     <li>Kindness and perseverance can imbibe the feeling of determination and support during the darkest
