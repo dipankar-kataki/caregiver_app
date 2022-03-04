@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AgencyApp\AuthController;
+use App\Http\Controllers\AgencyApp\AuthorizedOfficerController;
+use App\Http\Controllers\AgencyApp\BusinessInformationController;
 use App\Http\Controllers\AgencyApp\CreateJobController;
 use App\Http\Controllers\CaregiverApp\DocumentController;
 use App\Http\Controllers\CaregiverApp\ForgotPasswordController;
@@ -105,14 +107,48 @@ use Illuminate\Support\Facades\Route;
 
 
 
-    /**********************************  Agency Api's *********************************************/
+    /*
+    |--------------------------------------------------------------------------
+    | Agency Routes
+    |--------------------------------------------------------------------------
+    |
+    | Here is where you can find Agency API routes for your application.
+    |
+    */
 
     Route::prefix('agency')->group(function(){
+
         Route::prefix('auth')->group(function(){
             Route::post('signup',[ AuthController::class, 'signup']);
+            Route::post('login', [AuthController::class, 'login']);
         });
-        Route::prefix('job')->group(function(){
-            Route::post('create-job', [CreateJobController::class, 'createJob']);
+
+       
+
+        Route::group(['middleware' => ['auth:sanctum']], function () {
+
+            Route::prefix('business')->group(function(){
+                Route::post('business_information', [BusinessInformationController::class, 'create']);
+            });
+            Route::prefix('authorize-info')->group(function(){
+                Route::post('add-authorized-officer', [AuthorizedOfficerController::class, 'create']);
+            });
+            Route::prefix('job')->group(function(){
+                Route::post('create-job', [CreateJobController::class, 'createJob']);
+            });
+
+            Route::get('logout',function(){
+                auth()->user()->tokens()->delete();
+    
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'Logout successful.',
+                    'data' => null,
+                    'token' => 'null',
+                    'http_status_code' => 200
+                ]);
+            });
         });
+        
         
     });

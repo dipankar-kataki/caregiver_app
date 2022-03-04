@@ -32,7 +32,15 @@ class LoginController extends Controller
             }else{
                 $user = User::where('email', $request->email)->firstOrFail();
                 $token = $user->createToken('auth_token')->plainTextToken;
-                return $this->success( 'Login Successful', $user , $token, 200);
+                $details = [
+                    'firstname' => $user->firstname,
+                    'lastname' => $user->lastname,
+                    'email' => $user->email,
+                    'is_registration_completed' => $user->is_registration_completed,
+                    'is_questions_answered' => $user->is_questions_answered,
+                    'is_documents_uploaded' => $user->is_documents_uploaded
+                ];
+                return $this->success( 'Login Successful', $details , $token, 200);
             }
         }
     }
