@@ -118,6 +118,7 @@ use Illuminate\Support\Facades\Route;
 
     Route::prefix('agency')->group(function(){
 
+        /******************************** Auth Api's *******************************/
         Route::prefix('auth')->group(function(){
             Route::post('signup',[ AuthController::class, 'signup']);
             Route::post('login', [AuthController::class, 'login']);
@@ -126,17 +127,23 @@ use Illuminate\Support\Facades\Route;
        
 
         Route::group(['middleware' => ['auth:sanctum']], function () {
-
+        
+            /******************************** Business Api's *******************************/
             Route::prefix('business')->group(function(){
                 Route::post('business_information', [BusinessInformationController::class, 'create']);
             });
+
+            /******************************** Authorized Officer Information *******************************/
             Route::prefix('authorize-info')->group(function(){
                 Route::post('add-authorized-officer', [AuthorizedOfficerController::class, 'create']);
             });
+
+            /******************************** Job Api's *******************************/
             Route::prefix('job')->group(function(){
                 Route::post('create-job', [CreateJobController::class, 'createJob']);
             });
 
+            /******************************** Agency logout Api's *******************************/
             Route::get('logout',function(){
                 auth()->user()->tokens()->delete();
     
@@ -149,6 +156,4 @@ use Illuminate\Support\Facades\Route;
                 ]);
             });
         });
-        
-        
     });
