@@ -11,6 +11,7 @@ return array(
     'App\\Http\\Controllers\\Admin\\AuthController' => $baseDir . '/app/Http/Controllers/Admin/AuthController.php',
     'App\\Http\\Controllers\\Admin\\DashboardController' => $baseDir . '/app/Http/Controllers/Admin/DashboardController.php',
     'App\\Http\\Controllers\\AgencyApp\\AuthController' => $baseDir . '/app/Http/Controllers/AgencyApp/AuthController.php',
+    'App\\Http\\Controllers\\AgencyApp\\AuthorizedOfficerController' => $baseDir . '/app/Http/Controllers/AgencyApp/AuthorizedOfficerController.php',
     'App\\Http\\Controllers\\AgencyApp\\BusinessInformationController' => $baseDir . '/app/Http/Controllers/AgencyApp/BusinessInformationController.php',
     'App\\Http\\Controllers\\AgencyApp\\CreateJobController' => $baseDir . '/app/Http/Controllers/AgencyApp/CreateJobController.php',
     'App\\Http\\Controllers\\CaregiverApp\\DocumentController' => $baseDir . '/app/Http/Controllers/CaregiverApp/DocumentController.php',

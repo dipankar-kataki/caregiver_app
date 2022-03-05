@@ -54,7 +54,8 @@ class AuthorizedOfficerController extends Controller
                     'street' => $request->street,
                     'city' => $request->city,
                     'state' => $request->state,
-                    'zip_code' => $request->zip_code
+                    'zip_code' => $request->zip_code,
+                    'officer_belongs_to_user' => auth('sanctum')->user()->id
                 ]);
     
                 if($create){
@@ -62,22 +63,8 @@ class AuthorizedOfficerController extends Controller
                         'is_authorize_info_added' => 1
                     ]);
     
-                    $authorized_details = AuthorizedOfficer::where('email', $request->email)->first();
-                    $details = [
-                        'firstname' => $authorized_details->firstname,
-                        'lastname' => $authorized_details->lastname,
-                        'email' => $authorized_details->email,
-                        'phone' => $authorized_details->phone,
-                        'dob' => Carbon::parse($authorized_details->dob)->format('m-d-Y'),
-                        'ssn' => $authorized_details->ssn,
-                        'citizenship_of_country' => $authorized_details->citizenship_of_country,
-                        'percentage_of_ownership' => $authorized_details->percentage_of_ownership,
-                        'street' => $authorized_details->street,
-                        'city' => $authorized_details->city,
-                        'state' => $authorized_details->state,
-                        'zip_code' => $authorized_details->zip_code
-                    ];
-                    return $this->success('Authorized information added successfully.', $details, 'null', 201);
+                    $authorized_details = AuthorizedOfficer::where('officer_belongs_to_user', auth('sanctum')->user()->id)->get();
+                    return $this->success('Authorized information added successfully.', $authorized_details, 'null', 201);
                 }else{
                     return $this->error('Whoops! Something went wrong. Registration failed.', null,' null', 500);
                 }

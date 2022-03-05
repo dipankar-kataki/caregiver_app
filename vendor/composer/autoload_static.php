@@ -516,6 +516,7 @@ class ComposerStaticInit1a2a2328ef8d8f8301883a2e59d8eefa
         'App\\Http\\Controllers\\Admin\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/AuthController.php',
         'App\\Http\\Controllers\\Admin\\DashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/DashboardController.php',
         'App\\Http\\Controllers\\AgencyApp\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/AgencyApp/AuthController.php',
+        'App\\Http\\Controllers\\AgencyApp\\AuthorizedOfficerController' => __DIR__ . '/../..' . '/app/Http/Controllers/AgencyApp/AuthorizedOfficerController.php',
         'App\\Http\\Controllers\\AgencyApp\\BusinessInformationController' => __DIR__ . '/../..' . '/app/Http/Controllers/AgencyApp/BusinessInformationController.php',
         'App\\Http\\Controllers\\AgencyApp\\CreateJobController' => __DIR__ . '/../..' . '/app/Http/Controllers/AgencyApp/CreateJobController.php',
         'App\\Http\\Controllers\\CaregiverApp\\DocumentController' => __DIR__ . '/../..' . '/app/Http/Controllers/CaregiverApp/DocumentController.php',
