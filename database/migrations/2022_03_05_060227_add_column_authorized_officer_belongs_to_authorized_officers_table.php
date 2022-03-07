@@ -14,7 +14,9 @@ class AddColumnAuthorizedOfficerBelongsToAuthorizedOfficersTable extends Migrati
     public function up()
     {
         Schema::table('authorized_officers', function (Blueprint $table) {
-            $table->integer('officer_belongs_to_user')->after('zip_code');
+            $table->unsignedBigInteger('user_id')->after('zip_code');
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

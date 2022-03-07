@@ -11,4 +11,13 @@ class JobByAgency extends Model
 
     protected $table = 'job_by_agencies';
     protected $guarded = [];
+    public function getMedicalHistoryAttribute($value){
+        return unserialize($value);
+    }
+    public function getEssentialPriorExpertiseAttribute($value){
+        return unserialize($value);
+    }
+    public function getOtherRequirementsAttribute($value){
+        return unserialize($value);
+    }
 }

@@ -15,7 +15,27 @@ class CreateJobByAgenciesTable extends Migration
     {
         Schema::create('job_by_agencies', function (Blueprint $table) {
             $table->id();
+            $table->string('job_title');
+            $table->string('care_type');
+            $table->integer('patient_age');
+            $table->string('amount_per_hour');
+            $table->date('start_date_of_care');
+            $table->date('end_date_of_care');
+            $table->string('start_time');
+            $table->string('end_time');
+            $table->string('street');
+            $table->string('city');
+            $table->string('state');
+            $table->integer('zip_code');
+            $table->text('job_description');
+            $table->text('medical_history');
+            $table->text('essential_prior_expertise');
+            $table->text('other_requirements');
+            $table->unsignedBigInteger('user_id');
+            $table->boolean('is_activate')->default(1);
             $table->timestamps();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

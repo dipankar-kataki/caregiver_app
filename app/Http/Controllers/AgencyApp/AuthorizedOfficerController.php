@@ -55,7 +55,7 @@ class AuthorizedOfficerController extends Controller
                     'city' => $request->city,
                     'state' => $request->state,
                     'zip_code' => $request->zip_code,
-                    'officer_belongs_to_user' => auth('sanctum')->user()->id
+                    'user_id' => auth('sanctum')->user()->id
                 ]);
     
                 if($create){
@@ -63,7 +63,7 @@ class AuthorizedOfficerController extends Controller
                         'is_authorize_info_added' => 1
                     ]);
     
-                    $authorized_details = AuthorizedOfficer::where('officer_belongs_to_user', auth('sanctum')->user()->id)->get();
+                    $authorized_details = AuthorizedOfficer::where('user_id', auth('sanctum')->user()->id)->get();
                     return $this->success('Authorized information added successfully.', $authorized_details, 'null', 201);
                 }else{
                     return $this->error('Whoops! Something went wrong. Registration failed.', null,' null', 500);
