@@ -40,6 +40,10 @@ class CreateJobController extends Controller
             // $jobs = JobByAgency::where('user_id', auth('sanctum')->user()->id)->where('is_activate', 1)->first();
                 
             // return $this->success('Job posted successfully.',  $jobs->medical_history, 'null', 200);
+            if($request->end_date_of_care == '' || $request->end_date_of_care == null){
+                $request->end_date_of_care = $request->start_date_of_care;
+            }
+
             $create = JobByAgency::create([
                 'job_title' => $request->job_title,
                 'care_type' => $request->care_type,
@@ -62,7 +66,7 @@ class CreateJobController extends Controller
             if($create){
                 // $jobs = JobByAgency::where('user_id', auth('sanctum')->user()->id)->where('is_activate', 1)->get();
 
-                return $this->success('Job posted successfully.',  null, 'null', 200);
+                return $this->success('Job posted successfully.',  null, 'null', 201);
             }else{
                 return $this->error('Whoops! Something went wrong. Failed to post job.',  null, 'null', 500);
             }
@@ -72,5 +76,16 @@ class CreateJobController extends Controller
     public function getActiveJob(){
         $jobs = JobByAgency::where('user_id', auth('sanctum')->user()->id)->where('is_activate', 1)->orderBy('created_at', 'DESC')->get();
         return $this->success('Job posted successfully.',  $jobs, 'null', 200);
+    }
+
+    public function updateJobStatus(Request $request){
+        $update = JobByAgency::where('id', $request->job_id)->where('user_id', auth('sanctum')->user()->id)->update([
+            'is_activate' => $request->job_status
+        ]);
+        if($update){
+            return $this->success('Job status changed successfully.',  null, 'null', 201);
+        }else{
+            return $this->error('Whoops! Something went wrong.',  null, 'null', 500);
+        }
     }
 }

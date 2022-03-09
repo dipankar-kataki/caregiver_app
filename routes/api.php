@@ -142,6 +142,7 @@ use Illuminate\Support\Facades\Route;
             Route::prefix('job')->group(function(){
                 Route::post('create-job', [CreateJobController::class, 'createJob']);
                 Route::get('active-job', [CreateJobController::class, 'getActiveJob']);
+                Route::post('update-job-status', [CreateJobController::class, 'updateJobStatus']);
             });
 
             /******************************** Agency logout Api's *******************************/
