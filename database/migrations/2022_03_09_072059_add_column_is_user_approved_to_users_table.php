@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddColumnIsBusinessInfoAddedToUsersTable extends Migration
+class AddColumnIsUserApprovedToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,7 @@ class AddColumnIsBusinessInfoAddedToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->boolean('is_business_info_added')->after('is_documents_uploaded')->default(0);
-            $table->boolean('is_authorize_info_added')->after('is_business_info_added')->default(0);
+            $table->boolean('is_user_approved')->after('is_authorize_info_added')->default(0);
         });
     }
 

@@ -26,7 +26,7 @@ class LoginController extends Controller
         if($validator->fails()){
             return $this->error('Login failed. Incomplete data insertion.', $validator->errors(), 'null', 400);
         }else{
-            if ( ! Auth::attempt(['email' => $request->email, 'password' => $request->password]) )
+            if ( ! Auth::attempt(['email' => $request->email, 'password' => $request->password, 'role' => 2]) )
             {
                 return $this->error('Invalid credentials. User unauthorized',null, 'null', 401);
             }else{
@@ -38,7 +38,8 @@ class LoginController extends Controller
                     'email' => $user->email,
                     'is_registration_completed' => $user->is_registration_completed,
                     'is_questions_answered' => $user->is_questions_answered,
-                    'is_documents_uploaded' => $user->is_documents_uploaded
+                    'is_documents_uploaded' => $user->is_documents_uploaded,
+                    'is_user_approved' => $user->is_user_approved
                 ];
                 return $this->success( 'Login Successful', $details , $token, 200);
             }

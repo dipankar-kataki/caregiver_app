@@ -13,18 +13,18 @@
         <li class="nav-item nav-profile dropdown">
           <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
             <div class="nav-profile-img">
-              <img src="assets/images/faces/face1.jpg" alt="image">
+              <img src="{{asset('admin/assets/images/faces/face1.jpg')}}" alt="image">
               <span class="availability-status online"></span>
             </div>
             <div class="nav-profile-text">
-              <p class="mb-1 text-black">David Greymaax</p>
+              <p class="mb-1 text-black">Welcome {{Auth::user()->firstname}}</p>
             </div>
           </a>
           <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
-            <a class="dropdown-item" href="#">
-              <i class="mdi mdi-cached mr-2 text-success"></i> Activity Log </a>
+            <a class="dropdown-item" href="#" style="color:black;">
+              <i class="mdi mdi-settings mr-2 text-success"></i> Settings </a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{route('auth.logout')}}">
+            <a class="dropdown-item" href="{{route('auth.logout')}}" style="color:black;">
               <i class="mdi mdi-logout mr-2 text-primary"></i> Signout </a>
           </div>
         </li>
@@ -127,11 +127,11 @@
           </div>
         </li>
         
-        <li class="nav-item nav-logout d-none d-lg-block">
+        {{-- <li class="nav-item nav-logout d-none d-lg-block">
           <a class="nav-link" href="{{route('auth.logout')}}">
             <i class="mdi mdi-power"></i>
           </a>
-        </li>
+        </li> --}}
       </ul>
       <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
         data-toggle="offcanvas">

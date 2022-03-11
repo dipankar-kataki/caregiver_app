@@ -62,7 +62,8 @@ class ProfileController extends Controller
                 'age' =>  $dobFormat->format('%y'),
                 'total_care_completed' => $details->profile->total_care_completed,
                 'total_reviews' => $details->profile->total_reviews,
-                'total_percent' =>  $total_profile_percentage
+                'total_percent' =>  $total_profile_percentage,
+                'is_user_approved' => $details->is_user_approved
             ];
             return $this->success('Profile Details.', $profile, 'null', 200);
         }
@@ -277,7 +278,7 @@ class ProfileController extends Controller
     public function getAddress(Request $request){
         $details = Address::where('user_id', auth('sanctum')->user()->id)->first();
         if($details == null){
-            return $this->success('Whoops!, No details found.', null, 'null', 400);
+            return $this->error('Whoops!, No details found.', null, 'null', 400);
         }else{
             return $this->success('Address details', $details, 'null', 200);
         }
@@ -432,7 +433,7 @@ class ProfileController extends Controller
             'is_registration_completed' => $details->is_registration_completed,
             'is_questions_answered' => $details->is_questions_answered,
             'is_documents_uploaded' => $details->is_documents_uploaded,
-            
+            'is_user_approved' => $details->is_user_approved
         ];
 
         return $this->success('Profile completion status fetched successfully.', $profile_completion_status, 'null', 200);

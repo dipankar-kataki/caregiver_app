@@ -61,7 +61,7 @@ class AuthController extends Controller
         if($validator->fails()){
             return $this->error('Login failed. Incomplete data insertion.', $validator->errors(), 'null', 400);
         }else{
-            if ( ! Auth::attempt(['email' => $request->email, 'password' => $request->password]) )
+            if ( ! Auth::attempt(['email' => $request->email, 'password' => $request->password, 'role' => 3]) )
             {
                 return $this->error('Invalid credentials. User unauthorized',null, 'null', 401);
             }else{
@@ -71,7 +71,8 @@ class AuthController extends Controller
                     'business_name' => $user->business_name,
                     'email' => $user->email,
                     'is_business_info_added' => $user->is_business_info_added,
-                    'is_authorize_info_added' => $user->is_authorize_info_added
+                    'is_authorize_info_added' => $user->is_authorize_info_added,
+                    'is_user_approved' => $user->is_user_approved
                 ];
 
                 return $this->success( 'Login Successful', $details , $token, 200);

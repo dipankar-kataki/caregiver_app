@@ -13,7 +13,6 @@ use App\Http\Controllers\CaregiverApp\SignUpController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -81,10 +80,9 @@ use Illuminate\Support\Facades\Route;
         /************************************* Logout Api's ********************************************* */
         Route::get('logout',function(){
             auth()->user()->tokens()->delete();
-
             return response()->json([
-                'status' => 'success',
-                'message' => 'Logout successful.',
+                'status' => 'Success',
+                'message' => 'Logout successfull.',
                 'data' => null,
                 'token' => 'null',
                 'http_status_code' => 200
@@ -148,10 +146,9 @@ use Illuminate\Support\Facades\Route;
             /******************************** Agency logout Api's *******************************/
             Route::get('logout',function(){
                 auth()->user()->tokens()->delete();
-    
                 return response()->json([
-                    'status' => 'success',
-                    'message' => 'Logout successful.',
+                    'status' => 'Success',
+                    'message' => 'Logout successfull.',
                     'data' => null,
                     'token' => 'null',
                     'http_status_code' => 200

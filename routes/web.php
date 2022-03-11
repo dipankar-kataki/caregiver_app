@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\Admin\AgencyController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\CaregiverController;
 use App\Http\Controllers\Site\SiteController;
 
 /*
@@ -29,4 +31,14 @@ Route::group([
         'middleware' => 'auth'
     ], function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::prefix('caregiver')->group(function(){
+        Route::get('list-of-approved-caregivers', [CaregiverController::class, 'approvedCaregiverList'])->name('admin.caregiver.list.approved');
+        Route::get('list-of-new-joiners-caregiver', [CaregiverController::class, 'newJoiner'])->name('admin.caregiver.list.new.joiner');
+        Route::post('update-status', [CaregiverController::class, 'updateStatus'])->name('admin.caregiver.update.status');
+    });
+
+    Route::prefix('agency')->group(function(){
+        Route::get('list-of-approved-agency', [AgencyController::class, 'approvedAgencyList'])->name('admin.agency.list.approved');
+        Route::get('list-of-new-joiners-agency', [AgencyController::class, 'newJoiner'])->name('admin.agency.list.new.joiner');
+    });
 });

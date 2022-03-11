@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
             'lastname' => 'Admin',
             'email' => 'admin@peaceworc.com',
             'password' => Hash::make('password'),
-            'role' => 1
+            'role' => 1,
         ]);
     }
 }
