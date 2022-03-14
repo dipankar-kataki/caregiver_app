@@ -28,9 +28,9 @@ class CreateJobByAgenciesTable extends Migration
             $table->string('state');
             $table->integer('zip_code');
             $table->text('job_description');
-            $table->text('medical_history');
-            $table->text('essential_prior_expertise');
-            $table->text('other_requirements');
+            $table->text('medical_history')->nullable();
+            $table->text('essential_prior_expertise')->nullable();
+            $table->text('other_requirements')->nullable();
             $table->unsignedBigInteger('user_id');
             $table->boolean('is_activate')->default(1);
             $table->timestamps();

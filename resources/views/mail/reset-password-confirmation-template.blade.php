@@ -24,7 +24,7 @@
                     </tr>
                     <tr>
                         <td style="text-align:center;">
-                          <a href="https://rakeshmandal.com" title="logo" target="_blank">
+                          <a href="#" title="logo" target="_blank">
                             <img width="200" src="{{asset('peacesworc-logo.png')}}" title="logo" alt="logo">
                           </a>
                         </td>

@@ -30,9 +30,6 @@ class CreateJobController extends Controller
             'state' => 'required',
             'zip_code' => 'required',
             'job_description' => 'required',
-            'medical_history' => 'required',
-            'essential_prior_expertise' => 'required',
-            'other_requirements' => 'required',
         ]);
         if($validator->fails()){
             return $this->error('Whoops! Failed to create job.',  $validator->fails(), 'null', 400);

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AgencyApp\AgencyProfileController;
 use App\Http\Controllers\AgencyApp\AuthController;
 use App\Http\Controllers\AgencyApp\AuthorizedOfficerController;
 use App\Http\Controllers\AgencyApp\BusinessInformationController;
@@ -141,6 +142,12 @@ use Illuminate\Support\Facades\Route;
                 Route::post('create-job', [CreateJobController::class, 'createJob']);
                 Route::get('active-job', [CreateJobController::class, 'getActiveJob']);
                 Route::post('update-job-status', [CreateJobController::class, 'updateJobStatus']);
+            });
+
+            /******************************** Profile Status Complete Api's *******************************/
+
+            Route::prefix('profile')->group(function(){
+                Route::get('completion-status',[AgencyProfileController::class, 'completionStatus']);
             });
 
             /******************************** Agency logout Api's *******************************/
