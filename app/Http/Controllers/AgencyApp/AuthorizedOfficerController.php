@@ -72,8 +72,64 @@ class AuthorizedOfficerController extends Controller
         }
     }
 
+    public function editAuthorizedOfficer(Request $request){
+        $validator = Validator::make($request->all(),[
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'email' => 'required | email ',
+            'phone' => 'required',
+            'dob' => 'required',
+            'ssn' => 'required',
+            'citizenship_of_country' => 'required',
+            'percentage_of_ownership' => 'required',
+            'street' => 'required',
+            'city' => 'required',
+            'state' => 'required',
+            'zip_code' => 'required'
+        ]);
+
+        if($validator->fails()){
+            return $this->error('Whoops! Failed to update authorized officer.', $validator->errors(), 'null', 400);
+        }else{
+            $update = AuthorizedOfficer::where('id',$request->authorized_officer_id)->where('user_id', auth('sanctum')->user()->id)->update([
+                'firstname' => $request->firstname,
+                'lastname' => $request->lastname,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'dob' => DateTime::createFromFormat('m-d-Y',$request->dob),
+                'ssn' => $request->ssn,
+                'citizenship_of_country' => $request->citizenship_of_country,
+                'percentage_of_ownership' => $request->percentage_of_ownership,
+                'street' => $request->street,
+                'city' => $request->city,
+                'state' => $request->state,
+                'zip_code' => $request->zip_code,
+            ]);
+    
+            if($update){
+                return $this->success('Authorized information updated successfully.', null, 'null', 200);
+            }else{
+                return $this->error('Whoops! Something went wrong.', null,' null', 500);
+            }
+        }
+    }
+
     public function getAuthorizedOfficer(Request $request){
         $authorized_details = AuthorizedOfficer::where('user_id', auth('sanctum')->user()->id)->orderBy('created_at','DESC')->get();
         return $this->success('Authorized officer details.', $authorized_details, 'null', 200);
+    }
+
+    public function deleteAuthorizedOfficer(Request $request){
+        $count_officers = AuthorizedOfficer::where('user_id', auth('sanctum')->user()->id)->count();
+        if($count_officers > 1){
+            $delete = AuthorizedOfficer::where('id', $request->authorized_officer_id)->where('user_id', auth('sanctum')->user()->id)->delete();
+            if($delete){
+                return $this->success('Authorized officer deleted successfully.',  null, 'null', 200);
+            }else{
+                return $this->error('Whoops! Something went wrong.',  null, 'null', 500);
+            }
+        }else{
+            return $this->success('Whoops! Cannot delete authorized officer. Atleast one officer need to be present.',  null, 'null', 200);
+        }
     }
 }

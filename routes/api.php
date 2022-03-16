@@ -135,7 +135,9 @@ use Illuminate\Support\Facades\Route;
             /******************************** Authorized Officer Information *******************************/
             Route::prefix('authorize-info')->group(function(){
                 Route::post('add-authorized-officer', [AuthorizedOfficerController::class, 'create']);
+                Route::post('edit-authorized-officer', [AuthorizedOfficerController::class, 'editAuthorizedOfficer']);
                 Route::get('get-authorized-officer', [AuthorizedOfficerController::class, 'getAuthorizedOfficer']);
+                Route::post('delete-authorized-officer', [AuthorizedOfficerController::class, 'deleteAuthorizedOfficer']);
             });
 
             /******************************** Job Api's *******************************/
