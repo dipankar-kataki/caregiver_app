@@ -513,8 +513,11 @@ class ComposerStaticInit1a2a2328ef8d8f8301883a2e59d8eefa
     public static $classMap = array (
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
+        'App\\Http\\Controllers\\Admin\\AgencyController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/AgencyController.php',
         'App\\Http\\Controllers\\Admin\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/AuthController.php',
+        'App\\Http\\Controllers\\Admin\\CaregiverController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/CaregiverController.php',
         'App\\Http\\Controllers\\Admin\\DashboardController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/DashboardController.php',
+        'App\\Http\\Controllers\\AgencyApp\\AgencyProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/AgencyApp/AgencyProfileController.php',
         'App\\Http\\Controllers\\AgencyApp\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/AgencyApp/AuthController.php',
         'App\\Http\\Controllers\\AgencyApp\\AuthorizedOfficerController' => __DIR__ . '/../..' . '/app/Http/Controllers/AgencyApp/AuthorizedOfficerController.php',
         'App\\Http\\Controllers\\AgencyApp\\BusinessInformationController' => __DIR__ . '/../..' . '/app/Http/Controllers/AgencyApp/BusinessInformationController.php',

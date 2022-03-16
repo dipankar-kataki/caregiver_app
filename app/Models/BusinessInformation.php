@@ -11,4 +11,12 @@ class BusinessInformation extends Model
 
     protected $table = 'business_information';
     protected $guarded = [];
+
+    public function getBeneficiaryAttribute($value){
+        return unserialize($value);
+    }
+
+    public function getHomecareServiceAttribute($value){
+        return unserialize($value);
+    }
 }

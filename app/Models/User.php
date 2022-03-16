@@ -88,4 +88,8 @@ class User extends Authenticatable
     public function address(){
         return $this->hasOne(Address::class);
     }
+
+    public function business_information(){
+        return $this->hasOne(BusinessInformation::class);
+    }
 }

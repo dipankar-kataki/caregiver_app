@@ -8,8 +8,11 @@ $baseDir = dirname($vendorDir);
 return array(
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
+    'App\\Http\\Controllers\\Admin\\AgencyController' => $baseDir . '/app/Http/Controllers/Admin/AgencyController.php',
     'App\\Http\\Controllers\\Admin\\AuthController' => $baseDir . '/app/Http/Controllers/Admin/AuthController.php',
+    'App\\Http\\Controllers\\Admin\\CaregiverController' => $baseDir . '/app/Http/Controllers/Admin/CaregiverController.php',
     'App\\Http\\Controllers\\Admin\\DashboardController' => $baseDir . '/app/Http/Controllers/Admin/DashboardController.php',
+    'App\\Http\\Controllers\\AgencyApp\\AgencyProfileController' => $baseDir . '/app/Http/Controllers/AgencyApp/AgencyProfileController.php',
     'App\\Http\\Controllers\\AgencyApp\\AuthController' => $baseDir . '/app/Http/Controllers/AgencyApp/AuthController.php',
     'App\\Http\\Controllers\\AgencyApp\\AuthorizedOfficerController' => $baseDir . '/app/Http/Controllers/AgencyApp/AuthorizedOfficerController.php',
     'App\\Http\\Controllers\\AgencyApp\\BusinessInformationController' => $baseDir . '/app/Http/Controllers/AgencyApp/BusinessInformationController.php',
