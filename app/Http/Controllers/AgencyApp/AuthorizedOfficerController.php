@@ -71,4 +71,9 @@ class AuthorizedOfficerController extends Controller
             }
         }
     }
+
+    public function getAuthorizedOfficer(Request $request){
+        $authorized_details = AuthorizedOfficer::where('user_id', auth('sanctum')->user()->id)->orderBy('created_at','DESC')->get();
+        return $this->success('Authorized officer details.', $authorized_details, 'null', 200);
+    }
 }

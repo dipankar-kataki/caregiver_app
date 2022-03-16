@@ -135,17 +135,20 @@ use Illuminate\Support\Facades\Route;
             /******************************** Authorized Officer Information *******************************/
             Route::prefix('authorize-info')->group(function(){
                 Route::post('add-authorized-officer', [AuthorizedOfficerController::class, 'create']);
+                Route::get('get-authorized-officer', [AuthorizedOfficerController::class, 'getAuthorizedOfficer']);
             });
 
             /******************************** Job Api's *******************************/
             Route::prefix('job')->group(function(){
                 Route::post('create-job', [CreateJobController::class, 'createJob']);
+                Route::post('edit-job', [CreateJobController::class, 'editJob']);
                 Route::get('active-job', [CreateJobController::class, 'getActiveJob']);
                 Route::post('update-job-status', [CreateJobController::class, 'updateJobStatus']);
+                Route::post('delete-job', [CreateJobController::class, 'deleteJob']);
             });
 
-            /******************************** Profile Status Complete Api's *******************************/
 
+            /******************************** Profile Status Complete Api's *******************************/
             Route::prefix('profile')->group(function(){
                 Route::get('completion-status',[AgencyProfileController::class, 'completionStatus']);
             });

@@ -28,4 +28,8 @@ class JobByAgency extends Model
     public function getEndDateOfCareAttribute($value){
         return Carbon::parse($value)->format('m-d-Y');
     }
+
+    public function getCreatedAtAttribute($value){
+        return Carbon::parse($value)->diffForHumans();
+    }
 }
