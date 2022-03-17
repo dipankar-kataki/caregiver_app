@@ -124,7 +124,8 @@ class AuthorizedOfficerController extends Controller
         if($count_officers > 1){
             $delete = AuthorizedOfficer::where('id', $request->authorized_officer_id)->where('user_id', auth('sanctum')->user()->id)->delete();
             if($delete){
-                return $this->success('Authorized officer deleted successfully.',  null, 'null', 200);
+                $authorized_details = AuthorizedOfficer::where('user_id', auth('sanctum')->user()->id)->orderBy('created_at','DESC')->get();
+                return $this->success('Authorized officer deleted successfully.',  $authorized_details, 'null', 200);
             }else{
                 return $this->error('Whoops! Something went wrong.',  null, 'null', 500);
             }
