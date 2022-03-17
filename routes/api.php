@@ -153,6 +153,8 @@ use Illuminate\Support\Facades\Route;
             /******************************** Profile Status Complete Api's *******************************/
             Route::prefix('profile')->group(function(){
                 Route::get('completion-status',[AgencyProfileController::class, 'completionStatus']);
+                Route::post('edit-profile',[AgencyProfileController::class, 'editProfile']);
+                Route::get('get-profile-details',[AgencyProfileController::class, 'getProfileDetails']);
             });
 
             /******************************** Agency logout Api's *******************************/

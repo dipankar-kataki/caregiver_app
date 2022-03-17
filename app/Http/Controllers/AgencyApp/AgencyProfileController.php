@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Traits\ApiResponser;
 use App\Models\Address;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
 class AgencyProfileController extends Controller
@@ -33,7 +34,7 @@ class AgencyProfileController extends Controller
             'tax_id' => 'required',
             'no_of_employee' => 'required',
             'years_in_business' => 'required',
-            'country_of_business' => 'required',
+            'country_of_business_formation' => 'required',
             'annual_business_revenue' => 'required',
             'street' => 'required',
             'city' => 'required',
@@ -52,7 +53,7 @@ class AgencyProfileController extends Controller
                 'tax_id' => $request->tax_id,
                 'no_of_employee' => $request->no_of_employee,
                 'years_in_business' => $request->years_in_business,
-                'country_of_business' => $request->country_of_business,
+                'country_of_business_formation' => $request->country_of_business_formation,
                 'annual_business_revenue' => $request->annual_business_revenue,
                 'beneficiary' => serialize($request->beneficiary),
                 'homecare_service' => serialize($request->homecare_service),
@@ -66,10 +67,33 @@ class AgencyProfileController extends Controller
             ]);
 
             if($update_business_info && $update_address ){
-                return $this->success('Profile update successfully.', null, 'null', 201);
+                return $this->success('Profile update successfully.', null, 'null', 200);
             }else{
                 return $this->error('Whoops! Something went wrong.', null, 'null', 500);
             }
         }
+    }
+
+    public function getProfileDetails(Request $request){
+        $profile_details = User::with('address', 'business_information')->where('id', auth('sanctum')->user()->id)->first();
+        if($profile_details->business_information  != null){
+            $year_started =  Carbon::now()->subYears($profile_details->business_information->years_in_business);
+            $details = [
+                'business_name' => $profile_details->business_name,
+                'phone' => $profile_details->business_information->business_number,
+                'year_started' => $year_started->format('Y').' ('.$profile_details->business_information->years_in_business.' '.'years)',
+                'legal_structure_of_business' => $profile_details->business_information->legal_structure,
+                'no_of_employees' => $profile_details->business_information->no_of_employee,
+                'address' => $profile_details->address->street.', '. $profile_details->address->city.', '. $profile_details->address->zip_code.', '. $profile_details->address->state,
+                'annual_business_revenue' => '$ '.$profile_details->business_information->annual_business_revenue,
+                'bio' => $profile_details->business_information->bio,
+                'our_beneficiaries' => $profile_details->business_information->beneficiary,
+                'homecare_services' => $profile_details->business_information->homecare_service
+            ];
+            return $this->success('Profile details fetched successfully.',  $details, 'null', 200);
+        }else{
+            return $this->success('Profile details fetched successfully.', null, 'null', 200);
+        }
+        
     }
 }
