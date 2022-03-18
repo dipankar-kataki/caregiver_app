@@ -61,12 +61,12 @@ class LoginController extends Controller
             if($request->new_password != $request->confirm_password){
                 return $this->error('Whoops! Confirm password not matched.', null, 'null', 400);
             }else{
-                $details = User::where('id', auth('sanctum')->user()->id)->first();
+                $details = User::where('id', auth('sanctum')->user()->id)->where('role', 2)->first();
                 if(! (Hash::check($request->old_password, $details->password))){
                     return $this->error('Enter a valid password.', null, 'null', 400);
                 }else{
                     
-                    $update = User::where('id', auth('sanctum')->user()->id)->update([
+                    $update = User::where('id', auth('sanctum')->user()->id)->where('role', 2)->update([
                         'password' => Hash::make($request->confirm_password)
                     ]);
 

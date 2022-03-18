@@ -106,14 +106,14 @@ use Illuminate\Support\Facades\Route;
 
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | Agency Routes
-    |--------------------------------------------------------------------------
-    |
-    | Here is where you can find Agency API routes for your application.
-    |
-    */
+/*
+|--------------------------------------------------------------------------
+| Agency Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can find Agency API routes for your application.
+|
+*/
 
     Route::prefix('agency')->group(function(){
 
@@ -156,6 +156,8 @@ use Illuminate\Support\Facades\Route;
                 Route::post('edit-profile',[AgencyProfileController::class, 'editProfile']);
                 Route::get('get-profile-details',[AgencyProfileController::class, 'getProfileDetails']);
             });
+
+            Route::post('change-password',[AuthController::class,'changePassword']);
 
             /******************************** Agency logout Api's *******************************/
             Route::get('logout',function(){

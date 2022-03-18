@@ -79,4 +79,38 @@ class AuthController extends Controller
             }
         }
     }
+
+
+    public function changePassword(Request $request){
+
+        $validator = Validator::make($request->all(),[
+            'old_password' => 'required',
+            'new_password' => 'required',
+            'confirm_password' => 'required'
+        ]);
+
+        if($validator->fails()){
+            return $this->error('Whoops! Not able to change password', $validator->errors(), 'null', 400);
+        }else{
+            if($request->new_password != $request->confirm_password){
+                return $this->error('Whoops! Confirm password not matched.', null, 'null', 400);
+            }else{
+                $details = User::where('id', auth('sanctum')->user()->id)->where('role', 3)->first();
+                if(! (Hash::check($request->old_password, $details->password))){
+                    return $this->error('Enter a valid password.', null, 'null', 400);
+                }else{
+                    
+                    $update = User::where('id', auth('sanctum')->user()->id)->where('role', 3)->update([
+                        'password' => Hash::make($request->confirm_password)
+                    ]);
+
+                    if($update){
+                        return $this->success('Password changed successfully.', null, 'null', 200);
+                    }else{
+                        return $this->error('Whoops! Something went wrong. Failed to change password.', null, 'null', 400);
+                    }
+                }
+            }
+        }
+    }
 }
