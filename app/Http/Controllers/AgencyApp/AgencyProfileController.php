@@ -74,7 +74,7 @@ class AgencyProfileController extends Controller
         }
     }
 
-    public function getProfileDetails(Request $request){
+    public function getFormatedProfileDetails(Request $request){
         $profile_details = User::with('address', 'business_information')->where('id', auth('sanctum')->user()->id)->first();
         if($profile_details->business_information  != null){
             $year_started =  Carbon::now()->subYears($profile_details->business_information->years_in_business);
@@ -89,6 +89,33 @@ class AgencyProfileController extends Controller
                 'bio' => $profile_details->business_information->bio,
                 'our_beneficiaries' => $profile_details->business_information->beneficiary,
                 'homecare_services' => $profile_details->business_information->homecare_service
+            ];
+            return $this->success('Profile details fetched successfully.',  $details, 'null', 200);
+        }else{
+            return $this->success('Profile details fetched successfully.', null, 'null', 200);
+        }
+        
+    }
+    public function getProfileDetails(Request $request){
+        $profile_details = User::with('address', 'business_information')->where('id', auth('sanctum')->user()->id)->first();
+        if($profile_details->business_information  != null){
+            $details = [
+                'bio' => $profile_details->business_information->bio,
+                'business_name' => $profile_details->business_name,
+                'business_number' => $profile_details->business_information->business_number,
+                'legal_structure_of_business' => $profile_details->business_information->legal_structure,
+                'organization_type' => $profile_details->business_information->organization_type,
+                'tax_id' => $profile_details->business_information->tax_id,
+                'no_of_employees' => $profile_details->business_information->no_of_employee,
+                'years_in_business' => $profile_details->business_information->years_in_business,
+                'country_of_business_formation' => $profile_details->business_information->country_of_business_formation,
+                'annual_business_revenue' => $profile_details->business_information->annual_business_revenue,
+                'our_beneficiaries' => $profile_details->business_information->beneficiary,
+                'homecare_services' => $profile_details->business_information->homecare_service,
+                'street' => $profile_details->address->street,
+                'city' => $profile_details->address->city,
+                'state' => $profile_details->address->state,
+                'zip_code' => $profile_details->address->zip_code
             ];
             return $this->success('Profile details fetched successfully.',  $details, 'null', 200);
         }else{

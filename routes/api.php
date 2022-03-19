@@ -16,21 +16,14 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| API Routes
+| Caregiver Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
+| Here is where you can find Caregiver API routes for your application.
+| 
 |
 */
 
-
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
-/**********************************  Caregiver Api's *********************************************/
 
     /******************************** Login & Signup *******************************/
 
@@ -155,7 +148,10 @@ use Illuminate\Support\Facades\Route;
                 Route::get('completion-status',[AgencyProfileController::class, 'completionStatus']);
                 Route::post('edit-profile',[AgencyProfileController::class, 'editProfile']);
                 Route::get('get-profile-details',[AgencyProfileController::class, 'getProfileDetails']);
+                Route::get('get-formated-profile-details',[AgencyProfileController::class, 'getFormatedProfileDetails']);
             });
+
+            /************************************* Password Change Api ********************************************* */
 
             Route::post('change-password',[AuthController::class,'changePassword']);
 
