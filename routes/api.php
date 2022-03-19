@@ -11,6 +11,7 @@ use App\Http\Controllers\CaregiverApp\LoginController;
 use App\Http\Controllers\CaregiverApp\ProfileController;
 use App\Http\Controllers\CaregiverApp\RegistrationController;
 use App\Http\Controllers\CaregiverApp\SignUpController;
+use App\Http\Controllers\CaregiverApp\JobController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +44,11 @@ use Illuminate\Support\Facades\Route;
 
         Route::get('get-document',[DocumentController::class,'index']);
         Route::post('document-upload',[DocumentController::class,'uploadDocument']);
+
+        Route::prefix('job')->group(function(){
+            Route::get('recomended-jobs', [JobController::class, 'recomendedJobs']);
+            Route::get('recomended-jobs-count', [JobController::class, 'recomendedJobsCount']);
+        });
         
         Route::prefix('profile')->group(function(){
 
