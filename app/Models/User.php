@@ -92,4 +92,8 @@ class User extends Authenticatable
     public function business_information(){
         return $this->hasOne(BusinessInformation::class);
     }
+
+    public function jobs(){
+        return $this->hasMany(JobByAgency::class);
+    }
 }

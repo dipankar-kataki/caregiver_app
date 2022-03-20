@@ -48,6 +48,7 @@ use Illuminate\Support\Facades\Route;
         Route::prefix('job')->group(function(){
             Route::get('recomended-jobs', [JobController::class, 'recomendedJobs']);
             Route::get('recomended-jobs-count', [JobController::class, 'recomendedJobsCount']);
+            Route::post('owner-profile', [JobController::class, 'jobOwnerProfile']);
         });
         
         Route::prefix('profile')->group(function(){
