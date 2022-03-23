@@ -31,14 +31,8 @@ class ForgotPasswordController extends Controller
             if($details == null){
                 return $this->error('Failed to send email. User not found.', null, 'null', 400);
             }else{
-                $name = '';
-                if($details->role == 2){
-                    $name = $details->firstname.' '.$details->lastname;
-                }
-
-                if($details->role == 3){
-                    $name = $details->business_name;
-                }
+                $name = $details->firstname.' '.$details->lastname;
+                
                 $otp = rand(100000, 999999);
                 Cache::put('otp', $otp, now()->addMinutes(5));
                 Mail::to($request->email)->send(new SendResetPasswordLink($name, $otp));

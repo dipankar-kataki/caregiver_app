@@ -17,7 +17,6 @@ class AgencyForgotPasswordController extends Controller
 {
     use ApiResponser;
     public function sendResetLink(Request $request){
-        // return view('mail.reset-password-template');
         $validator = Validator::make($request->all(),[
             'email' => 'required | email'
         ],[
@@ -27,18 +26,12 @@ class AgencyForgotPasswordController extends Controller
         if($validator->fails()){
             return $this->error('Failed to send email.', $validator->errors(), 'null', 400);
         }else{
-            $details = User::where('email', $request->email)->when('role', 3)->first();
+            $details = User::where('email', $request->email)->where('role', 3)->first();
             if($details == null){
                 return $this->error('Failed to send email. User not found.', null, 'null', 400);
             }else{
-                $name = '';
-                if($details->role == 2){
-                    $name = $details->firstname.' '.$details->lastname;
-                }
-
-                if($details->role == 3){
-                    $name = $details->business_name;
-                }
+                
+                $name = $details->business_name;
                 $otp = rand(100000, 999999);
                 Cache::put('otp', $otp, now()->addMinutes(5));
                 Mail::to($request->email)->send(new SendResetPasswordLink($name, $otp));
@@ -78,7 +71,7 @@ class AgencyForgotPasswordController extends Controller
         if($validator->fails()){
             return $this->error('Failed to reset password.', $validator->errors(), 'null', 400);
         }else{
-            $details = User::where('email', $request->email)->when('role', 3)->first();
+            $details = User::where('email', $request->email)->where('role', 3)->first();
             if($details == null){
                 return $this->error('Failed to reset password. Not a valid user', null, 'null', 400);
             }else{

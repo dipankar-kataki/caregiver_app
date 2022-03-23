@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class AgencyController extends Controller
 {
@@ -18,7 +19,9 @@ class AgencyController extends Controller
         return view('admin.agency.new-joiners')->with('new_joiner', $new_joiner);
     }
 
-    public function viewProfile(){
-        return view('admin.agency.view-profile');
+    public function viewProfile($id){
+        $user_id = Crypt::decrypt($id);
+        $details = User::with('jobs', 'business_information', 'address', 'profile')->where('id', $user_id)->where('role', 3)->first();
+        return view('admin.agency.view-profile')->with('details' , $details);
     }
 }

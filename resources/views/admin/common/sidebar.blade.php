@@ -20,7 +20,7 @@
           <i class="mdi mdi-home menu-icon"></i>
         </a>
       </li>
-      <li class="nav-item">
+      {{-- <li class="nav-item">
         <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
           <span class="menu-title">Caregiver</span>
           <i class="menu-arrow"></i>
@@ -30,16 +30,14 @@
             <li class="nav-item"> 
               <a class="nav-link" href="{{route('admin.caregiver.list.approved')}}">
                 <span class="menu-title">Approved Caregiver</span>
-                {{-- <i class="mdi mdi-mother-nurse  menu-icon"></i> --}}
               </a>
               <a class="nav-link" href="{{route('admin.caregiver.list.new.joiner')}}">
                 <span class="menu-title">New Joiners</span>
-                {{-- <i class="mdi mdi-mother-nurse  menu-icon"></i> --}}
               </a>
             </li>
           </ul>
         </div>
-      </li>
+      </li> --}}
       <li class="nav-item">
         <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
           <span class="menu-title">Agency</span>
@@ -50,11 +48,9 @@
             <li class="nav-item"> 
               <a class="nav-link" href="{{route('admin.agency.list.approved')}}">
                 <span class="menu-title">Approved Agencies</span>
-                {{-- <i class="mdi mdi-mother-nurse  menu-icon"></i> --}}
               </a>
               <a class="nav-link" href="{{route('admin.agency.list.new.joiner')}}">
                 <span class="menu-title">New Joiners</span>
-                {{-- <i class="mdi mdi-mother-nurse  menu-icon"></i> --}}
               </a>
             </li>
           </ul>
