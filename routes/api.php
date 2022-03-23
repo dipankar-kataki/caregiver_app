@@ -32,6 +32,7 @@ use Illuminate\Support\Facades\Route;
     Route::post('login',[LoginController::class,'login']);
     Route::prefix('forgot-password')->group(function(){
         Route::post('send-reset-link', [ForgotPasswordController::class, 'sendResetLink']);
+        Route::post('verify-otp', [ForgotPasswordController::class, 'verifyOtp']);
         Route::post('update-password', [ForgotPasswordController::class, 'updatePassword']);
     });
 

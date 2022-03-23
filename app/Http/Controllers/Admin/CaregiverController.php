@@ -30,4 +30,8 @@ class CaregiverController extends Controller
             return response()->json(['message' => 'Whoops! Something went wrong. User not approved', 'status' => 2]);
         }
     }
+
+    public function viewProfile(){
+        return view('admin.caregiver.view-profile');
+    }
 }

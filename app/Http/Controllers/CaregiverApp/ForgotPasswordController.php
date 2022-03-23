@@ -48,39 +48,49 @@ class ForgotPasswordController extends Controller
         }
     }
 
-    public function updatePassword(Request $request){
-        $otp = $request->otp;
-        $password = $request->password;
+    public function verifyOtp(Request $request){
+
         $validator = Validator::make($request->all(),[
             'otp' => 'required',
-            'email' => 'required',
-            'password' => 'required',
         ],[
             'otp.required' => 'OTP is required. Please enter a valid otp.',
-            'password.required' => 'Please enter a strong password.'
+        ]);
+
+        if($validator->fails()){
+            return $this->error('Failed to verify OTP.', $validator->errors(), 'null', 400);
+        }else{
+            if(Cache::get('otp') != $request->otp){
+                return $this->error('Failed to verify OTP. Invalid OTP.', null, 'null', 400);
+            }else{
+                Cache::forget('otp');
+                return $this->success('OTP verified successfully.', null, 'null', 200);
+            }
+        }
+    }
+
+    public function updatePassword(Request $request){
+        $password = $request->password;
+        $validator = Validator::make($request->all(),[
+            'email' => 'required',
+            'password' => 'required',
         ]);
 
         if($validator->fails()){
             return $this->error('Failed to reset password.', $validator->errors(), 'null', 400);
         }else{
-            if(Cache::get('otp') != $otp){
-                return $this->error('Failed to reset password. Invalid OTP.', null, 'null', 400);
+            $details = User::where('email', $request->email)->first();
+            if($details == null){
+                return $this->error('Failed to reset password. Not a valid user', null, 'null', 400);
             }else{
-               $details = User::where('email', $request->email)->first();
-                if($details == null){
-                    return $this->error('Failed to reset password. Something went wrong. Not a valid user', null, 'null', 400);
+                $update = User::where('email', $request->email)->update([
+                    'password' => Hash::make($password)
+                ]);
+                if($update){
+                    Mail::to($request->email)->send(new SendPasswordConfirmationMail() );
+                    return $this->success('Password changed successfully.', null, 'null', 200);
                 }else{
-                    $update = User::where('email', $request->email)->update([
-                        'password' => Hash::make($password)
-                    ]);
-                    if($update){
-                        Cache::forget('otp');
-                        Mail::to($request->email)->send(new SendPasswordConfirmationMail() );
-                        return $this->success('Password changed successfully.', null, 'null', 200);
-                    }else{
-                        return $this->error('Whoops! Something went wrong. Failed to reset password.', null, 'null', 400);
-                    }
-               }
+                    return $this->error('Whoops! Something went wrong. Failed to reset password.', null, 'null', 400);
+                }
             }
         }
     }

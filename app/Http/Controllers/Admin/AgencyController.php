@@ -17,4 +17,8 @@ class AgencyController extends Controller
         $new_joiner = User::where('is_user_approved', 0)->where('role', 3)->orderBy('created_at', 'DESC')->get();   
         return view('admin.agency.new-joiners')->with('new_joiner', $new_joiner);
     }
+
+    public function viewProfile(){
+        return view('admin.agency.view-profile');
+    }
 }
