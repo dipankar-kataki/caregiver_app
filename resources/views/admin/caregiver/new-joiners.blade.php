@@ -48,7 +48,7 @@
                                             <td>{{$item->firstname}} {{$item->lastname}}</td>
                                             <td>{{$item->email}}</td>
                                             <td><img src="{{asset($item->profile->profile_image)}}" alt="profile pic"></td>
-                                            <td><a href="#" style="text-decoration:none;font-weight:bold;">View Profile</a></td>
+                                            <td><a href="{{route('admin.caregiver.view.profile')}}" style="text-decoration:none;font-weight:bold;">View Profile</a></td>
                                             <td>
                                                 <button class="btn btn-md btn-success approve-btn" data-id="{{$item->id}}">Approve</button>&nbsp;
                                                 <button class="btn btn-md btn-danger decline-btn" data-id="{{$item->id}}">Decline</button>
