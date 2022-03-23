@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\CaregiverApp;
 
 use App\Http\Controllers\Controller;
+use App\Models\AcceptedJob;
 use Illuminate\Http\Request;
 use App\Models\JobByAgency;
 use App\Traits\ApiResponser;
@@ -79,5 +80,45 @@ class JobController extends Controller
                 return $this->success('Profile details fetched successfully.', null, 'null', 200);
             }
         }
+    }
+
+    public function acceptJob(Request $request){
+        $validator = Validator::make($request->all(),[
+            'job_id' => 'required'
+        ]);
+
+        if($validator->fails()){
+            return $this->error('Whoops! Something went wrong. Failed to accept job.', $validator->errors(), 'null', 400);
+        }else{
+            $check_user = User::where('id', auth('sanctum')->user()->id)->first();
+            if($check_user->is_user_approved == 0){
+                $profile_completion_status = [
+                    'is_registration_completed' => $check_user->is_registration_completed,
+                    'is_questions_answered' => $check_user->is_questions_answered,
+                    'is_documents_uploaded' => $check_user->is_documents_uploaded,
+                ];
+                return $this->error('Whoops! Failed to accept job.', $profile_completion_status , 'null', 400);
+            }else{
+                $get_agency = JobByAgency::where('id', $request->job_id)->first();
+                $createJob = AcceptedJob::create([
+                    'job_by_agencies_id' =>  $request->job_id,
+                    'caregiver_id' => auth('sanctum')->user()->id,
+                    'agency_id' => $get_agency->user_id
+                ]);
+                if($createJob){
+                    JobByAgency::where('id', $request->job_id)->update([
+                        'is_activate' => 2
+                    ]);
+                    return $this->success('Job accepted successfully.',  null, 'null', 200);
+                }else{
+                    return $this->error('Whoops! Something went wrong. Failed to accept job.', null , 'null', 400);
+                }
+            }
+        }
+    }
+
+    public function ongoingJob(){
+        $ongoing_job = AcceptedJob::with('jobByAgency')->where('caregiver_id', auth('sanctum')->user()->id)->get();
+        return $this->success('Ongoing job fetched successfully.',   $ongoing_job, 'null', 200);
     }
 }

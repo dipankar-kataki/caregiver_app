@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AgencyApp\AgencyForgotPasswordController;
 use App\Http\Controllers\AgencyApp\AgencyProfileController;
 use App\Http\Controllers\AgencyApp\AuthController;
 use App\Http\Controllers\AgencyApp\AuthorizedOfficerController;
@@ -50,6 +51,8 @@ use Illuminate\Support\Facades\Route;
             Route::get('recomended-jobs', [JobController::class, 'recomendedJobs']);
             Route::get('recomended-jobs-count', [JobController::class, 'recomendedJobsCount']);
             Route::post('owner-profile', [JobController::class, 'jobOwnerProfile']);
+            Route::post('accept-job' , [JobController::class, 'acceptJob']);
+            Route::get('ongoing-job' , [JobController::class, 'ongoingJob']);
         });
         
         Route::prefix('profile')->group(function(){
@@ -124,6 +127,11 @@ use Illuminate\Support\Facades\Route;
             Route::post('login', [AuthController::class, 'login']);
         });
 
+        Route::prefix('forgot-password')->group(function(){
+            Route::post('send-reset-link', [AgencyForgotPasswordController::class, 'sendResetLink']);
+            Route::post('verify-otp', [AgencyForgotPasswordController::class, 'verifyOtp']);
+            Route::post('update-password', [AgencyForgotPasswordController::class, 'updatePassword']);
+        });
        
 
         Route::group(['middleware' => ['auth:sanctum']], function () {

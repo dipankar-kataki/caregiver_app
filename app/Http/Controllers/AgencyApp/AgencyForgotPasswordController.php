@@ -1,19 +1,19 @@
 <?php
 
-namespace App\Http\Controllers\CaregiverApp;
+namespace App\Http\Controllers\AgencyApp;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Mail\SendPasswordConfirmationMail;
 use App\Mail\SendResetPasswordLink;
 use App\Models\User;
 use App\Traits\ApiResponser;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Mail;
 
-class ForgotPasswordController extends Controller
+class AgencyForgotPasswordController extends Controller
 {
     use ApiResponser;
     public function sendResetLink(Request $request){
@@ -27,7 +27,7 @@ class ForgotPasswordController extends Controller
         if($validator->fails()){
             return $this->error('Failed to send email.', $validator->errors(), 'null', 400);
         }else{
-            $details = User::where('email', $request->email)->where('role', 2)->first();
+            $details = User::where('email', $request->email)->when('role', 3)->first();
             if($details == null){
                 return $this->error('Failed to send email. User not found.', null, 'null', 400);
             }else{
@@ -78,7 +78,7 @@ class ForgotPasswordController extends Controller
         if($validator->fails()){
             return $this->error('Failed to reset password.', $validator->errors(), 'null', 400);
         }else{
-            $details = User::where('email', $request->email)->where('role', 2)->first();
+            $details = User::where('email', $request->email)->when('role', 3)->first();
             if($details == null){
                 return $this->error('Failed to reset password. Not a valid user', null, 'null', 400);
             }else{
