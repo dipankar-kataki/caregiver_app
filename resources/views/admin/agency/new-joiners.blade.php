@@ -46,7 +46,7 @@
                                             <td>{{$key + 1}}</td>
                                             <td>{{$item->business_name}}</td>
                                             <td>{{$item->email}}</td>
-                                            <td><a href="#" style="text-decoration:none;font-weight:bold;">View Profile</a></td>
+                                            <td><a href="{{route('admin.agency.view.profile')}}" style="text-decoration:none;font-weight:bold;">View Profile</a></td>
                                             <td>
                                                 <button class="btn btn-md btn-success">Approve</button>&nbsp;
                                                 <button class="btn btn-md btn-danger">Decline</button>
