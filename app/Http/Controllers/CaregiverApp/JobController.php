@@ -96,6 +96,7 @@ class JobController extends Controller
                     'is_registration_completed' => $check_user->is_registration_completed,
                     'is_questions_answered' => $check_user->is_questions_answered,
                     'is_documents_uploaded' => $check_user->is_documents_uploaded,
+                    'is_user_approved' => $check_user->is_user_approved
                 ];
                 return $this->error('Whoops! Failed to accept job.', $profile_completion_status , 'null', 400);
             }else{
