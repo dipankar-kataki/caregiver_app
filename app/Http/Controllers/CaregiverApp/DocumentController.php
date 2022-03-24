@@ -24,7 +24,7 @@ class DocumentController extends Controller
     use ApiResponser;
 
 
-    public function index(Request $request){
+    public function index(){
         $details = User::where('id', auth('sanctum')->user()->id)->with('covid','childAbuse','criminal','driving','employment','identification','tuberculosis','w_4_form')->first();
 
         return $this->success('Document fetched successfully.',  $details, 'null', 200);
@@ -139,5 +139,21 @@ class DocumentController extends Controller
            
         }
        
+    }
+
+    public function documentCount(Request $request){
+        $details = User::where('id', auth('sanctum')->user()->id)->with('covid','childAbuse','criminal','driving','employment','identification','tuberculosis','w_4_form')->first();
+        $documents_count = [
+            'covid' => $details->covid->count(),
+            'childAbuse' => $details->childAbuse->count(),
+            'criminal' => $details->criminal->count(),
+            'driving' => $details->driving->count(),
+            'employment' => $details->employment->count(),
+            'identification' => $details->identification->count(),
+            'tuberculosis' => $details->tuberculosis->count(),
+            'w_4_form' => $details->w_4_form->count(),
+
+        ];
+        return $this->success('Document count fetched successfully.',  $documents_count, 'null', 200);
     }
 }

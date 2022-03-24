@@ -119,7 +119,33 @@ class JobController extends Controller
     }
 
     public function ongoingJob(){
-        $ongoing_job = AcceptedJob::with('jobByAgency')->where('caregiver_id', auth('sanctum')->user()->id)->get();
-        return $this->success('Ongoing job fetched successfully.',   $ongoing_job, 'null', 200);
+        $ongoing_job = AcceptedJob::with('jobByAgency')->where('caregiver_id', auth('sanctum')->user()->id)->orderBy('created_at', 'DESC')->get();
+        $new_details = [];
+        foreach($ongoing_job as $key => $item){
+            $agency_name = User::where('id', $item->agency_id)->first();
+            $details = [
+
+                'id' => $item->id,
+                'agency_name' => $agency_name->business_name,
+                'job_title' => $item->jobByAgency->job_title,
+                'amount_per_hour' => $item->jobByAgency->amount_per_hour,
+                'care_type' => $item->jobByAgency->care_type,
+                'patient_age' => $item->jobByAgency->patient_age,
+                'start_date_of_care' => $item->jobByAgency->start_date_of_care,
+                'end_date_of_care' => $item->jobByAgency->end_date_of_care,
+                'start_time' => $item->jobByAgency->start_time,
+                'end_time' => $item->jobByAgency->end_time,
+                'location' => $item->jobByAgency->street.', '. $item->jobByAgency->city.', '. $item->jobByAgency->zip_code.', '. $item->jobByAgency->state,
+                'job_description' =>  $item->jobByAgency->job_description,
+                'medical_history' => $item->jobByAgency->medical_history,
+                'essential_prior_expertise' => $item->jobByAgency->essential_prior_expertise,
+                'other_requirements' => $item->jobByAgency->other_requirements,
+                'created_at' => $item->jobByAgency->created_at,
+                
+            ];
+            array_push($new_details, $details);
+        }
+
+        return $this->success('Ongoing job fetched successfully.',   $new_details, 'null', 200);
     }
 }

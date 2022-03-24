@@ -6,6 +6,7 @@ use App\Http\Controllers\AgencyApp\AuthController;
 use App\Http\Controllers\AgencyApp\AuthorizedOfficerController;
 use App\Http\Controllers\AgencyApp\BusinessInformationController;
 use App\Http\Controllers\AgencyApp\CreateJobController;
+use App\Http\Controllers\CaregiverApp\AnswerController;
 use App\Http\Controllers\CaregiverApp\DocumentController;
 use App\Http\Controllers\CaregiverApp\ForgotPasswordController;
 use App\Http\Controllers\CaregiverApp\LoginController;
@@ -44,8 +45,18 @@ use Illuminate\Support\Facades\Route;
     Route::group(['middleware' => ['auth:sanctum']], function () {
         Route::post('/registration',[RegistrationController::class,'registration']);
 
-        Route::get('get-document',[DocumentController::class,'index']);
-        Route::post('document-upload',[DocumentController::class,'uploadDocument']);
+        Route::prefix('answer')->group(function(){
+            Route::post('add',[ AnswerController::class, 'addAnswer']);
+        });
+
+
+        Route::prefix('document')->group(function(){
+            Route::get('get-document',[DocumentController::class,'index']);
+            Route::post('document-upload',[DocumentController::class,'uploadDocument']);
+            Route::get('document-count',[DocumentController::class,'documentCount']);
+        });
+        
+
 
         Route::prefix('job')->group(function(){
             Route::get('recomended-jobs', [JobController::class, 'recomendedJobs']);
