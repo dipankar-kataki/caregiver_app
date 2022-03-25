@@ -125,7 +125,7 @@ class JobController extends Controller
             $agency_name = User::where('id', $item->agency_id)->first();
             $details = [
 
-                'id' => $item->id,
+                'id' => $item->jobByAgency->id,
                 'agency_name' => $agency_name->business_name,
                 'job_title' => $item->jobByAgency->job_title,
                 'amount_per_hour' => $item->jobByAgency->amount_per_hour,
