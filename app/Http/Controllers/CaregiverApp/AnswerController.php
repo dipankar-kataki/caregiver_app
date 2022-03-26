@@ -17,7 +17,6 @@ class AnswerController extends Controller
     public function addAnswer(Request $request){
 
         $validator = Validator::make($request->all(), [
-            'question_id' => 'required',
             'answer' => 'required'
         ]);
 
@@ -25,17 +24,14 @@ class AnswerController extends Controller
             return $this->error('Whoops! Something went wrong. Failed to submit answers.', $validator->errors() , 'null', 400);
         }else{
 
-            foreach($request->question_id as $key =>  $item){
-                foreach($request->answer as $key1 => $item2){
-                    if($key == $key1){
-                        $data['question_id'] = $item;
-                        $data['answer'] = $item2;
-                        $data['created_at'] = Carbon::now();
-                        $data['updated_at'] = Carbon::now();
-                        $insertData[] = $data;
-                    }
-                }
+            foreach($request->answer as $key => $item){
+                $data['question_id'] = $key + 1;
+                $data['answer'] = $item;
+                $data['created_at'] = Carbon::now();
+                $data['updated_at'] = Carbon::now();
+                $insertData[] = $data;
             }
+
             Answer::insert($insertData);
             User::where('id', auth('sanctum')->user()->id)->where('role', 2)->update([
                 'is_questions_answered' => 1
