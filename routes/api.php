@@ -54,6 +54,7 @@ use Illuminate\Support\Facades\Route;
             Route::get('get-document',[DocumentController::class,'index']);
             Route::post('document-upload',[DocumentController::class,'uploadDocument']);
             Route::get('document-count',[DocumentController::class,'documentCount']);
+            Route::post('is-document-uploaded', [DocumentController::class,'isDocumentUploaded']);
         });
         
 

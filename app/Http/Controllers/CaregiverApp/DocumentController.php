@@ -156,4 +156,22 @@ class DocumentController extends Controller
         ];
         return $this->success('Document count fetched successfully.',  $documents_count, 'null', 200);
     }
+    // && ($details->childAbuse->count() > 0) && ($details->criminal->count() > 0) && ($details->driving->count() > 0) && ($details->employment->count() > 0) && ($details->identification->count() > 0) && ($details->tuberculosis->count() > 0) && ( $details->w_4_form->count() > 0)
+
+    public function isDocumentUploaded(){
+        $details = User::where('id', auth('sanctum')->user()->id)->with('covid','childAbuse','criminal','driving','employment','identification','tuberculosis','w_4_form')->first();
+        if( !(($details->covid->count() == 0) && ($details->childAbuse->count() == 0) && ($details->criminal->count() == 0) && ($details->driving->count() == 0) && ($details->employment->count() == 0) && ($details->identification->count() == 0) && ($details->tuberculosis->count() == 0) && ( $details->w_4_form->count() == 0)) ){
+            $update = User::where('id', auth('sanctum')->user()->id)->where('role', 2)->update([
+                'is_documents_uploaded' => 1
+            ]);
+
+            if($update){
+                return $this->success('Document status updated.',  null, 'null', 201);
+            }else{
+                return $this->error('Whoops! Something went wrong. Failed to update document status.',  null, 'null', 500);
+            }
+        }else{
+            return $this->error('Whoops! Something went wrong. Failed to update document status.',  null, 'null', 500);
+        }
+    }
 }
