@@ -32,15 +32,15 @@ Route::group([
     ], function () {
     Route::get('dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::prefix('caregiver')->group(function(){
-        Route::get('list-of-approved-caregivers', [CaregiverController::class, 'approvedCaregiverList'])->name('admin.caregiver.list.approved');
-        Route::get('list-of-new-joiners-caregiver', [CaregiverController::class, 'newJoiner'])->name('admin.caregiver.list.new.joiner');
+        Route::get('approved-caregivers', [CaregiverController::class, 'approvedCaregiverList'])->name('admin.caregiver.list.approved');
+        Route::get('request-for-approval', [CaregiverController::class, 'newJoiner'])->name('admin.caregiver.request.for.approval');
         Route::post('update-status', [CaregiverController::class, 'updateStatus'])->name('admin.caregiver.update.status');
         Route::get('view-profile/{id}', [CaregiverController::class, 'viewProfile'])->name('admin.caregiver.view.profile');
     });
 
     Route::prefix('agency')->group(function(){
-        Route::get('list-of-approved-agency', [AgencyController::class, 'approvedAgencyList'])->name('admin.agency.list.approved');
-        Route::get('list-of-new-joiners-agency', [AgencyController::class, 'newJoiner'])->name('admin.agency.list.new.joiner');
+        Route::get('approved-agencies', [AgencyController::class, 'approvedAgencyList'])->name('admin.agency.list.approved');
+        Route::get('request-for-approval', [AgencyController::class, 'newJoiner'])->name('admin.agency.request.for.approval');
         Route::get('view-profile/{id}', [AgencyController::class, 'viewProfile'])->name('admin.agency.view.profile');
     });
 });

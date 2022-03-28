@@ -17,12 +17,11 @@
             <div class="card widget-box-one border border-primary bg-soft-primary">
                 <div class="card-body">
                     <div class="float-right avatar-lg rounded-circle mt-3">
-                        <i class="mdi mdi-chart-areaspline font-30 widget-icon rounded-circle avatar-title text-primary"></i>
+                        <i class="mdi mdi-hospital font-30 widget-icon rounded-circle avatar-title text-primary"></i>
                     </div>
                     <div class="wigdet-one-content">
-                        <p class="m-0 text-uppercase font-weight-bold text-muted" title="Statistics">Statistics</p>
-                        <h2><span data-plugin="counterup">34578</span> <i class="mdi mdi-arrow-up text-success font-24"></i></h2>
-                        <p class="text-muted m-0"><span class="font-weight-medium">Last:</span> 30.4k</p>
+                        <p class="m-0 text-uppercase font-weight-bold text-muted" title="Statistics">Caregivers</p>
+                        <h2><span data-plugin="counterup">{{$total_caregivers}}</span> <i class="mdi {{$total_caregivers == 0 ? '' : 'mdi-arrow-up'}} text-success font-24"></i></h2>
                     </div>
                 </div>
             </div>
@@ -33,12 +32,11 @@
             <div class="card widget-box-one border border-warning bg-soft-warning">
                 <div class="card-body">
                     <div class="float-right avatar-lg rounded-circle mt-3">
-                        <i class="mdi mdi-layers font-30 widget-icon rounded-circle avatar-title text-warning"></i>
+                        <i class="mdi mdi-hospital-building font-30 widget-icon rounded-circle avatar-title text-warning"></i>
                     </div>
                     <div class="wigdet-one-content">
-                        <p class="m-0 text-uppercase font-weight-bold text-muted" title="User This Month">User This Month</p>
-                        <h2><span data-plugin="counterup">52410 </span> <i class="mdi mdi-arrow-up text-success font-24"></i></h2>
-                        <p class="text-muted m-0"><span class="font-weight-medium">Last:</span> 40.33k</p>
+                        <p class="m-0 text-uppercase font-weight-bold text-muted" title="User This Month">Agencies</p>
+                        <h2><span data-plugin="counterup">{{$total_agencies}} </span> <i class="mdi {{$total_agencies == 0 ? '' : 'mdi-arrow-up'}} text-success font-24"></i></h2>
                     </div>
                 </div>
             </div>
@@ -49,12 +47,11 @@
             <div class="card widget-box-one border border-danger bg-soft-danger">
                 <div class="card-body">
                     <div class="float-right avatar-lg rounded-circle mt-3">
-                        <i class="mdi mdi-av-timer font-30 widget-icon rounded-circle avatar-title text-danger"></i>
+                        <i class="mdi mdi-briefcase font-30 widget-icon rounded-circle avatar-title text-danger"></i>
                     </div>
                     <div class="wigdet-one-content">
-                        <p class="m-0 text-uppercase font-weight-bold text-muted" title="Statistics">Statistics</p>
-                        <h2><span data-plugin="counterup">6352 </span> <i class="mdi mdi-arrow-up text-success font-24"></i></h2>
-                        <p class="text-muted m-0"><span class="font-weight-medium">Last:</span> 956</p>
+                        <p class="m-0 text-uppercase font-weight-bold text-muted" title="Statistics">Jobs Posted</p>
+                        <h2><span data-plugin="counterup">{{$total_jobs_posted}} </span> <i class="mdi {{$total_jobs_posted == 0 ? '' : 'mdi-arrow-up'}} text-success font-24"></i></h2>
                     </div>
                 </div>
             </div>
@@ -65,12 +62,11 @@
             <div class="card widget-box-one border border-success bg-soft-success">
                 <div class="card-body">
                     <div class="float-right avatar-lg rounded-circle mt-3">
-                        <i class="mdi mdi-account-convert font-30 widget-icon rounded-circle avatar-title text-success"></i>
+                        <i class="mdi mdi-currency-usd font-30 widget-icon rounded-circle avatar-title text-success"></i>
                     </div>
                     <div class="wigdet-one-content">
-                        <p class="m-0 text-uppercase font-weight-bold text-muted" title="User Today">User Today</p>
-                        <h2><span data-plugin="counterup">895</span> <i class="mdi mdi-arrow-down text-danger font-24"></i></h2>
-                        <p class="text-muted m-0"><span class="font-weight-medium">Last:</span> 1250</p>
+                        <p class="m-0 text-uppercase font-weight-bold text-muted" title="User Today">Revenue Generated</p>
+                        <h2><span data-plugin="counterup">895</span> <i class="mdi mdi-arrow-up text-success font-24"></i></h2>
                     </div>
                 </div>
             </div>

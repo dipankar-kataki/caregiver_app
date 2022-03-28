@@ -5,7 +5,7 @@
 @endsection
 
 
-@section('title', 'Admin | Approved Agency')
+@section('title', 'Admin | Request For Approval')
 
 
 @section('content')
@@ -16,27 +16,27 @@
                 <thead>
                     <tr>
                         <th>Sl No</th>
-                        <th>Business Name</th>
+                        <th>Name</th>
                         <th>Email</th>
+                        <th>Date Of Birth</th>
                         <th>Phone Number</th>
-                        <th>Organization Type</th>
-                        <th>Years In Business</th>
+                        <th>Experience</th>
                         <th>View</th>
-                        <th>Status</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
 
                 <tbody>
-                    @foreach($approved_agencies as $key =>  $item)
+                    @foreach($request_for_approval as $key =>  $item)
                         <tr>
                             <td>{{$key + 1}}</td>
-                            <td>{{$item->business_name}}</td>
+                            <td>{{$item->firstname}} {{$item->lastname}}</td>
                             <td>{{$item->email}}</td>
-                            <td>{{$item->business_information->business_number}}</td>
-                            <td>{{$item->business_information->organization_type}}</td>
-                            <td>{{$item->business_information->years_in_business}}</td>
+                            <td>{{$item->profile->dob}}</td>
+                            <td>{{$item->profile->phone}}</td>
+                            <td>{{$item->profile->experience}}</td>
                             <td><a href="#" class="btn btn-sm btn-primary waves-effect width-md waves-light">View Profile</a></td>
-                            <td><a href="#" class="btn btn-sm btn-success btn-rounded width-md waves-effect waves-light">Approved</a></td>
+                            <td><a href="#" class="btn btn-sm btn-warning waves-effect width-md waves-light">Approve User</a></td>
                         </tr>
                     @endforeach
                 </tbody>

@@ -10,6 +10,15 @@
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{asset('admin/assets/images/favicon-icon.png')}}">
 
+    <!-- Table datatable css -->
+    <link href="{{asset('admin/assets/libs/datatables/dataTables.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('admin/assets/libs/datatables/responsive.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('admin/assets/libs/datatables/buttons.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('admin/assets/libs/datatables/fixedHeader.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('admin/assets/libs/datatables/scroller.bootstrap4.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('admin/assets/libs/datatables/dataTables.colVis.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('admin/assets/libs/datatables/fixedColumns.bootstrap4.min.html')}}" rel="stylesheet" type="text/css" />
+    
     <!-- App css -->
     <link href="{{asset('admin/assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" id="bootstrap-stylesheet" />
     <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
@@ -45,8 +54,8 @@
                               <div class="page-title-right">
                                   <ol class="breadcrumb m-0">
                                       <li class="breadcrumb-item"><a href="javascript: void(0);">Peaceworc</a></li>
-                                      <li class="breadcrumb-item"><a href="javascript: void(0);" style="text-transform:capitalize;">{{Request::segment(1)}} </a></li>
                                       <li class="breadcrumb-item"><a href="javascript: void(0);" style="text-transform:capitalize;">{{Request::segment(2)}} </a></li>
+                                      <li class="breadcrumb-item"><a href="javascript: void(0);" style="text-transform:capitalize;">{{Request::segment(3)}} </a></li>
                                   </ol>
                               </div>
                               <h4 class="page-title" style="text-transform:capitalize; ">{{Request::segment(2)}}</h4>
@@ -85,6 +94,31 @@
     <script src="{{asset('admin/assets/libs/raphael/raphael.min.js')}}"></script>
 
     <script src="{{asset('admin/assets/js/pages/dashboard.init.js')}}"></script>
+
+     <!-- Datatable plugin js -->
+     <script src="{{asset('admin/assets/libs/datatables/jquery.dataTables.min.js')}}"></script>
+     <script src="{{asset('admin/assets/libs/datatables/dataTables.bootstrap4.min.js')}}"></script>
+ 
+     <script src="{{asset('admin/assets/libs/datatables/dataTables.responsive.min.js')}}"></script>
+     <script src="{{asset('admin/assets/libs/datatables/responsive.bootstrap4.min.js')}}"></script>
+ 
+     <script src="{{asset('admin/assets/libs/datatables/dataTables.buttons.min.js')}}"></script>
+     <script src="{{asset('admin/assets/libs/datatables/buttons.bootstrap4.min.js')}}"></script>
+ 
+     <script src="{{asset('admin/assets/libs/datatables/buttons.html5.min.js')}}"></script>
+     <script src="{{asset('admin/assets/libs/datatables/buttons.print.min.js')}}"></script>
+ 
+     <script src="{{asset('admin/assets/libs/datatables/dataTables.keyTable.min.js')}}"></script>
+     <script src="{{asset('admin/assets/libs/datatables/dataTables.fixedHeader.min.js')}}"></script>
+     <script src="{{asset('admin/assets/libs/datatables/dataTables.scroller.min.js')}}"></script>
+     <script src="{{asset('admin/assets/libs/datatables/dataTables.fixedColumns.min.html')}}"></script>
+ 
+     <script src="{{asset('admin/assets/libs/jszip/jszip.min.js')}}"></script>
+     <script src="{{asset('admin/assets/libs/pdfmake/pdfmake.min.js')}}"></script>
+     <script src="{{asset('admin/assets/libs/pdfmake/vfs_fonts.js')}}"></script>
+ 
+     <!-- Datatables init -->
+     <script src="{{asset('admin/assets/js/pages/datatables.init.js')}}"></script>
 
     <!-- App js -->
     <script src="{{asset('admin/assets/js/app.min.js')}}"></script>

@@ -10,12 +10,12 @@ class CaregiverController extends Controller
 {
     public function approvedCaregiverList(){
         $approved_list = User::with('profile')->where('is_user_approved', 1)->where('role', 2)->orderBy('created_at', 'DESC')->get();   
-        return view('admin.caregiver.approved-caregiver')->with('approved_list', $approved_list);
+        return view('admin.caregiver.approved-caregiver')->with(['approved_list' => $approved_list]);
     }
 
     public function newJoiner(Request $request){
-        $new_joiner = User::with('profile')->where('is_user_approved', 0)->where('role', 2)->orderBy('created_at', 'DESC')->get();   
-        return view('admin.caregiver.new-joiners')->with('new_joiner', $new_joiner);
+        $request_for_approval = User::with('profile')->where('is_user_approved', 0)->where('role', 2)->orderBy('created_at', 'DESC')->get();   
+        return view('admin.caregiver.request-for-approval')->with(['request_for_approval'=> $request_for_approval]);
     }
     public function updateStatus(Request $request){
         $user_id = $request->user_id;
