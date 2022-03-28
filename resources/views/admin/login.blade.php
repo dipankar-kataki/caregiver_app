@@ -5,7 +5,7 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Purple Admin</title>
+    <title>Peaceworc Admin</title>
     <!-- plugins:css -->
     <link rel="stylesheet" href="{{ asset('admin/assets/vendors/mdi/css/materialdesignicons.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/assets/vendors/css/vendor.bundle.base.css') }}">
@@ -14,7 +14,7 @@
     <!-- Layout styles -->
     <link rel="stylesheet" href="{{ asset('admin/assets/css/style.css') }}">
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="{{ asset('admin/assets/images/favicon.ico') }}" />
+    <link rel="shortcut icon" href="{{ asset('admin/assets/images/favicon-icon.png') }}" />
 
 </head>
 
@@ -26,7 +26,7 @@
                     <div class="col-lg-4 mx-auto">
                         <div class="auth-form-light text-left p-5">
                             <div class="brand-logo">
-                                <img src="{{ asset('admin/assets/images/logo.svg') }}">
+                                <img src="{{ asset('admin/assets/images/logo-main.png') }}">
                             </div>
                             {{-- Error --}}
                             @if (\Session::has('error'))
