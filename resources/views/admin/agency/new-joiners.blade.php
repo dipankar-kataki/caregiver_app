@@ -41,7 +41,57 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   @foreach ($new_joiner as $key =>  $item)
+                                    <tr>
+                                        <td>1</td>
+                                        <td>rtret</td>
+                                        <td>ertert@fdgd.v</td>
+                                        <td>View Profile</td>
+                                        <td>
+                                            <button class="btn btn-md btn-success">Approve</button>&nbsp;
+                                            <button class="btn btn-md btn-danger">Decline</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>rtret</td>
+                                        <td>ertert@fdgd.v</td>
+                                        <td>View Profile</td>
+                                        <td>
+                                            <button class="btn btn-md btn-success">Approve</button>&nbsp;
+                                            <button class="btn btn-md btn-danger">Decline</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>rtret</td>
+                                        <td>ertert@fdgd.v</td>
+                                        <td>View Profile</td>
+                                        <td>
+                                            <button class="btn btn-md btn-success">Approve</button>&nbsp;
+                                            <button class="btn btn-md btn-danger">Decline</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>rtret</td>
+                                        <td>ertert@fdgd.v</td>
+                                        <td>View Profile</td>
+                                        <td>
+                                            <button class="btn btn-md btn-success">Approve</button>&nbsp;
+                                            <button class="btn btn-md btn-danger">Decline</button>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>rtret</td>
+                                        <td>ertert@fdgd.v</td>
+                                        <td>View Profile</td>
+                                        <td>
+                                            <button class="btn btn-md btn-success">Approve</button>&nbsp;
+                                            <button class="btn btn-md btn-danger">Decline</button>
+                                        </td>
+                                    </tr>
+                                   {{-- @foreach ($new_joiner as $key =>  $item)
                                         <tr>
                                             <td>{{$key + 1}}</td>
                                             <td>{{$item->business_name}}</td>
@@ -52,7 +102,7 @@
                                                 <button class="btn btn-md btn-danger">Decline</button>
                                             </td>
                                         </tr>
-                                   @endforeach
+                                   @endforeach --}}
                                 </tbody>
                             </table>
                         </div>

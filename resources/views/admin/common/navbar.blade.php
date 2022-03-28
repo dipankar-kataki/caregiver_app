@@ -1,141 +1,227 @@
-<nav class="navbar default-layout-navbar col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-    <div class="text-center navbar-brand-wrapper d-flex align-items-center justify-content-center">
-      <a class="navbar-brand brand-logo" href="{{route('admin.dashboard')}}"><img src="{{asset('admin/assets/images/logo.svg')}}"
-          alt="logo" /></a>
-      <a class="navbar-brand brand-logo-mini" href="{{route('admin.dashboard')}}"><img src="{{asset('admin/assets/images/logo-mini.svg')}}"
-          alt="logo" /></a>
-    </div>
-    <div class="navbar-menu-wrapper d-flex align-items-stretch">
-      <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
-        <span class="mdi mdi-menu"></span>
-      </button>
-      <ul class="navbar-nav navbar-nav-right">
-        <li class="nav-item nav-profile dropdown">
-          <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-            <div class="nav-profile-img">
-              <img src="{{asset('admin/assets/images/faces/face1.jpg')}}" alt="image">
-              <span class="availability-status online"></span>
-            </div>
-            <div class="nav-profile-text">
-              <p class="mb-1 text-black">Welcome {{Auth::user()->firstname}}</p>
-            </div>
-          </a>
-          <div class="dropdown-menu navbar-dropdown" aria-labelledby="profileDropdown">
-            <a class="dropdown-item" href="#" style="color:black;">
-              <i class="mdi mdi-settings mr-2 text-success"></i> Settings </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{route('auth.logout')}}" style="color:black;">
-              <i class="mdi mdi-logout mr-2 text-primary"></i> Signout </a>
-          </div>
-        </li>
 
-        <li class="nav-item d-none d-lg-block full-screen-link">
-          <a class="nav-link">
-            <i class="mdi mdi-fullscreen" id="fullscreen-button"></i>
-          </a>
-        </li>
+<div class="navbar-custom">
+  <ul class="list-unstyled topnav-menu float-right mb-0">
 
-        <li class="nav-item dropdown">
-          <a class="nav-link count-indicator dropdown-toggle" id="messageDropdown" href="#" data-toggle="dropdown"
-            aria-expanded="false">
-            <i class="mdi mdi-email-outline"></i>
-            <span class="count-symbol bg-warning"></span>
+      <li class="dropdown notification-list">
+          <a class="nav-link dropdown-toggle  waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+              <i class="mdi mdi-bell noti-icon"></i>
+              <span class="badge badge-success rounded-circle noti-icon-badge">4</span>
           </a>
-          <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list" aria-labelledby="messageDropdown">
-            <h6 class="p-3 mb-0">Messages</h6>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item preview-item">
-              <div class="preview-thumbnail">
-                <img src="{{asset('admin/assets/images/faces/face4.jpg')}}" alt="image" class="profile-pic">
-              </div>
-              <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Mark send you a message</h6>
-                <p class="text-gray mb-0"> 1 Minutes ago </p>
-              </div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item preview-item">
-              <div class="preview-thumbnail">
-                <img src="{{asset('admin/assets/images/faces/face2.jpg')}}" alt="image" class="profile-pic">
-              </div>
-              <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Cregh send you a message</h6>
-                <p class="text-gray mb-0"> 15 Minutes ago </p>
-              </div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item preview-item">
-              <div class="preview-thumbnail">
-                <img src="{{asset('admin/assets/images/faces/face3.jpg')}}" alt="image" class="profile-pic">
-              </div>
-              <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                <h6 class="preview-subject ellipsis mb-1 font-weight-normal">Profile picture updated</h6>
-                <p class="text-gray mb-0"> 18 Minutes ago </p>
-              </div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <h6 class="p-3 mb-0 text-center">4 new messages</h6>
-          </div>
-        </li>
+          <div class="dropdown-menu dropdown-menu-right dropdown-lg">
 
-        <li class="nav-item dropdown">
-          <a class="nav-link count-indicator dropdown-toggle" id="notificationDropdown" href="#" data-toggle="dropdown">
-            <i class="mdi mdi-bell-outline"></i>
-            <span class="count-symbol bg-danger"></span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-right navbar-dropdown preview-list"
-            aria-labelledby="notificationDropdown">
-            <h6 class="p-3 mb-0">Notifications</h6>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item preview-item">
-              <div class="preview-thumbnail">
-                <div class="preview-icon bg-success">
-                  <i class="mdi mdi-calendar"></i>
-                </div>
+              <!-- item-->
+              <div class="dropdown-item noti-title">
+                  <h5 class="font-16 m-0">
+                      <span class="float-right">
+                          <a href="#" class="text-dark">
+                              <small>Clear All</small>
+                          </a>
+                      </span>Notification
+                  </h5>
               </div>
-              <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                <h6 class="preview-subject font-weight-normal mb-1">Event today</h6>
-                <p class="text-gray ellipsis mb-0"> Just a reminder that you have an event today </p>
+
+              <div class="slimscroll noti-scroll">
+
+                  <!-- item-->
+                  <a href="javascript:void(0);" class="dropdown-item notify-item">
+                      <div class="notify-icon bg-success">
+                          <i class="mdi mdi-settings-outline"></i>
+                      </div>
+                      <p class="notify-details">New settings
+                          <small class="text-muted">There are new settings available</small>
+                      </p>
+                  </a>
+          
+                  <!-- item-->
+                  <a href="javascript:void(0);" class="dropdown-item notify-item">
+                      <div class="notify-icon bg-info">
+                          <i class="mdi mdi-bell-outline"></i>
+                      </div>
+                      <p class="notify-details">Updates
+                          <small class="text-muted">There are 2 new updates available</small>
+                      </p>
+                  </a>
+
+                  <!-- item-->
+                  <a href="javascript:void(0);" class="dropdown-item notify-item">
+                      <div class="notify-icon bg-danger">
+                          <i class="mdi mdi-account-plus"></i>
+                      </div>
+                      <p class="notify-details">New user
+                          <small class="text-muted">You have 10 unread messages</small>
+                      </p>
+                  </a>
+
+                  <!-- item-->
+                  <a href="javascript:void(0);" class="dropdown-item notify-item">
+                      <div class="notify-icon bg-info">
+                          <i class="mdi mdi-comment-account-outline"></i>
+                      </div>
+                      <p class="notify-details">Caleb Flakelar commented on Admin
+                          <small class="text-muted">4 days ago</small>
+                      </p>
+                  </a>
+
+                  <!-- item-->
+                  <a href="javascript:void(0);" class="dropdown-item notify-item">
+                      <div class="notify-icon bg-secondary">
+                          <i class="mdi mdi-heart"></i>
+                      </div>
+                      <p class="notify-details">Carlos Crouch liked
+                          <b>Admin</b>
+                          <small class="text-muted">13 days ago</small>
+                      </p>
+                  </a>
               </div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item preview-item">
-              <div class="preview-thumbnail">
-                <div class="preview-icon bg-warning">
-                  <i class="mdi mdi-settings"></i>
-                </div>
-              </div>
-              <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                <h6 class="preview-subject font-weight-normal mb-1">Settings</h6>
-                <p class="text-gray ellipsis mb-0"> Update dashboard </p>
-              </div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item preview-item">
-              <div class="preview-thumbnail">
-                <div class="preview-icon bg-info">
-                  <i class="mdi mdi-link-variant"></i>
-                </div>
-              </div>
-              <div class="preview-item-content d-flex align-items-start flex-column justify-content-center">
-                <h6 class="preview-subject font-weight-normal mb-1">Launch Admin</h6>
-                <p class="text-gray ellipsis mb-0"> New admin wow! </p>
-              </div>
-            </a>
-            <div class="dropdown-divider"></div>
-            <h6 class="p-3 mb-0 text-center">See all notifications</h6>
+
+              <!-- All-->
+              <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all">
+                  See all Notification
+                  <i class="fi-arrow-right"></i>
+              </a>
+
           </div>
-        </li>
-        
-        {{-- <li class="nav-item nav-logout d-none d-lg-block">
-          <a class="nav-link" href="{{route('auth.logout')}}">
-            <i class="mdi mdi-power"></i>
+      </li>
+
+      {{-- <li class="dropdown notification-list">
+          <a class="nav-link dropdown-toggle  waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+              <i class="mdi mdi-email noti-icon"></i>
+              <span class="badge badge-danger rounded-circle noti-icon-badge">8</span>
           </a>
-        </li> --}}
-      </ul>
-      <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button"
-        data-toggle="offcanvas">
-        <span class="mdi mdi-menu"></span>
-      </button>
-    </div>
-  </nav>
+          <div class="dropdown-menu dropdown-menu-right dropdown-lg">
+
+              <!-- item-->
+              <div class="dropdown-item noti-title">
+                  <h5 class="font-16 m-0">
+                      <span class="float-right">
+                          <a href="#" class="text-dark">
+                              <small>Clear All</small>
+                          </a>
+                      </span>Messages
+                  </h5>
+              </div>
+
+              <div class="slimscroll noti-scroll">
+
+                  <div class="inbox-widget">
+                      <a href="#">
+                          <div class="inbox-item">
+                              <div class="inbox-item-img"><img src="assets/images/users/avatar-1.jpg" class="rounded-circle" alt=""></div>
+                              <p class="inbox-item-author">Chadengle</p>
+                              <p class="inbox-item-text text-truncate">Hey! there I'm available...</p>
+                          </div>
+                      </a>
+                      <a href="#">
+                          <div class="inbox-item">
+                              <div class="inbox-item-img"><img src="assets/images/users/avatar-2.jpg" class="rounded-circle" alt=""></div>
+                              <p class="inbox-item-author">Tomaslau</p>
+                              <p class="inbox-item-text text-truncate">I've finished it! See you so...</p>
+                          </div>
+                      </a>
+                      <a href="#">
+                          <div class="inbox-item">
+                              <div class="inbox-item-img"><img src="assets/images/users/avatar-3.jpg" class="rounded-circle" alt=""></div>
+                              <p class="inbox-item-author">Stillnotdavid</p>
+                              <p class="inbox-item-text text-truncate">This theme is awesome!</p>
+                          </div>
+                      </a>
+                      <a href="#">
+                          <div class="inbox-item">
+                              <div class="inbox-item-img"><img src="assets/images/users/avatar-4.jpg" class="rounded-circle" alt=""></div>
+                              <p class="inbox-item-author">Kurafire</p>
+                              <p class="inbox-item-text text-truncate">Nice to meet you</p>
+                          </div>
+                      </a>
+                      <a href="#">
+                          <div class="inbox-item">
+                              <div class="inbox-item-img"><img src="assets/images/users/avatar-5.jpg" class="rounded-circle" alt=""></div>
+                              <p class="inbox-item-author">Shahedk</p>
+                              <p class="inbox-item-text text-truncate">Hey! there I'm available...</p>
+
+                          </div>
+                      </a>
+                  </div> <!-- end inbox-widget -->
+
+              </div>
+              <!-- All-->
+              <a href="javascript:void(0);" class="dropdown-item text-center text-primary notify-item notify-all">
+                  See all Messages
+                  <i class="fi-arrow-right"></i>
+              </a>
+
+          </div>
+      </li> --}}
+
+      <li class="dropdown notification-list mr-3">
+          <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
+              <img src="{{asset('admin/assets/images/users/avatar-1.jpg')}}" alt="user-image" class="rounded-circle">
+              <span class="d-none d-sm-inline-block ml-1">Alex M.</span>
+          </a>
+          <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
+              <!-- item-->
+              <div class="dropdown-header noti-title">
+                  <h6 class="text-overflow m-0">Welcome !</h6>
+              </div>
+
+              <!-- item-->
+              <a href="javascript:void(0);" class="dropdown-item notify-item">
+                  <i class="mdi mdi-account-outline"></i>
+                  <span>Profile</span>
+              </a>
+
+              <!-- item-->
+              <a href="javascript:void(0);" class="dropdown-item notify-item">
+                  <i class="mdi mdi-settings-outline"></i>
+                  <span>Settings</span>
+              </a>
+
+              <div class="dropdown-divider"></div>
+
+              <!-- item-->
+              <a href="{{route('auth.logout')}}" class="dropdown-item notify-item">
+                  <i class="mdi mdi-logout-variant"></i>
+                  <span>Logout</span>
+              </a>
+
+          </div>
+      </li>
+
+  </ul>
+
+  <!-- LOGO -->
+  <div class="logo-box">
+      <a href="index.html" class="logo text-center">
+          <span class="logo-lg">
+              <img src="{{asset('admin/assets/images/logo-main.png')}}" alt="" width="180">
+              <!-- <span class="logo-lg-text-light">Zircos</span> -->
+          </span>
+          <span class="logo-sm">
+              <!-- <span class="logo-sm-text-dark">Z</span> -->
+              <img src="{{asset('admin/assets/images/favicon-icon.png')}}" alt="" height="30">
+          </span>
+      </a>
+  </div>
+
+  <ul class="list-unstyled topnav-menu topnav-menu-left m-0">
+      <li>
+          <button class="button-menu-mobile waves-effect">
+              <i class="mdi mdi-menu"></i>
+          </button>
+      </li>
+
+      <li class="d-none d-sm-block">
+          <form class="app-search">
+              <div class="app-search-box">
+                  <div class="input-group" >
+                      <input type="text" class="form-control" placeholder="Search...">
+                      <div class="input-group-append" style="height: 37.5px;">
+                          <button class="btn" type="submit">
+                              <i class="fas fa-search"></i>
+                          </button>
+                      </div>
+                  </div>
+              </div>
+          </form>
+      </li>
+  </ul>
+</div>

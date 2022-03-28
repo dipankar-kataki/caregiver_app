@@ -1,73 +1,48 @@
-<nav class="sidebar sidebar-offcanvas" id="sidebar">
-    <ul class="nav">
-      <li class="nav-item nav-profile">
-        <a href="#" class="nav-link">
-          <div class="nav-profile-image">
-            <img src="{{asset('admin/assets/images/faces/face1.jpg')}}" alt="profile">
-            <span class="login-status online"></span>
-            <!--change to offline or busy as needed-->
-          </div>
-          <div class="nav-profile-text d-flex flex-column">
-            <span class="font-weight-bold mb-2">{{Auth::user()->firstname}}</span>
-            <span class="text-secondary text-small">Admin</span>
-          </div>
-          <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{{route('admin.dashboard')}}">
-          <span class="menu-title">Dashboard</span>
-          <i class="mdi mdi-home menu-icon"></i>
-        </a>
-      </li>
-      {{-- <li class="nav-item">
-        <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-          <span class="menu-title">Caregiver</span>
-          <i class="menu-arrow"></i>
-        </a>
-        <div class="collapse" id="ui-basic">
-          <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> 
-              <a class="nav-link" href="{{route('admin.caregiver.list.approved')}}">
-                <span class="menu-title">Approved Caregiver</span>
-              </a>
-              <a class="nav-link" href="{{route('admin.caregiver.list.new.joiner')}}">
-                <span class="menu-title">New Joiners</span>
-              </a>
-            </li>
-          </ul>
+
+<div class="left-side-menu">
+    <div class="slimscroll-menu">
+
+        <!--- Sidemenu -->
+        <div id="sidebar-menu">
+
+            <ul class="metismenu" id="side-menu">
+
+                <li class="menu-title">Navigation</li>
+                <li>
+                    <a href="{{route('admin.dashboard')}}" class="waves-effect waves-light">
+                        <i class="mdi mdi-view-dashboard"></i>Dashboard  
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="waves-effect waves-light">
+                        <i class="mdi mdi-invert-colors"></i>
+                        <span> User Interface </span>
+                        <span class="menu-arrow"></span>
+                    </a>
+                    <ul class="nav-second-level" aria-expanded="false">
+
+                        <li><a href="ui-buttons.html">Buttons</a></li>
+                        <li><a href="ui-typography.html">Typography</a></li>
+                        <li><a href="ui-card.html">Card</a></li>
+                        <li><a href="ui-portlets.html">Portlets</a></li>
+                        <li><a href="ui-modals.html">Modals</a></li>
+                        <li><a href="ui-checkbox-radio.html">Checkboxs-Radios</a></li>
+                        <li><a href="ui-tabs.html">Tabs</a></li>
+                        <li><a href="ui-progressbars.html">Progress Bars</a></li>
+                        <li><a href="ui-notifications.html">Notification</a></li>
+                        <li><a href="ui-alerts.html">Alerts</a>
+                            <li><a href="ui-carousel.html">Carousel</a>
+                                <li><a href="ui-video.html">Video</a>
+                                    <li><a href="ui-tooltips-popovers.html">Tooltips & Popovers</a></li>
+                                    <li><a href="ui-images.html">Images</a></li>
+                                    <li><a href="ui-bootstrap.html">Bootstrap UI</a></li>
+                                    <li><a href="ui-grid.html">Grid</a></li>
+                    </ul>
+                </li>
+            </ul>
+
         </div>
-      </li> --}}
-      <li class="nav-item">
-        <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-          <span class="menu-title">Agency</span>
-          <i class="menu-arrow"></i>
-        </a>
-        <div class="collapse" id="ui-basic">
-          <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> 
-              <a class="nav-link" href="{{route('admin.agency.list.approved')}}">
-                <span class="menu-title">Approved Agencies</span>
-              </a>
-              <a class="nav-link" href="{{route('admin.agency.list.new.joiner')}}">
-                <span class="menu-title">New Joiners</span>
-              </a>
-            </li>
-          </ul>
-        </div>
-      </li>
-      {{-- <li class="nav-item">
-        <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
-          <span class="menu-title">Basic UI Elements</span>
-          <i class="menu-arrow"></i>
-          <i class="mdi mdi-crosshairs-gps menu-icon"></i>
-        </a>
-        <div class="collapse" id="ui-basic">
-          <ul class="nav flex-column sub-menu">
-            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/buttons.html">Buttons</a></li>
-            <li class="nav-item"> <a class="nav-link" href="pages/ui-features/typography.html">Typography</a></li>
-          </ul>
-        </div>
-      </li> --}}
-    </ul>
-  </nav>
+        <!-- End Sidebar -->
+    </div>
+  <!-- Sidebar -left -->
+</div>

@@ -1,6 +1,9 @@
 <footer class="footer">
-    <div class="container-fluid clearfix">
-        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © Peaceworc
-            2021</span>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                2022 &copy; <a href="/"> PEACEWORC</a> design & developed by <a href="https://ekodus.com/">Ekodus Inc.</a>
+            </div>
+        </div>
     </div>
 </footer>

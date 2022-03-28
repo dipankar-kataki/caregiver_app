@@ -1,68 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<head>
+    <meta charset="utf-8" />
     <title>@yield('title')</title>
-    <!-- plugins:css -->
-    <link rel="stylesheet" href="{{asset('admin/assets/vendors/mdi/css/materialdesignicons.min.css')}}">
-    <link rel="stylesheet" href="{{asset('admin/assets/vendors/css/vendor.bundle.base.css')}}">
-    <!-- endinject -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta content="Peaceworc a caregiver website." name="description" />
+    <meta content="Coderthemes" name="author" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- App favicon -->
+    <link rel="shortcut icon" href="{{asset('admin/assets/images/favicon-icon.png')}}">
 
-    <!-- Layout styles -->
-    <link rel="stylesheet" href="{{asset('admin/assets/css/style.css')}}">
-    <!-- End layout styles -->
-    <link rel="shortcut icon" href="{{asset('admin/assets/images/favicon.ico')}}">
+    <!-- App css -->
+    <link href="{{asset('admin/assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css" id="bootstrap-stylesheet" />
+    <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
+    <link href="{{asset('admin/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" id="app-stylesheet" />
     @yield('cunstomHeader')
-  </head>
-  <body>
-    <div class="container-scroller">
-      <!-- partial:partials/_navbar.html -->
-      @include('admin.common.navbar')
-      
-      <!-- partial -->
-      <div class="container-fluid page-body-wrapper">
-        <!-- partial:partials/_sidebar.html -->
-        @include('admin.common.sidebar')
-        <!-- partial -->
-        <div class="main-panel">
-          @yield('main')
-          <!-- content-wrapper ends -->
-          <!-- partial:partials/_footer.html -->
-          @include('admin.common.footer')
-          <!-- partial -->
-        </div>
-        <!-- main-panel ends -->
-      </div>
-      <!-- page-body-wrapper ends -->
-    </div>
-    <!-- container-scroller -->
-    <!-- plugins:js -->
-    <script src="{{asset('admin/assets/vendors/js/vendor.bundle.base.js')}}"></script>
-    <!-- endinject -->
-    <!-- Plugin js for this page -->
-    <script src="{{asset('admin/assets/vendors/chart.js/Chart.min.js')}}"></script>
-    <!-- End plugin js for this page -->
-    <!-- inject:js -->
-    <script src="{{asset('admin/assets/js/off-canvas.js')}}"></script>
-    <script src="{{asset('admin/assets/js/hoverable-collapse.js')}}"></script>
-    <script src="{{asset('admin/assets/js/misc.js')}}"></script>
-    <!-- endinject -->
-    <!-- Custom js for this page -->
-    <script src="{{asset('admin/assets/js/dashboard.js')}}"></script>
-    <script src="{{asset('admin/assets/js/todolist.js')}}"></script>
+</head>
 
-    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.0.1/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.bootstrap4.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/2.0.1/js/buttons.print.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <!-- End custom js for this page -->
-    @yield('cunstomJS')
-  </body>
+<body>
+
+  <!-- Begin page -->
+  <div id="wrapper">
+    <!-- Topbar Start -->
+      @include('admin.common.navbar')
+    <!-- end Topbar --> 
+
+    <!-- ========== Left Sidebar Start ========== -->
+      @include('admin.common.sidebar')
+    <!-- Left Sidebar End -->
+
+    <!-- ============================================================== -->
+    <!-- Start Page Content here -->
+    <!-- ============================================================== -->
+
+      <div class="content-page">
+          <div class="content">
+
+              <!-- Start Content-->
+              <div class="container-fluid">
+                <!-- start page title -->
+                  <div class="row">
+                      <div class="col-12">
+                          <div class="page-title-box">
+                              <div class="page-title-right">
+                                  <ol class="breadcrumb m-0">
+                                      <li class="breadcrumb-item"><a href="javascript: void(0);">Peaceworc</a></li>
+                                      <li class="breadcrumb-item"><a href="javascript: void(0);" style="text-transform:capitalize;">{{Request::segment(1)}} </a></li>
+                                      <li class="breadcrumb-item"><a href="javascript: void(0);" style="text-transform:capitalize;">{{Request::segment(2)}} </a></li>
+                                  </ol>
+                              </div>
+                              <h4 class="page-title" style="text-transform:capitalize; ">{{Request::segment(2)}}</h4>
+                          </div>
+                      </div>
+                  </div>
+                <!-- end page title -->
+                 @yield('content')
+
+              </div>
+              <!-- end container-fluid -->
+
+          </div>
+          <!-- end content -->
+
+          
+
+          <!-- Footer Start -->
+          @include('admin.common.footer')
+          <!-- end Footer -->
+
+      </div>
+    
+    <!-- ============================================================== -->
+    <!-- End Page content -->
+    <!-- ============================================================== -->
+
+  </div>
+  <!-- END wrapper -->
+
+
+    <!-- Vendor js -->
+    <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script>
+
+    <script src="{{asset('admin/assets/libs/morris-js/morris.min.js')}}"></script>
+    <script src="{{asset('admin/assets/libs/raphael/raphael.min.js')}}"></script>
+
+    <script src="{{asset('admin/assets/js/pages/dashboard.init.js')}}"></script>
+
+    <!-- App js -->
+    <script src="{{asset('admin/assets/js/app.min.js')}}"></script>
+
+</body>
 </html>
