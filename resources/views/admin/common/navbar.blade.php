@@ -155,7 +155,8 @@
       <li class="dropdown notification-list mr-3">
           <a class="nav-link dropdown-toggle nav-user mr-0 waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
               <img src="{{asset('admin/assets/images/users/avatar-1.jpg')}}" alt="user-image" class="rounded-circle">
-              <span class="d-none d-sm-inline-block ml-1">Alex M.</span>
+              <span class="d-none d-sm-inline-block ml-1">{{substr(Auth::user()->firstname, 0, 1)}} . {{Auth::user()->lastname}}</span>
+              <span class="d-none d-sm-inline-block ml-1"><i class="mdi mdi-chevron-down"></i> </span>
           </a>
           <div class="dropdown-menu dropdown-menu-right profile-dropdown ">
               <!-- item-->
