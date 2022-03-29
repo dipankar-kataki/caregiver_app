@@ -39,7 +39,7 @@
                             <div class="d-flex justify-content-between align-items-center">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-sm btn-outline-secondary shadow-none"
-                                        onclick="location.href='{{ route('site.blog', ['id' => Crypt::encrypt(1)]) }}';">View</button>
+                                        onclick="location.href='{{ route('site.blog', ['id' => Crypt::encrypt($item->id)]) }}';">View</button>
                                 </div>
                                 <small class="text-muted">{{$item->created_at->diffForHumans()}}</small>
                             </div>

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 class BlogController extends Controller
 {
     public function index(){
-        $details = Blog::where('is_activate', 1)->get();
+        $details = Blog::where('is_activate', 1)->orderBy('created_at', 'DESC')->get();
         return view('admin.blog.get-blogs')->with(['details' => $details]);
     }
 

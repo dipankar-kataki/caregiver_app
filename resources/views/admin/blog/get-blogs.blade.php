@@ -26,7 +26,7 @@
                         <div class="post-title">
                             <h5><a href="javascript:void(0);">{{Str::of($item->title)->limit(30)}}</a></h5>
                         </div>
-                        <p>{{Str::of($item->content)->limit(100)}}</p>
+                        <p>{{Str::of($item->content)->limit(50)}}</p>
                         <div class="text-right">
                             <a href="javascript:void(0);" class="btn btn-success btn-sm waves-effect waves-light">Read More <i class="mdi mdi-arrow-right ml-1"></i></a>
                         </div>

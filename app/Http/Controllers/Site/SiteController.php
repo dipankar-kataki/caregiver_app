@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Mail\GetInTouchMail;
 use App\Models\Blog;
 use Exception;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Mail;
 
 class SiteController extends Controller
@@ -14,7 +15,7 @@ class SiteController extends Controller
     //
     public function index(Request $request)
     {
-        $blogs = Blog::where('is_activate', 1)->take(3)->get();
+        $blogs = Blog::where('is_activate', 1)->orderBy('created_at', 'DESC')->take(3)->get();
         return view('site.index')->with(['blogs' => $blogs]);
     }
 
@@ -63,10 +64,12 @@ class SiteController extends Controller
     public function blogs(Request $request, $id = null)
     {
         if (!$id) {
-            $blogs = Blog::where('is_activate', 1)->get();
+            $blogs = Blog::where('is_activate', 1)->orderBy('created_at', 'DESC')->get();
             return view('site.blog.index')->with(['blogs' => $blogs]);
         } else {
-            return view('site.blog.blogDetails');
+            $id = Crypt::decrypt($id);
+            $blog_details = Blog::where('id', $id)->where('is_activate', 1)->first();
+            return view('site.blog.blogDetails')->with(['blog_details' => $blog_details]);
         }
     }
 }
