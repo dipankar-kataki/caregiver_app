@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class CaregiverController extends Controller
 {
@@ -18,11 +19,10 @@ class CaregiverController extends Controller
         return view('admin.caregiver.request-for-approval')->with(['request_for_approval'=> $request_for_approval]);
     }
     public function updateStatus(Request $request){
-        $user_id = $request->user_id;
-        $status = $request->status;
+        $user_id = Crypt::decrypt($request->id);
 
         $update_status = User::where('id', $user_id)->update([
-            'is_user_approved' => $status
+            'is_user_approved' => 1
         ]);
         if($update_status){
             return response()->json(['message' => 'User Approved', 'status' => 1]);
