@@ -15,7 +15,7 @@ class AgencyController extends Controller
     }
 
     public function newJoiner(Request $request){
-        $request_for_approval = User::where('is_user_approved', 0)->where('role', 3)->orderBy('created_at', 'DESC')->get();   
+        $request_for_approval = User::where('is_business_info_added', 1)->where('is_authorize_info_added', 1)->where('is_user_approved', 0)->where('role', 3)->orderBy('created_at', 'DESC')->get();   
         return view('admin.agency.request-for-approval')->with(['request_for_approval' => $request_for_approval]);
     }
 
