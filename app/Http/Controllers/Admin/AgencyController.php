@@ -19,6 +19,19 @@ class AgencyController extends Controller
         return view('admin.agency.request-for-approval')->with(['request_for_approval' => $request_for_approval]);
     }
 
+    public function updateStatus(Request $request){
+        $user_id = Crypt::decrypt($request->id);
+
+        $update_status = User::where('id', $user_id)->update([
+            'is_user_approved' => 1
+        ]);
+        if($update_status){
+            return response()->json(['message' => 'User Approved', 'status' => 1]);
+        }else{
+            return response()->json(['message' => 'Whoops! Something went wrong. User not approved', 'status' => 2]);
+        }
+    }
+    
     public function viewProfile($id){
         $user_id = Crypt::decrypt($id);
         $details = User::with('jobs', 'business_information', 'address', 'profile')->where('id', $user_id)->where('role', 3)->first();

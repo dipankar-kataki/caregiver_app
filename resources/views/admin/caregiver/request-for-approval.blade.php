@@ -36,7 +36,7 @@
                             <td>{{$item->profile->phone}}</td>
                             <td>{{$item->profile->experience}}</td>
                             <td><a href="#" class="btn btn-sm btn-primary waves-effect width-md waves-light">View Profile</a></td>
-                            <td><button  type="button" class="btn btn-sm btn-warning waves-effect width-md waves-light" id="approveUser" data-id="{{Crypt::encrypt($item->id)}}">Approve User</button></td>
+                            <td><button  type="button" class="btn btn-sm btn-warning waves-effect width-md waves-light approveUser" data-id="{{Crypt::encrypt($item->id)}}">Approve User</button></td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -49,10 +49,10 @@
 
 @section('cunstomJS')
     <script>
-        $('#approveUser').on('click', function(){
+        $('.approveUser').on('click', function(){
             let id = $(this).data('id');
-            $('#approveUser').text('Please wait...');
-            $('#approveUser').attr('disabled', true);
+            $(this).text('Please wait...');
+            $(this).attr('disabled', true);
             $.ajax({
                 url:"{{route('admin.caregiver.update.status')}}",
                 type:"POST",
@@ -66,14 +66,14 @@
                         location.reload(true);
                     }else{
                         toastr.error(data.message);
-                        $('#approveUser').text('Approve User');
-                        $('#approveUser').attr('disabled', false);
+                        $('.approveUser').text('Approve User');
+                        $('.approveUser').attr('disabled', false);
                     }
                 },error:function(xhr, status, error){
                     if(xhr.status == 500 || xhr.status == 422){
                         toastr.error('Whoops! Something went wron. Failed to approve user.');
-                        $('#approveUser').text('Approve User');
-                        $('#approveUser').attr('disabled', false);
+                        $('.approveUser').text('Approve User');
+                        $('.approveUser').attr('disabled', false);
                     }
                 }
             });

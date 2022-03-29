@@ -42,6 +42,7 @@ Route::group([
     Route::prefix('agency')->group(function(){
         Route::get('approved-agencies', [AgencyController::class, 'approvedAgencyList'])->name('admin.agency.list.approved');
         Route::get('request-for-approval', [AgencyController::class, 'newJoiner'])->name('admin.agency.request.for.approval');
+        Route::post('update-status', [AgencyController::class, 'updateStatus'])->name('admin.agency.update.status');
         Route::get('view-profile/{id}', [AgencyController::class, 'viewProfile'])->name('admin.agency.view.profile');
     });
 

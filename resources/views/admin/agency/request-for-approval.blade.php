@@ -36,7 +36,7 @@
                             <td>{{$item->business_information->organization_type}}</td>
                             <td>{{$item->business_information->legal_structure}}</td>
                             <td><a href="#" class="btn btn-sm btn-primary waves-effect width-md waves-light">View Profile</a></td>
-                            <td><a href="#" class="btn btn-sm btn-warning waves-effect width-md waves-light">Approve User</a></td>
+                            <td><button  type="button" class="btn btn-sm btn-warning waves-effect width-md waves-light approveUser" data-id="{{Crypt::encrypt($item->id)}}">Approve User</button></td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -48,5 +48,35 @@
 
 
 @section('cunstomJS')
-
+    <script>
+        $('.approveUser').on('click', function(){
+            let id = $(this).data('id');
+            $(this).text('Please wait...');
+            $(this).attr('disabled', true);
+            $.ajax({
+                url:"{{route('admin.agency.update.status')}}",
+                type:"POST",
+                data:{
+                    '_token' : "{{csrf_token()}}",
+                    'id' : id
+                },
+                success:function(data){
+                    if(data.status == 1){
+                        toastr.success(data.message);
+                        location.reload(true);
+                    }else{
+                        toastr.error(data.message);
+                        $('.approveUser').text('Approve User');
+                        $('.approveUser').attr('disabled', false);
+                    }
+                },error:function(xhr, status, error){
+                    if(xhr.status == 500 || xhr.status == 422){
+                        toastr.error('Whoops! Something went wron. Failed to approve user.');
+                        $('.approveUser').text('Approve User');
+                        $('.approveUser').attr('disabled', false);
+                    }
+                }
+            });
+        });
+    </script>
 @endsection
