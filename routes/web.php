@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\AgencyController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AuthController;
+use App\Http\Controllers\Admin\BlogController;
 use App\Http\Controllers\Admin\CaregiverController;
 use App\Http\Controllers\Site\SiteController;
 
@@ -42,5 +43,10 @@ Route::group([
         Route::get('approved-agencies', [AgencyController::class, 'approvedAgencyList'])->name('admin.agency.list.approved');
         Route::get('request-for-approval', [AgencyController::class, 'newJoiner'])->name('admin.agency.request.for.approval');
         Route::get('view-profile/{id}', [AgencyController::class, 'viewProfile'])->name('admin.agency.view.profile');
+    });
+
+    Route::prefix('blog')->group(function(){
+        Route::get('all-blog', [BlogController::class, 'index'])->name('admin.get.blog');
+        Route::post('create-blog', [BlogController::class, 'createBlog'])->name('admin.create.blog');
     });
 });

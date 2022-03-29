@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Site;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Mail\GetInTouchMail;
+use App\Models\Blog;
 use Exception;
 use Illuminate\Support\Facades\Mail;
 
@@ -13,7 +14,8 @@ class SiteController extends Controller
     //
     public function index(Request $request)
     {
-        return view('site.index');
+        $blogs = Blog::where('is_activate', 1)->take(3)->get();
+        return view('site.index')->with(['blogs' => $blogs]);
     }
 
     public function contact(Request $request)
@@ -61,7 +63,8 @@ class SiteController extends Controller
     public function blogs(Request $request, $id = null)
     {
         if (!$id) {
-            return view('site.blog.index');
+            $blogs = Blog::where('is_activate', 1)->get();
+            return view('site.blog.index')->with(['blogs' => $blogs]);
         } else {
             return view('site.blog.blogDetails');
         }

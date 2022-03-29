@@ -36,6 +36,12 @@
                         <li><a href="{{route('admin.agency.request.for.approval')}}">Request For Approval</a></li>
                     </ul>
                 </li>
+
+                <li>
+                    <a href="{{route('admin.get.blog')}}" class="waves-effect waves-light">
+                        <i class="mdi mdi-blogger"></i>Blogs  
+                    </a>
+                </li>
             </ul>
 
         </div>
