@@ -24,7 +24,7 @@
     <link href="{{asset('admin/assets/css/icons.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{asset('admin/assets/css/app.min.css')}}" rel="stylesheet" type="text/css" id="app-stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
+    <!-- Magnific -->
 
     @yield('cunstomHeader')
 </head>
@@ -61,7 +61,11 @@
                                       <li class="breadcrumb-item"><a href="javascript: void(0);" style="text-transform:capitalize;">{{Request::segment(3)}} </a></li>
                                   </ol>
                               </div>
-                              <h4 class="page-title" style="text-transform:capitalize; ">{{Request::segment(2)}}</h4>
+                              @if (Request::segment(2) != null)
+                                <h4 class="page-title" style="text-transform:capitalize; ">{{Request::segment(2)}}</h4>                                  
+                              @else
+                                <h4 class="page-title" style="text-transform:capitalize; ">{{Request::segment(3)}}</h4>                                  
+                              @endif
                           </div>
                       </div>
                   </div>
@@ -93,10 +97,14 @@
     <!-- Vendor js -->
     <script src="{{asset('admin/assets/js/vendor.min.js')}}"></script>
 
+
     <script src="{{asset('admin/assets/libs/morris-js/morris.min.js')}}"></script>
     <script src="{{asset('admin/assets/libs/raphael/raphael.min.js')}}"></script>
 
     <script src="{{asset('admin/assets/js/pages/dashboard.init.js')}}"></script>
+
+    <!-- KNOB JS -->
+    <script src="{{asset('admin/assets/libs/jquery-knob/jquery.knob.min.js')}}"></script>
 
      <!-- Datatable plugin js -->
      <script src="{{asset('admin/assets/libs/datatables/jquery.dataTables.min.js')}}"></script>
@@ -127,7 +135,12 @@
     <script src="{{asset('admin/assets/js/app.min.js')}}"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-      @yield('cunstomJS')
+    
+
+
+    @yield('cunstomJS')
+
+
     <script>
       toastr.options = {
           "closeButton": false,

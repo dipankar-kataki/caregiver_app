@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Education;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -31,7 +32,10 @@ class CaregiverController extends Controller
         }
     }
 
-    public function viewProfile(){
-        return view('admin.caregiver.view-profile');
+    public function viewProfile($id){
+        $id = Crypt::decrypt($id);
+        $user_details = User::with('profile', 'address')->where('id', $id)->first();
+        $education = Education::where('user_id', $id)->get();
+        return view('admin.caregiver.profile')->with(['user_details' => $user_details, 'education' => $education]);
     }
 }

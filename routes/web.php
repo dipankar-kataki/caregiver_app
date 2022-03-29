@@ -36,14 +36,14 @@ Route::group([
         Route::get('approved-caregivers', [CaregiverController::class, 'approvedCaregiverList'])->name('admin.caregiver.list.approved');
         Route::get('request-for-approval', [CaregiverController::class, 'newJoiner'])->name('admin.caregiver.request.for.approval');
         Route::post('update-status', [CaregiverController::class, 'updateStatus'])->name('admin.caregiver.update.status');
-        Route::get('view-profile/{id}', [CaregiverController::class, 'viewProfile'])->name('admin.caregiver.view.profile');
+        Route::get('profile/{id}', [CaregiverController::class, 'viewProfile'])->name('admin.caregiver.view.profile');
     });
 
     Route::prefix('agency')->group(function(){
         Route::get('approved-agencies', [AgencyController::class, 'approvedAgencyList'])->name('admin.agency.list.approved');
         Route::get('request-for-approval', [AgencyController::class, 'newJoiner'])->name('admin.agency.request.for.approval');
         Route::post('update-status', [AgencyController::class, 'updateStatus'])->name('admin.agency.update.status');
-        Route::get('view-profile/{id}', [AgencyController::class, 'viewProfile'])->name('admin.agency.view.profile');
+        Route::get('profile/{id}', [AgencyController::class, 'viewProfile'])->name('admin.agency.view.profile');
     });
 
     Route::prefix('blog')->group(function(){

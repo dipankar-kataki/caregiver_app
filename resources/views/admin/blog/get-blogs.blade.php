@@ -11,7 +11,7 @@
 @section('content')
     <div class="row">
         <div class="col-12">
-            <button class="btn btn-teal waves-effect waves-light m-2" style="float:right;box-shadow: 0px 5px 10px #bdbbbb;" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#addBlogModal"><i class="mdi mdi-bookmark-plus-outline"></i>&nbsp; Create Blog</button>
+            <button class="btn btn-teal waves-effect waves-light mb-3" style="float:right;box-shadow: 0px 5px 10px #bdbbbb;" data-backdrop="static" data-keyboard="false" data-toggle="modal" data-target="#addBlogModal"><i class="mdi mdi-bookmark-plus-outline"></i>&nbsp; Create Blog</button>
         </div>
     </div>
     <div class="row">
@@ -61,19 +61,19 @@
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label for="title" class="control-label">Add Title</label>
-                                    <input type="text" class="form-control" name="title" id="titleBlog" placeholder="e.g Exclusive: Get a First Look at the Fall Collection">
+                                    <input type="text" class="form-control" name="title" id="titleBlog" placeholder="e.g Exclusive: Get a First Look at the Fall Collection" required>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Add Image</label>
-                                    <input type="file" name="blogImage" id="blogImage" class="form-control">
+                                    <input type="file" name="blogImage" id="blogImage" class="form-control" required>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label>Add Content</label>
-                                    <textarea name="blogContent" id="blogContent" class="form-control" cols="30" rows="10" placeholder="Write here"></textarea>
+                                    <textarea name="blogContent" id="blogContent" class="form-control" cols="30" rows="10" placeholder="Write here" required></textarea>
                                 </div>
                             </div>
                             <div class="col-md-12">
@@ -93,6 +93,11 @@
 
 @section('cunstomJS')
     <script>
+
+        $('#blogCloseModalBtn').on('click',function(){
+            $('#addBlogModal').modal('hide');
+        });
+
         $('#blogForm').on('submit', function(e){
             e.preventDefault();
 
@@ -130,6 +135,9 @@
                         location.reload(true);
                     }else{
                         toastr.error(data.message);
+                        $('#blogSubmitModalBtn').text('Submit');
+                        $('#blogSubmitModalBtn').attr('disabled', false);
+                        $('#blogCloseModalBtn').attr('disabled', false);
                     }
                 },
                 error:function(xhr, status, error){

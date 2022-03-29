@@ -35,7 +35,7 @@
                             <td>{{$item->profile->dob}}</td>
                             <td>{{$item->profile->phone}}</td>
                             <td>{{$item->profile->gender}}</td>
-                            <td><a href="#" class="btn btn-sm btn-primary waves-effect width-md waves-light">View Profile</a></td>
+                            <td><a href="{{route('admin.caregiver.view.profile', ['id' => Crypt::encrypt($item->id)])}}" class="btn btn-sm btn-primary waves-effect width-md waves-light">View Profile</a></td>
                             <td><a href="#" class="btn btn-sm btn-success btn-rounded width-md waves-effect waves-light">Approved</a></td>
                         </tr>
                     @endforeach
