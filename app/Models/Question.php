@@ -11,4 +11,8 @@ class Question extends Model
 
     protected $table = 'questions';
     protected $guarded = [];
+
+    public function answer(){
+        return $this->hasMany(Answer::class);
+    }
 }

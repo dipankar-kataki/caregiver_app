@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\AgencyApp;
 
 use App\Http\Controllers\Controller;
+use App\Models\AcceptedJob;
+use App\Models\Answer;
+use App\Models\Education;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\JobByAgency;
+use App\Models\Question;
 use App\Models\User;
 use DateTime;
 use Carbon\Carbon;
@@ -128,6 +132,36 @@ class CreateJobController extends Controller
         return $this->success('Job posted successfully.',  $jobs, 'null', 200);
     }
 
+    public function getOngoingJob(){
+        $jobs = AcceptedJob::with('jobByAgency')->where('agency_id', auth('sanctum')->user()->id)->orderBy('created_at', 'DESC')->get();
+
+        $new_details = [];
+        foreach($jobs as $key => $item){
+            $details = [
+                'job_title' => $item->jobByAgency->job_title,
+                'amount' => '$'.$item->jobByAgency->amount_per_hour,
+                'care_type' => $item->jobByAgency->care_type,
+                'job_accepted_on' =>  Carbon::parse($item->jobByAgency->created_at)->diffForHumans(),
+                'patient_age' => $item->jobByAgency->patient_age,
+                'start_date' => $item->jobByAgency->start_date_of_care,
+                'end_date' => $item->jobByAgency->end_date_of_care,
+                'start_time' => $item->jobByAgency->start_time,
+                'end_time' => $item->jobByAgency->end_time,
+                'location' => $item->jobByAgency->street.', '.$item->jobByAgency->city.', '.$item->jobByAgency->state.', '.$item->jobByAgency->zip_code,
+                'description' => $item->jobByAgency->job_description,
+                'medical_history' => $item->jobByAgency->medical_history,
+                'essential_prior_expertise' => $item->jobByAgency->essential_prior_expertise,
+                'other_requirements' => $item->jobByAgency->other_requirements,
+                'is_activate' => $item->jobByAgency->is_activate,
+                'accepted_by' => $item->caregiver_id,
+    
+            ];
+
+            array_push($new_details, $details);
+        }
+        return $this->success('Ongoing job fetched successfully.',  $new_details, 'null', 200);
+    }
+
     public function updateJobStatus(Request $request){
         $update = JobByAgency::where('id', $request->job_id)->where('user_id', auth('sanctum')->user()->id)->update([
             'is_activate' => $request->job_status
@@ -145,6 +179,47 @@ class CreateJobController extends Controller
             return $this->success('Job deleted successfully.',  null, 'null', 200);
         }else{
             return $this->error('Whoops! Something went wrong.',  null, 'null', 500);
+        }
+    }
+
+    public function getCaregiverProfile($id){
+
+        $details = User::with('profile', 'address')->where('id', $id)->first();
+        $education = Education::where('user_id', $id)->get();
+        $answer = Answer::where('user_id', $id)->get();
+        $final_question = [];
+        foreach($answer as $key => $item){
+            $question = Question::where('id', $answer[$key]['question_id'])->get();
+            foreach($question as $key => $item2){
+                $new_question = [
+                    'question' => $item2->question,
+                    'answer' => $item->answer
+                ];
+
+                array_push($final_question, $new_question);
+            }
+        }
+        if($details == null){
+            return $this->error('Whoops! Caregiver not found. ',  null, 'null', 404);
+        }else{
+            $dobFormat = $diff = date_diff(date_create( $details->profile->dob), date_create(date('Y-m-d')));
+            $profile = [
+                'image' =>  $details->profile->profile_image,
+                'name' =>  $details->firstname.' '.$details->lastname,
+                'work_type' => $details->profile->work_type.' caregiver',
+                'rating' => $details->profile->total_rating,
+                'experience' => $details->profile->experience.' yrs',
+                'age' => $dobFormat->format('%y').' yrs',
+                'care_completed' => $details->profile->total_care_completed,
+                'total_review' => $details->profile->total_reviews,
+                'bio' => $details->profile->bio,
+                'address' => $details->address->street.', '.$details->address->city.', '.$details->address->state.', '.$details->address->zip_code,
+                'education' => $education,
+                'reviews' => null,
+                'question' => $final_question
+            ];
+            
+            return $this->success('Caregiver profile fetched successfully.',  $profile, 'null', 200);
         }
     }
 

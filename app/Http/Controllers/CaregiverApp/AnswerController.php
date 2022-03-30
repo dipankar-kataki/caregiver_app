@@ -27,6 +27,7 @@ class AnswerController extends Controller
             foreach($request->answer as $key => $item){
                 $data['question_id'] = $key + 1;
                 $data['answer'] = $item;
+                $data['user_id'] = auth('sanctum')->user()->id;
                 $data['created_at'] = Carbon::now();
                 $data['updated_at'] = Carbon::now();
                 $insertData[] = $data;

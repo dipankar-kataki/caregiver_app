@@ -166,8 +166,10 @@ use Illuminate\Support\Facades\Route;
                 Route::post('create-job', [CreateJobController::class, 'createJob']);
                 Route::post('edit-job', [CreateJobController::class, 'editJob']);
                 Route::get('active-job', [CreateJobController::class, 'getActiveJob']);
+                Route::get('ongoing-job', [CreateJobController::class, 'getOngoingJob']);
                 Route::post('update-job-status', [CreateJobController::class, 'updateJobStatus']);
                 Route::post('delete-job', [CreateJobController::class, 'deleteJob']);
+                Route::get('caregiver-profile/{id}', [CreateJobController::class, 'getCaregiverProfile']);
             });
 
 
