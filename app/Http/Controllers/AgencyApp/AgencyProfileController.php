@@ -79,16 +79,16 @@ class AgencyProfileController extends Controller
         if($profile_details->business_information  != null){
             $year_started =  Carbon::now()->subYears($profile_details->business_information->years_in_business);
 
-            $beneficiary = '';
+            $beneficiary = [];
             if($profile_details->business_information->beneficiary == null){
-                $beneficiary = null;
+                $beneficiary = [];
             }else{
                 $beneficiary = $profile_details->business_information->beneficiary;
             }
 
-            $homecare_service = '';
+            $homecare_service = [];
             if($profile_details->business_information->homecare_service == null){
-                $homecare_service = null;
+                $homecare_service = [];
             }else{
                 $homecare_service = $profile_details->business_information->homecare_service;
             }
@@ -114,16 +114,16 @@ class AgencyProfileController extends Controller
     public function getProfileDetails(Request $request){
         $profile_details = User::with('address', 'business_information')->where('id', auth('sanctum')->user()->id)->first();
 
-        $beneficiary = '';
+        $beneficiary = [];
         if($profile_details->business_information->beneficiary == null){
-            $beneficiary = null;
+            $beneficiary = [];
         }else{
             $beneficiary = $profile_details->business_information->beneficiary;
         }
 
-        $homecare_service = '';
+        $homecare_service = [];
         if($profile_details->business_information->homecare_service == null){
-            $homecare_service = null;
+            $homecare_service = [];
         }else{
             $homecare_service = $profile_details->business_information->homecare_service;
         }
