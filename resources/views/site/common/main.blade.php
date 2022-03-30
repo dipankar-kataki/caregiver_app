@@ -26,10 +26,11 @@
 </head>
 
 <body>
-    @yield('main')
+    
     <!-- Navbar -->
     @include('site.common.navbar')
 
+        @yield('main')
     <!-- Footer -->
     @include('site.common.footer')
 

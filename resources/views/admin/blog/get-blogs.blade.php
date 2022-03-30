@@ -28,7 +28,7 @@
                         </div>
                         <p>{{Str::of($item->content)->limit(50)}}</p>
                         <div class="text-right">
-                            <a href="javascript:void(0);" class="btn btn-success btn-sm waves-effect waves-light">Read More <i class="mdi mdi-arrow-right ml-1"></i></a>
+                            <a href="{{ route('site.blog', ['id' => Crypt::encrypt($item->id)]) }}" target="_blank" class="btn btn-success btn-sm waves-effect waves-light">Read More <i class="mdi mdi-arrow-right ml-1"></i></a>
                         </div>
                     </div>
                 </div>

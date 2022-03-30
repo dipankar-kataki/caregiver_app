@@ -200,7 +200,7 @@
 
 #blogDetails img {
     height: 60vh;
-    object-fit: cover;
+    object-fit: contain;
 }
 
 .header {

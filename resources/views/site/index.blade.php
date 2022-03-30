@@ -152,7 +152,7 @@
                     @forelse ($blogs as $item)
                         <div class="col-sm-4 mb-4">
                             <div class="card shadow-sm">
-                                <img src="{{asset($item->image)}}" alt="blog image" style="height:275px; width:100%; object-fit:cover;">
+                                <img src="{{asset($item->image)}}" alt="blog image" style="height:275px; width:100%; object-fit:cover;object-position: top;">
                                 <div class="card-body">
                                     <p class="card-text fs-5">{{Str::of($item->title)->limit(30)}}</p>
                                     <div class="d-flex justify-content-between align-items-center">
