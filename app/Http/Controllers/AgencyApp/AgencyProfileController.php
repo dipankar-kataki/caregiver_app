@@ -78,6 +78,21 @@ class AgencyProfileController extends Controller
         $profile_details = User::with('address', 'business_information')->where('id', auth('sanctum')->user()->id)->first();
         if($profile_details->business_information  != null){
             $year_started =  Carbon::now()->subYears($profile_details->business_information->years_in_business);
+
+            $beneficiary = '';
+            if($profile_details->business_information->beneficiary == null){
+                $beneficiary = null;
+            }else{
+                $beneficiary = $profile_details->business_information->beneficiary;
+            }
+
+            $homecare_service = '';
+            if($profile_details->business_information->homecare_service == null){
+                $homecare_service = null;
+            }else{
+                $homecare_service = $profile_details->business_information->homecare_service;
+            }
+
             $details = [
                 'business_name' => $profile_details->business_name,
                 'phone' => $profile_details->business_information->business_number,
@@ -87,8 +102,8 @@ class AgencyProfileController extends Controller
                 'address' => $profile_details->address->street.', '. $profile_details->address->city.', '. $profile_details->address->zip_code.', '. $profile_details->address->state,
                 'annual_business_revenue' => '$ '.$profile_details->business_information->annual_business_revenue,
                 'bio' => $profile_details->business_information->bio,
-                'our_beneficiaries' => $profile_details->business_information->beneficiary,
-                'homecare_services' => $profile_details->business_information->homecare_service
+                'our_beneficiaries' => $beneficiary,
+                'homecare_services' => $homecare_service
             ];
             return $this->success('Profile details fetched successfully.',  $details, 'null', 200);
         }else{
