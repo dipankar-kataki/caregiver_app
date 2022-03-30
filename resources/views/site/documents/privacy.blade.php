@@ -1,6 +1,11 @@
 @extends('site.common.main')
 
 @section('customHeader')
+<style>
+    .navbar{
+        display: none;
+    }
+</style>
 @endsection
 
 @section('siteTitle', 'PeaceWorc | Home')
