@@ -6,9 +6,6 @@
 @section('siteTitle', 'PeaceWorc | Home')
 
 @section('main')
-    <!-- Navbar -->
-    @include('site.common.navbarHome')
-
     <!-- Banner -->
     @include('site.common.banner')
 
