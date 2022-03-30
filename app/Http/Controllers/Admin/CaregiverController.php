@@ -3,7 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\ChildAbuse;
+use App\Models\Covid;
+use App\Models\Criminal;
 use App\Models\Education;
+use App\Models\Tuberculosis;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -36,6 +40,7 @@ class CaregiverController extends Controller
         $id = Crypt::decrypt($id);
         $user_details = User::with('profile', 'address')->where('id', $id)->first();
         $education = Education::where('user_id', $id)->get();
-        return view('admin.caregiver.profile')->with(['user_details' => $user_details, 'education' => $education]);
+        $documents = User::with('tuberculosis', 'covid', 'criminal', 'childAbuse', 'w_4_form', 'employment', 'driving', 'identification')->where('id', $id)->get();
+        return view('admin.caregiver.profile')->with(['user_details' => $user_details, 'education' => $education, 'documents' => $documents]);
     }
 }

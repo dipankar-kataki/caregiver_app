@@ -152,6 +152,7 @@ class DocumentController extends Controller
             'identification' => $details->identification->count(),
             'tuberculosis' => $details->tuberculosis->count(),
             'w_4_form' => $details->w_4_form->count(),
+            'is_document_uploaded' => $details->is_documents_uploaded
 
         ];
         return $this->success('Document count fetched successfully.',  $documents_count, 'null', 200);

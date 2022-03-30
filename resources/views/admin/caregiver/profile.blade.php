@@ -25,7 +25,11 @@
                     <div class="text-center card-box shadow-none border border-secoundary">
                         <div class="member-card">
                             <div class="avatar-xl member-thumb mb-3 mx-auto d-block">
-                                <img src="{{asset($user_details->profile->profile_image)}}" class="rounded-circle img-thumbnail" alt="profile-image">
+                                @if ($user_details->profile->profile_image == null)
+                                    <img src="{{asset('admin/assets/images/placeholder.jpg')}}" class="rounded-circle img-thumbnail" alt="profile-image">                                    
+                                @else
+                                    <img src="{{asset($user_details->profile->profile_image)}}" class="rounded-circle img-thumbnail" alt="profile-image">                                    
+                                @endif
                                 <i class="mdi mdi-star-circle member-star text-success"></i>
                             </div>
 
@@ -203,33 +207,170 @@
                             <div class="pt-2">
                                 <h5 class="font-16 mb-3">Uploaded Documents</h5>
                                 <div class="row">
-                                    <div class="col-sm-12">
-                                        <p>Covid</p>
-                                        <div class="card">
-                                            <div class="card-body">
-                                                <ul class="profile-documents">
-                                                    <li>
-                                                        <p>Image: <a href="#">Click to view</a></p>
-                                                    </li>
-                                                    <li>
-                                                        <p>Image: <a href="#">Click to view</a></p>
-                                                    </li>
-                                                    <li>
-                                                        <p>Image: <a href="#">Click to view</a></p>
-                                                    </li>
-                                                    <li>
-                                                        <p>Image: <a href="#">Click to view</a></p>
-                                                    </li>
-                                                    <li>
-                                                        <p>Image: <a href="#">Click to view</a></p>
-                                                    </li>
-                                                    <li>
-                                                        <p>Image: <a href="#">Click to view</a></p>
-                                                    </li>
-                                                </ul>
+                                    @forelse ($documents as $key => $item)
+                                        @if (!($documents[$key]['tuberculosis']->isEmpty()))
+                                            <div class="col-sm-12">
+                                                <p>Tuberculosis Test</p>
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <ul class="profile-documents">
+                                                            <li>
+                                                                <h6>Document: <a href="{{asset($item->tuberculosis[$key]['image'])}}" target="_blank">Click to view</a></h6>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
                                             </div>
+                                        @endif
+
+                                        @if (!($documents[$key]['covid']->isEmpty()))
+                                            <div class="col-sm-12">
+                                                <p>Covid-19 Vaccination Card</p>
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <ul class="profile-documents">
+                                                            @forelse ($documents as $key => $item)
+                                                                <li>
+                                                                    <h6>Document: <a href="{{asset($item->covid[$key]['image'])}}" target="_blank">Click to view</a></h6>
+                                                                </li>
+                                                            @empty
+                                                                <li>No documents to show.</li>
+                                                            @endforelse
+                                                        
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+
+                                        @if (!($documents[$key]['criminal']->isEmpty()))
+                                            <div class="col-sm-12">
+                                                <p>Criminal Background Result</p>
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <ul class="profile-documents">
+                                                            @forelse ($documents as $key => $item)
+                                                                <li>
+                                                                    <h6>Document: <a href="{{asset($item->criminal[$key]['image'])}}" target="_blank">Click to view</a></h6>
+                                                                </li>
+                                                            @empty
+                                                                <li>No documents to show.</li>
+                                                            @endforelse
+                                                        
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+
+                                        @if (!($documents[$key]['childAbuse']->isEmpty()))
+                                            <div class="col-sm-12">
+                                                <p>Child Abuse Clearance</p>
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <ul class="profile-documents">
+                                                            @forelse ($documents as $key => $item)
+                                                                <li>
+                                                                    <h6>Document: <a href="{{asset($item->childAbuse[$key]['image'])}}" target="_blank">Click to view</a></h6>
+                                                                </li>
+                                                            @empty
+                                                                <li>No documents to show.</li>
+                                                            @endforelse
+                                                        
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+
+
+                                        @if (!($documents[$key]['w_4_form']->isEmpty()))
+                                            <div class="col-sm-12">
+                                                <p>W-4 Form</p>
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <ul class="profile-documents">
+                                                            @forelse ($documents as $key => $item)
+                                                                <li>
+                                                                    <h6>Document: <a href="{{asset($item->w_4_form[$key]['image'])}}" target="_blank">Click to view</a></h6>
+                                                                </li>
+                                                            @empty
+                                                                <li>No documents to show.</li>
+                                                            @endforelse
+                                                        
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+
+                                        @if (!($documents[$key]['employment']->isEmpty()))
+                                            <div class="col-sm-12">
+                                                <p>Employment Eligibility Verification form (I-9)</p>
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <ul class="profile-documents">
+                                                            @forelse ($documents as $key => $item)
+                                                                <li>
+                                                                    <h6>Document: <a href="{{asset($item->employment[$key]['image'])}}" target="_blank">Click to view</a></h6>
+                                                                </li>
+                                                            @empty
+                                                                <li>No documents to show.</li>
+                                                            @endforelse
+                                                        
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+
+                                        @if (!($documents[$key]['driving']->isEmpty()))
+                                            <div class="col-sm-12">
+                                                <p>Driving License</p>
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <ul class="profile-documents">
+                                                            @forelse ($documents as $key => $item)
+                                                                <li>
+                                                                    <h6>Document: <a href="{{asset($item->driving[$key]['image'])}}" target="_blank">Click to view</a></h6>
+                                                                </li>
+                                                            @empty
+                                                                <li>No documents to show.</li>
+                                                            @endforelse
+                                                        
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+
+                                        @if (!($documents[$key]['identification']->isEmpty()))
+                                            <div class="col-sm-12">
+                                                <p>Identification</p>
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        <ul class="profile-documents">
+                                                            @forelse ($documents as $key => $item)
+                                                                <li>
+                                                                    <h6>Document: <a href="{{asset($item->identification[$key]['image'])}}" target="_blank">Click to view</a></h6>
+                                                                </li>
+                                                            @empty
+                                                                <li>No documents to show.</li>
+                                                            @endforelse
+                                                        
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        @endif
+
+
+                                    @empty
+                                        <div class="text-center">
+                                            <h6>No Documents To Show</h6>
                                         </div>
-                                    </div>
+                                    @endforelse
+                                    
                                 </div>
                             </div>
                         </div>
