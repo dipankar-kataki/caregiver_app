@@ -1,34 +1,16 @@
 @extends('site.common.main')
 
 @section('customHeader')
-    <style>
-        .main {
-            margin-top: 100px;
-        }
-
-        .navbar .navbar-collapse .navbar-nav .nav-item .nav-link {
-            color: #111;
-        }
-
-        .navbar {
-            background: #fff;
-            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .2);
-        }
-
-        .navbar .navbar-brand img {
-            filter: none;
-        }
-
-    </style>
 @endsection
 
 @section('siteTitle', 'PeaceWorc | Blogs')
 
 @section('main')
-    <!-- Navbar -->
-    @include('site.common.navbar')
+<section class="header">
+    <p class="header_title">Blogs</p>
+</section>
 
-    <div class="container main">
+    <div class="container main mt-5">
         <div class="row">
             @forelse ($blogs as $item)
                 <div class="col-sm-4 mb-4">

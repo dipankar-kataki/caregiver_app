@@ -27,6 +27,8 @@
 
 <body>
     @yield('main')
+    <!-- Navbar -->
+    @include('site.common.navbar')
 
     <!-- Footer -->
     @include('site.common.footer')

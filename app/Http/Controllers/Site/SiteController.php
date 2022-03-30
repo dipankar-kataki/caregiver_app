@@ -72,4 +72,12 @@ class SiteController extends Controller
             return view('site.blog.blogDetails')->with(['blog_details' => $blog_details]);
         }
     }
+
+    public function terms(){
+        return view('site.documents.terms');
+    }
+
+    public function privacy(){
+        return view('site.documents.privacy');
+    }
 }
