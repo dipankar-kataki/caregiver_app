@@ -39,7 +39,7 @@
                             </div>
 
                             @if ($user_details->is_user_approved == 0)
-                                <button type="button" class="btn btn-warning btn-sm width-sm waves-effect mt-2 waves-light">Approve User</button>                                
+                                <button  type="button" class="btn btn-sm btn-warning waves-effect width-md waves-light approveUser" data-id="{{Crypt::encrypt($user_details->id)}}">Approve User</button>                                
                             @else
                                 <button type="button" class="btn btn-success btn-rounded btn-sm width-sm waves-effect mt-2 waves-light">User Approved</button>                                
                             @endif
@@ -388,5 +388,35 @@
 
 
 @section('cunstomJS')
-
+<script>
+        $('.approveUser').on('click', function(){
+            let id = $(this).data('id');
+            $(this).text('Please wait...');
+            $(this).attr('disabled', true);
+            $.ajax({
+                url:"{{route('admin.caregiver.update.status')}}",
+                type:"POST",
+                data:{
+                    '_token' : "{{csrf_token()}}",
+                    'id' : id
+                },
+                success:function(data){
+                    if(data.status == 1){
+                        toastr.success(data.message);
+                        location.reload(true);
+                    }else{
+                        toastr.error(data.message);
+                        $('.approveUser').text('Approve User');
+                        $('.approveUser').attr('disabled', false);
+                    }
+                },error:function(xhr, status, error){
+                    if(xhr.status == 500 || xhr.status == 422){
+                        toastr.error('Whoops! Something went wron. Failed to approve user.');
+                        $('.approveUser').text('Approve User');
+                        $('.approveUser').attr('disabled', false);
+                    }
+                }
+            });
+        });
+    </script>
 @endsection
