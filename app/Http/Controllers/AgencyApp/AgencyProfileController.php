@@ -39,12 +39,13 @@ class AgencyProfileController extends Controller
             'street' => 'required',
             'city' => 'required',
             'state' => 'required',
-            'zip_code' => 'required'
+            'zip_code' => 'required',
         ]);
 
         if($validator->fails()){
             return $this->error('Whoops! Failed to update profile.', $validator->errors(), 'null', 400);
         }else{
+
             $update_business_info = BusinessInformation::where('user_id', auth('sanctum')->user()->id)->update([
                 'bio' => $request->bio,
                 'business_number' => $request->business_number,
@@ -57,6 +58,7 @@ class AgencyProfileController extends Controller
                 'annual_business_revenue' => $request->annual_business_revenue,
                 'beneficiary' => serialize($request->beneficiary),
                 'homecare_service' => serialize($request->homecare_service),
+
             ]);
 
             $update_address = Address::where('user_id', auth('sanctum')->user()->id)->update([
