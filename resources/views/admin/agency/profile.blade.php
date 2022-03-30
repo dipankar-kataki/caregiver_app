@@ -173,14 +173,41 @@
                                 <div class="col-md-6 col-sm-12">
                                     <div class="pt-2">
                                         <h6 class="font-16 mb-1">Our Beneficiaries</h6>
-                                        <p class="mb-0">{{$user_details->business_information->beneficiary}}</p>
+                                        @if($user_details->business_information->beneficiary != null)
+                                            @forelse ($user_details->business_information->beneficiary as $item)
+                                                <ul>
+                                                    <li>{{$item}}</li>
+                                                </ul>
+                                            @empty
+                                                <div class="text-center">
+                                                    <h6>No beneficiaries to show.</h6>
+                                                </div>
+                                            @endforelse
+                                        @else
+                                            <p>No beneficiaries to show.</p>
+                                        @endif
+                                        
+                                        {{-- <p class="mb-0">{{$user_details->business_information->beneficiary}}</p> --}}
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 col-sm-12">
                                     <div class="pt-2">
                                         <h6 class="font-16 mb-1">Homecare Services</h6>
-                                        <p class="mb-0">{{$user_details->business_information->homecare_service}}</p>
+                                        @if($user_details->business_information->homecare_service != null)
+                                            @forelse ($user_details->business_information->homecare_service as $item)
+                                                <ul>
+                                                    <li>{{$item}}</li>
+                                                </ul>
+                                            @empty
+                                                <div class="text-center">
+                                                    <h6>No beneficiaries to show.</h6>
+                                                </div>
+                                            @endforelse
+                                        @else
+                                            <p>No homecare services to show.</p>
+                                        @endif
+                                        
                                     </div>
                                 </div>
                             </div>
