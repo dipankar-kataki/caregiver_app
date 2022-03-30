@@ -113,6 +113,21 @@ class AgencyProfileController extends Controller
     }
     public function getProfileDetails(Request $request){
         $profile_details = User::with('address', 'business_information')->where('id', auth('sanctum')->user()->id)->first();
+
+        $beneficiary = '';
+        if($profile_details->business_information->beneficiary == null){
+            $beneficiary = null;
+        }else{
+            $beneficiary = $profile_details->business_information->beneficiary;
+        }
+
+        $homecare_service = '';
+        if($profile_details->business_information->homecare_service == null){
+            $homecare_service = null;
+        }else{
+            $homecare_service = $profile_details->business_information->homecare_service;
+        }
+        
         if($profile_details->business_information  != null){
             $details = [
                 'bio' => $profile_details->business_information->bio,
@@ -125,8 +140,8 @@ class AgencyProfileController extends Controller
                 'years_in_business' => $profile_details->business_information->years_in_business,
                 'country_of_business_formation' => $profile_details->business_information->country_of_business_formation,
                 'annual_business_revenue' => $profile_details->business_information->annual_business_revenue,
-                'our_beneficiaries' => $profile_details->business_information->beneficiary,
-                'homecare_services' => $profile_details->business_information->homecare_service,
+                'our_beneficiaries' => $beneficiary,
+                'homecare_services' => $homecare_service,
                 'street' => $profile_details->address->street,
                 'city' => $profile_details->address->city,
                 'state' => $profile_details->address->state,
