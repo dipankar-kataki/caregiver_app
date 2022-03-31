@@ -119,7 +119,8 @@ class JobController extends Controller
                 $createJob = AcceptedJob::create([
                     'job_by_agencies_id' =>  $request->job_id,
                     'caregiver_id' => auth('sanctum')->user()->id,
-                    'agency_id' => $get_agency->user_id
+                    'agency_id' => $get_agency->user_id,
+                    'is_activate' => 1
                 ]);
                 if($createJob){
                     JobByAgency::where('id', $request->job_id)->update([
@@ -134,7 +135,7 @@ class JobController extends Controller
     }
 
     public function ongoingJob(){
-        $ongoing_job = AcceptedJob::with('jobByAgency')->where('caregiver_id', auth('sanctum')->user()->id)->orderBy('created_at', 'DESC')->get();
+        $ongoing_job = AcceptedJob::with('jobByAgency')->where('caregiver_id', auth('sanctum')->user()->id)->where('is_activate', 1)->orderBy('created_at', 'DESC')->get();
         $new_details = [];
         foreach($ongoing_job as $key => $item){
             $agency_name = User::where('id', $item->agency_id)->first();
@@ -162,5 +163,28 @@ class JobController extends Controller
         }
 
         return $this->success('Ongoing job fetched successfully.',   $new_details, 'null', 200);
+    }
+
+    public function completeJob(Request $request){
+        $validator = Validator::make($request->all(),[
+            'job_id' => 'required'
+        ]);
+        if($validator->fails()){
+            return $this->error('Whoops! Something went wrong. Failed to complete job.', $validator->errors() , 'null', 500);
+        }else{
+            $details = AcceptedJob::where('id', $request->job_id)->first();
+            $updateJobByAgencyTable = JobByAgency::where('id', $details->job_by_agencies_id)->update([
+                'is_activate' => 0
+            ]);
+            $updateJobAcceptedTable = AcceptedJob::where('id', $request->job_id)->update([
+                'is_activate' => 0
+            ]);
+            if($updateJobByAgencyTable && $updateJobAcceptedTable){
+                return $this->success('Job completed successfully',  null, 'null', 200);
+            }else{
+                return $this->error('Whoops! Something went wrong. Failed to complete job.', null , 'null', 400);
+            }
+        }
+        
     }
 }

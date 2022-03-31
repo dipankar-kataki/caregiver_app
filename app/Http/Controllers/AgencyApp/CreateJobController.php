@@ -137,6 +137,12 @@ class CreateJobController extends Controller
 
         $new_details = [];
         foreach($jobs as $key => $item){
+            $user = User::with('profile')->where('id', $item->caregiver_id)->first();
+            $caregiver_details = [
+                'name' => $user->firstname.', '.$user->lastname,
+                'work_type' => $user->profile->work_type.' caregiver',
+                'rating' => $user->profile->total_rating
+            ];
             $details = [
                 'job_title' => $item->jobByAgency->job_title,
                 'amount' => '$'.$item->jobByAgency->amount_per_hour,
@@ -153,6 +159,7 @@ class CreateJobController extends Controller
                 'essential_prior_expertise' => $item->jobByAgency->essential_prior_expertise,
                 'other_requirements' => $item->jobByAgency->other_requirements,
                 'is_activate' => $item->jobByAgency->is_activate,
+                'accepted_caregiver_details' => $caregiver_details,
                 'accepted_by' => $item->caregiver_id,
     
             ];
@@ -192,7 +199,7 @@ class CreateJobController extends Controller
             $question = Question::where('id', $answer[$key]['question_id'])->get();
             foreach($question as $key => $item2){
                 $new_question = [
-                    'question' => $item2->question,
+                    'question' => $item2->slug,
                     'answer' => $item->answer
                 ];
 
@@ -215,7 +222,7 @@ class CreateJobController extends Controller
                 'bio' => $details->profile->bio,
                 'address' => $details->address->street.', '.$details->address->city.', '.$details->address->state.', '.$details->address->zip_code,
                 'education' => $education,
-                'reviews' => null,
+                'reviews' => [],
                 'question' => $final_question
             ];
             

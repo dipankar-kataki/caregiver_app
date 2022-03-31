@@ -65,6 +65,7 @@ use Illuminate\Support\Facades\Route;
             Route::post('owner-profile', [JobController::class, 'jobOwnerProfile']);
             Route::post('accept-job' , [JobController::class, 'acceptJob']);
             Route::get('ongoing-job' , [JobController::class, 'ongoingJob']);
+            Route::post('complete-job', [JobController::class, 'completeJob']);
         });
         
         Route::prefix('profile')->group(function(){
