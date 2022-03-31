@@ -27,7 +27,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
+Route::prefix('caregiver')->group(function(){
+    
     /******************************** Login & Signup *******************************/
 
     Route::post('signup',[SignUpController::class,'signup']);
@@ -120,6 +121,9 @@ use Illuminate\Support\Facades\Route;
             'http_status_code' => 401
         ]);
     })->name('login-expire');
+});
+
+    
 
 
 
