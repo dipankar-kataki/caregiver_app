@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AcceptedJob;
 use Illuminate\Http\Request;
 use App\Models\JobByAgency;
+use App\Models\Registration;
 use App\Traits\ApiResponser;
 use App\Models\User;
 use Carbon\Carbon;
@@ -172,6 +173,14 @@ class JobController extends Controller
         if($validator->fails()){
             return $this->error('Whoops! Something went wrong. Failed to complete job.', $validator->errors() , 'null', 500);
         }else{
+            $registration = Registration::where('user_id', auth('sanctum')->user()->id)->first();
+            $total_care_completed = 0;
+            if($registration->total_care_completed == null ){
+                $total_care_completed = 0;
+            }else{
+                $total_care_completed = $total_care_completed + 1;
+            }
+
             $details = AcceptedJob::where('id', $request->job_id)->first();
             $updateJobByAgencyTable = JobByAgency::where('id', $details->job_by_agencies_id)->update([
                 'is_activate' => 0
@@ -179,6 +188,11 @@ class JobController extends Controller
             $updateJobAcceptedTable = AcceptedJob::where('id', $request->job_id)->update([
                 'is_activate' => 0
             ]);
+
+            Registration::where('user_id', auth('sanctum')->user()->id)->update([
+                'total_care_completed' =>  $total_care_completed
+            ]);
+            
             if($updateJobByAgencyTable && $updateJobAcceptedTable){
                 return $this->success('Job completed successfully',  null, 'null', 200);
             }else{
