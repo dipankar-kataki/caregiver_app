@@ -28,7 +28,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::prefix('caregiver')->group(function(){
-    
+
     /******************************** Login & Signup *******************************/
 
     Route::post('signup',[SignUpController::class,'signup']);
@@ -67,6 +67,7 @@ Route::prefix('caregiver')->group(function(){
             Route::post('accept-job' , [JobController::class, 'acceptJob']);
             Route::get('ongoing-job' , [JobController::class, 'ongoingJob']);
             Route::post('complete-job', [JobController::class, 'completeJob']);
+            Route::get('past-job', [JobController::class, 'pastJob']);
         });
         
         Route::prefix('profile')->group(function(){
@@ -175,6 +176,7 @@ Route::prefix('caregiver')->group(function(){
                 Route::post('update-job-status', [CreateJobController::class, 'updateJobStatus']);
                 Route::post('delete-job', [CreateJobController::class, 'deleteJob']);
                 Route::get('caregiver-profile/{id}', [CreateJobController::class, 'getCaregiverProfile']);
+                Route::get('closed-job', [CreateJobController::class, 'getClosedJob']);
             });
 
 

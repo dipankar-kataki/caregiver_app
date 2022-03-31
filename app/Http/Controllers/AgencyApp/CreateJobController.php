@@ -140,7 +140,7 @@ class CreateJobController extends Controller
             $user = User::with('profile')->where('id', $item->caregiver_id)->first();
             $caregiver_details = [
                 'name' => $user->firstname.', '.$user->lastname,
-                'work_type' => $user->profile->work_type.' caregiver',
+                'work_type' => $user->profile->work_type,
                 'rating' => $user->profile->total_rating
             ];
             $details = [
@@ -230,5 +230,9 @@ class CreateJobController extends Controller
         }
     }
 
+    public function getClosedJob(){
+        $details = JobByAgency::where('is_activate', 0)->where('user_id', auth('sanctum')->user()->id)->get();
+        return $this->success('Closed job fetched successfully.',  $details, 'null', 200);
+    }
 
 }
