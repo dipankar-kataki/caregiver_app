@@ -174,12 +174,12 @@ class JobController extends Controller
             return $this->error('Whoops! Something went wrong. Failed to complete job.', $validator->errors() , 'null', 500);
         }else{
             $registration = Registration::where('user_id', auth('sanctum')->user()->id)->first();
-            $total_care_completed = 0;
-            if($registration->total_care_completed == null ){
-                $total_care_completed = 0;
-            }else{
-                $total_care_completed = $total_care_completed + 1;
-            }
+            // $total_care_completed = 0;
+            // if($registration->total_care_completed == null ){
+            //     $total_care_completed = 0;
+            // }else{
+            //     $total_care_completed = $total_care_completed + 1;
+            // }
 
             $details = AcceptedJob::where('id', $request->job_id)->first();
             $updateJobByAgencyTable = JobByAgency::where('id', $details->job_by_agencies_id)->update([
@@ -190,9 +190,9 @@ class JobController extends Controller
             ]);
 
             Registration::where('user_id', auth('sanctum')->user()->id)->update([
-                'total_care_completed' =>  $total_care_completed
+                'total_care_completed' =>  $registration->total_care_completed + 1
             ]);
-            
+
             if($updateJobByAgencyTable && $updateJobAcceptedTable){
                 return $this->success('Job completed successfully',  null, 'null', 200);
             }else{
