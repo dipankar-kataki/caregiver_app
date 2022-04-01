@@ -243,17 +243,21 @@ class ProfileController extends Controller
                 $profilePic->move(public_path('caregiver-app/profile/'), $new_name);
                 $file = 'caregiver-app/profile/' . $new_name;
             }
-
-            $update = Registration::where('user_id', auth('sanctum')->user()->id)->update([
-                'profile_image' => $file
-            ]);
-
-            
-
+            $details = Registration::where('user_id', auth('sanctum')->user()->id)->first();
+            if($details != null){
+                $update = Registration::where('user_id', auth('sanctum')->user()->id)->update([
+                    'profile_image' => $file
+                ]);
+            }else{
+                Registration::create([
+                    'profile_image' => $file,
+                    'user_id' => auth('sanctum')->user()->id
+                ]);
+            }
             if($update){
                 return $this->success('Profile image updated successfully', ['profile_image' => $file], 'null', 201);
             }else{
-                return $this->error('Whoops!, Failed to add profile image', null, 'null', 200);
+                return $this->error('Whoops!, Failed to add profile image', null, 'null', 400);
             }
         }
     }
