@@ -157,7 +157,7 @@ class ProfileController extends Controller
                     }
                     return $this->success('Profile updated successfully', $profile, 'null', 201);
                 }else{
-                    return $this->error('Whoops!, Updated failed', null, 'null', 200);
+                    return $this->error('Whoops!, Updated failed', null, 'null', 400);
                 }
             }else{
                 $updateReg = Registration::where('user_id', auth('sanctum')->user()->id)->update([
@@ -194,7 +194,7 @@ class ProfileController extends Controller
                     }
                     return $this->success('Profile updated successfully', $profile, 'null', 201);
                 }else{
-                    return $this->error('Whoops!, Updated failed', null, 'null', 200);
+                    return $this->error('Whoops!, Updated failed', null, 'null', 400);
                 }
             }
         }
