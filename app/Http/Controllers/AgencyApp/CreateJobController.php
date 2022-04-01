@@ -244,9 +244,10 @@ class CreateJobController extends Controller
                 'id' => $item->jobByAgency->id,
                 'agency_name' => $agency_name->business_name,
                 'job_title' => $item->jobByAgency->job_title,
-                'amount_per_hour' => $item->jobByAgency->amount_per_hour,
+                'amount' => $item->jobByAgency->amount_per_hour,
                 'care_type' => $item->jobByAgency->care_type,
                 'patient_age' => $item->jobByAgency->patient_age,
+                'job_closed_on' =>  Carbon::parse($item->jobByAgency->updated_at)->diffForHumans(),
                 'start_date_of_care' => $item->jobByAgency->start_date_of_care,
                 'end_date_of_care' => $item->jobByAgency->end_date_of_care,
                 'start_time' => $item->jobByAgency->start_time,
@@ -258,7 +259,7 @@ class CreateJobController extends Controller
                 'other_requirements' => $item->jobByAgency->other_requirements,
                 'caregiver_details' =>  $caregiver_details,
                 'accepted_by' => $item->caregiver_id,
-                'created_at' => $item->jobByAgency->created_at,
+                'job_created_on' => $item->jobByAgency->created_at,
                 
             ];
             array_push($new_details, $details);
