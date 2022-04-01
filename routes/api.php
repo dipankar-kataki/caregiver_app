@@ -7,6 +7,7 @@ use App\Http\Controllers\AgencyApp\AuthorizedOfficerController;
 use App\Http\Controllers\AgencyApp\BusinessInformationController;
 use App\Http\Controllers\AgencyApp\CreateJobController;
 use App\Http\Controllers\CaregiverApp\AnswerController;
+use App\Http\Controllers\CaregiverApp\CaregiverReviewController;
 use App\Http\Controllers\CaregiverApp\DocumentController;
 use App\Http\Controllers\CaregiverApp\ForgotPasswordController;
 use App\Http\Controllers\CaregiverApp\LoginController;
@@ -91,6 +92,12 @@ Route::prefix('caregiver')->group(function(){
                 Route::get('get-education',[ProfileController::class,'getEducation']);
                 Route::post('edit-education',[ProfileController::class,'editEducation']);
             }); 
+        });
+
+
+        Route::prefix('review')->group(function(){
+            Route::get('get-review/{id}', [CaregiverReviewController::class, 'getReview']);
+            Route::post('add-review', [CaregiverReviewController::class, 'addReview']);
         });
 
         /************************************* Password Change Api ********************************************* */
@@ -186,6 +193,12 @@ Route::prefix('caregiver')->group(function(){
                 Route::post('edit-profile',[AgencyProfileController::class, 'editProfile']);
                 Route::get('get-profile-details',[AgencyProfileController::class, 'getProfileDetails']);
                 Route::get('get-formated-profile-details',[AgencyProfileController::class, 'getFormatedProfileDetails']);
+            });
+
+            /******************************** Review Api's *******************************/
+            Route::prefix('review')->group(function(){
+                Route::get('get-review/{id}', [AgencyReviewController::class, 'getReview']);
+                Route::post('add-review', [AgencyReviewController::class, 'addReview']);
             });
 
             /************************************* Password Change Api ********************************************* */

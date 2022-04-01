@@ -174,11 +174,11 @@ class JobController extends Controller
             return $this->error('Whoops! Something went wrong. Failed to complete job.', $validator->errors() , 'null', 500);
         }else{
             $registration = Registration::where('user_id', auth('sanctum')->user()->id)->first();
-            $details = AcceptedJob::where('id', $request->job_id)->first();
+            $details = AcceptedJob::where('job_by_agencies_id', $request->job_id)->first();
             $updateJobByAgencyTable = JobByAgency::where('id', $details->job_by_agencies_id)->update([
                 'is_activate' => 0
             ]);
-            $updateJobAcceptedTable = AcceptedJob::where('id', $request->job_id)->update([
+            $updateJobAcceptedTable = AcceptedJob::where('job_by_agencies_id', $request->job_id)->update([
                 'is_activate' => 0
             ]);
 
@@ -186,7 +186,7 @@ class JobController extends Controller
                 'total_care_completed' =>  $registration->total_care_completed + 1
             ]);
 
-            if($updateJobByAgencyTable && $updateJobAcceptedTable){
+            if(($updateJobByAgencyTable) && ($updateJobAcceptedTable)){
                 return $this->success('Job completed successfully',  null, 'null', 200);
             }else{
                 return $this->error('Whoops! Something went wrong. Failed to complete job.', null , 'null', 400);

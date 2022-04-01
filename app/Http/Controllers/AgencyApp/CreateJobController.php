@@ -66,8 +66,6 @@ class CreateJobController extends Controller
                     'user_id' => auth('sanctum')->user()->id
                 ]);
                 if($create){
-                    // $jobs = JobByAgency::where('user_id', auth('sanctum')->user()->id)->where('is_activate', 1)->get();
-    
                     return $this->success('Job posted successfully.',  null, 'null', 201);
                 }else{
                     return $this->error('Whoops! Something went wrong. Failed to post job.',  null, 'null', 500);
@@ -141,7 +139,7 @@ class CreateJobController extends Controller
             $caregiver_details = [
                 'name' => $user->firstname.', '.$user->lastname,
                 'work_type' => $user->profile->work_type,
-                'rating' => $user->profile->total_rating
+                'rating' => $user->profile->rating
             ];
             $details = [
                 'job_title' => $item->jobByAgency->job_title,
@@ -214,7 +212,7 @@ class CreateJobController extends Controller
                 'image' =>  $details->profile->profile_image,
                 'name' =>  $details->firstname.' '.$details->lastname,
                 'work_type' => $details->profile->work_type.' caregiver',
-                'rating' => $details->profile->total_rating,
+                'rating' => $details->profile->rating,
                 'experience' => $details->profile->experience.' yrs',
                 'age' => $dobFormat->format('%y').' yrs',
                 'care_completed' => $details->profile->total_care_completed,
@@ -231,6 +229,42 @@ class CreateJobController extends Controller
     }
 
     public function getClosedJob(){
+        $closed_job = AcceptedJob::with('jobByAgency')->where('agency_id', auth('sanctum')->user()->id)->where('is_activate', 0)->orderBy('created_at', 'DESC')->get();
+        $new_details = [];
+        foreach($closed_job as $key => $item){
+            $agency_name = User::where('id', $item->agency_id)->first();
+            $user = User::with('profile')->where('id', $item->caregiver_id)->first();
+            $caregiver_details = [
+                'name' => $user->firstname.', '.$user->lastname,
+                'work_type' => $user->profile->work_type,
+                'rating' => $user->profile->rating
+            ];
+            $details = [
+
+                'id' => $item->jobByAgency->id,
+                'agency_name' => $agency_name->business_name,
+                'job_title' => $item->jobByAgency->job_title,
+                'amount_per_hour' => $item->jobByAgency->amount_per_hour,
+                'care_type' => $item->jobByAgency->care_type,
+                'patient_age' => $item->jobByAgency->patient_age,
+                'start_date_of_care' => $item->jobByAgency->start_date_of_care,
+                'end_date_of_care' => $item->jobByAgency->end_date_of_care,
+                'start_time' => $item->jobByAgency->start_time,
+                'end_time' => $item->jobByAgency->end_time,
+                'location' => $item->jobByAgency->street.', '. $item->jobByAgency->city.', '. $item->jobByAgency->zip_code.', '. $item->jobByAgency->state,
+                'job_description' =>  $item->jobByAgency->job_description,
+                'medical_history' => $item->jobByAgency->medical_history,
+                'essential_prior_expertise' => $item->jobByAgency->essential_prior_expertise,
+                'other_requirements' => $item->jobByAgency->other_requirements,
+                'caregiver_details' =>  $caregiver_details,
+                'accepted_by' => $item->caregiver_id,
+                'created_at' => $item->jobByAgency->created_at,
+                
+            ];
+            array_push($new_details, $details);
+        }
+
+        return $this->success('Past job fetched successfully.',   $new_details, 'null', 200);
         $details = JobByAgency::where('is_activate', 0)->where('user_id', auth('sanctum')->user()->id)->get();
         return $this->success('Closed job fetched successfully.',  $details, 'null', 200);
     }

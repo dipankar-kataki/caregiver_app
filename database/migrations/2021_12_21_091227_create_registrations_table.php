@@ -25,7 +25,7 @@ class CreateRegistrationsTable extends Migration
             $table->string('work_type')->nullable();
             $table->integer('total_care_completed')->nullable();
             $table->integer('total_reviews')->nullable();
-            $table->integer('rating')->nullable();
+            $table->decimal('rating',2,1)->nullable();
             $table->unsignedBigInteger('user_id');
             $table->timestamps();
 
