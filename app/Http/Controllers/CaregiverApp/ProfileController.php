@@ -248,17 +248,25 @@ class ProfileController extends Controller
                 $update = Registration::where('user_id', auth('sanctum')->user()->id)->update([
                     'profile_image' => $file
                 ]);
+
+                if($update){
+                    return $this->success('Profile image updated successfully', ['profile_image' => $file], 'null', 201);
+                }else{
+                    return $this->error('Whoops!, Failed to update profile image', null, 'null', 400);
+                }
             }else{
-                Registration::create([
+               $create =  Registration::create([
                     'profile_image' => $file,
                     'user_id' => auth('sanctum')->user()->id
                 ]);
+
+                if($create){
+                    return $this->success('Profile image added successfully', ['profile_image' => $file], 'null', 201);
+                }else{
+                    return $this->error('Whoops!, Failed to add profile image', null, 'null', 400);
+                }
             }
-            if($update){
-                return $this->success('Profile image updated successfully', ['profile_image' => $file], 'null', 201);
-            }else{
-                return $this->error('Whoops!, Failed to add profile image', null, 'null', 400);
-            }
+            
         }
     }
 
