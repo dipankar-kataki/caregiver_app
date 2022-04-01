@@ -57,12 +57,12 @@ class RegistrationController extends Controller
             }else if($check_ssn_exist == true){
                 return $this->error('Social Security Number already exists.', null, 'null', 403);
             }else{
-                $createReg = Registration::create([
+                $createReg = Registration::where('user_id', auth('sanctum')->user()->id)->update([
                     'phone' => $phone,
                     'dob' => DateTime::createFromFormat('m-d-Y',$dob),
                     'ssn' => $ssn,
                     'gender' => $gender,
-                    'user_id' => auth('sanctum')->user()->id
+                    // 'user_id' => auth('sanctum')->user()->id
                 ]);
 
                 $createAdd = Address::create([
