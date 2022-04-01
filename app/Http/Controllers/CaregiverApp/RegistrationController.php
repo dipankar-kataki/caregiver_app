@@ -75,7 +75,7 @@ class RegistrationController extends Controller
 
 
     
-                if($createReg && $createAdd){
+                if(($createReg) && ($createAdd)){
                     User::where('id', auth('sanctum')->user()->id )->update([
                         'is_registration_completed' => 1
                     ]);
