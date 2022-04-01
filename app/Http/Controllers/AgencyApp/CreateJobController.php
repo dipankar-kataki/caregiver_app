@@ -247,7 +247,7 @@ class CreateJobController extends Controller
                 'amount' => $item->jobByAgency->amount_per_hour,
                 'care_type' => $item->jobByAgency->care_type,
                 'patient_age' => $item->jobByAgency->patient_age,
-                'job_closed_on' =>  Carbon::parse($item->jobByAgency->updated_at)->diffForHumans(),
+                'job_accepted_on' =>  Carbon::parse($item->jobByAgency->updated_at)->diffForHumans(),
                 'start_date' => $item->jobByAgency->start_date_of_care,
                 'end_date' => $item->jobByAgency->end_date_of_care,
                 'start_time' => $item->jobByAgency->start_time,
