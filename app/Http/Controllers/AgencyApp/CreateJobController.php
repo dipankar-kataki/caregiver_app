@@ -131,7 +131,7 @@ class CreateJobController extends Controller
     }
 
     public function getOngoingJob(){
-        $jobs = AcceptedJob::with('jobByAgency')->where('agency_id', auth('sanctum')->user()->id)->orderBy('created_at', 'DESC')->get();
+        $jobs = AcceptedJob::with('jobByAgency')->where('agency_id', auth('sanctum')->user()->id)->where('is_activate', 0)->orderBy('created_at', 'DESC')->get();
 
         $new_details = [];
         foreach($jobs as $key => $item){
