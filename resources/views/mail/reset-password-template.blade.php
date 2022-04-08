@@ -49,7 +49,7 @@
                                         <p style="color:#455056; font-size:15px;line-height:24px; margin:0;">
                                             We cannot simply send you your old password. A unique OTP to reset your
                                             password has been generated for you. To reset your password, enter the
-                                            following six digit OTP.
+                                            following six digit OTP, which will be valid for 5 minutes.
 
                                             
                                         </p>
