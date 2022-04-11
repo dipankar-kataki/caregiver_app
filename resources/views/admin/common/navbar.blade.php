@@ -164,14 +164,14 @@
                   <h6 class="text-overflow m-0">Welcome !</h6>
               </div>
 
-              <!-- item-->
+              {{-- <!-- item-->
               <a href="javascript:void(0);" class="dropdown-item notify-item">
                   <i class="mdi mdi-account-outline"></i>
                   <span>Profile</span>
-              </a>
+              </a> --}}
 
               <!-- item-->
-              <a href="{{route('admin.setting.get.change.password')}}" class="dropdown-item notify-item">
+              <a href="{{route('admin.setting.get.overview')}}" class="dropdown-item notify-item">
                   <i class="mdi mdi-settings-outline"></i>
                   <span>Settings</span>
               </a>

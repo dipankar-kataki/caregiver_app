@@ -9,24 +9,72 @@
 
 
 @section('content')
-<div class="col-lg-6 col-md-6 col-sm-12 mt-4">
-    <form id="updatePasswordForm">
-        @csrf
-        <div class="form-group">
-            <label for="exampleInputEmail1">Old password</label>
-            <input type="password" name="oldPassword" class="form-control" id="oldPassword"  placeholder="e.g xxxxxxxx">
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12 mt-4">
+        <div class="card-box">
+            <h4 class="header-title">Update Email</h4>
+            <div class="card-body">
+                <form id="updateEmailForm">
+                    @csrf
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Email</label>
+                        <input type="email" name="email" class="form-control" id="email"  value="{{Auth::user()->email}}">
+                    </div>
+                    <div class="form-group" style="display:block;">
+                        <label for="exampleInputEmail1">Enter OTP </label>
+                        <input type="text" name="email" class="form-control" id="otp" placeholder="Enter otp to verify email">
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-success waves-effect waves-light" id="updateEmailBtn">UPDATE</button>
+                </form>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">New Password</label>
-            <input type="password" name="newPassword" class="form-control" id="newPassword" placeholder="e.g xxxxxxxx">
+    </div>
+    <div class="col-lg-6 col-md-6 col-sm-12 mt-4">
+        <div class="card-box">
+            <h4 class="header-title">Update Basic Details</h4>
+            <div class="card-body">
+                <form id="updateBasicDetailsForm">
+                    @csrf
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Firstname</label>
+                        <input type="text" name="firstname" class="form-control" id="firstname"  placeholder="{{Auth::user()->firstname}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Lastname</label>
+                        <input type="text" name="lastname" class="form-control" id="lastname" placeholder="{{Auth::user()->lastname}}">
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-success waves-effect waves-light" id="updateBasicDetailsBtn">UPDATE</button>
+                </form>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="exampleInputPassword1">Confirm Password</label>
-            <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" placeholder="e.g xxxxxxxx">
-        </div>
-        <button type="submit" class="btn btn-sm btn-success waves-effect waves-light" id="updatePasswordBtn">UPDATE</button>
-    </form>
+    </div>
 </div>
+<div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-12 mt-4">
+        <div class="card-box">
+            <h4 class="header-title">Change Password</h4>
+            <div class="card-body">
+                <form id="updatePasswordForm">
+                    @csrf
+                    <div class="form-group">
+                        <label for="exampleInputEmail1">Old password</label>
+                        <input type="password" name="oldPassword" class="form-control" id="oldPassword"  placeholder="e.g xxxxxxxx">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">New Password</label>
+                        <input type="password" name="newPassword" class="form-control" id="newPassword" placeholder="e.g xxxxxxxx">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputPassword1">Confirm Password</label>
+                        <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" placeholder="e.g xxxxxxxx">
+                    </div>
+                    <button type="submit" class="btn btn-sm btn-success waves-effect waves-light" id="updatePasswordBtn">UPDATE</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 @endsection
 
 

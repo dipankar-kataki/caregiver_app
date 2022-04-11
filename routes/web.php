@@ -53,7 +53,8 @@ Route::group([
     });
 
     Route::prefix('setting')->group(function(){
-        Route::get('change-password', [AuthController::class, 'getSetting'])->name('admin.setting.get.change.password');
+        Route::get('overview', [AuthController::class, 'getSetting'])->name('admin.setting.get.overview');
         Route::post('update-password', [AuthController::class, 'updatePassword'])->name('admin.setting.update.password');
+        
     });
 });
