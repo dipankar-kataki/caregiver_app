@@ -51,4 +51,9 @@ Route::group([
         Route::get('all-blog', [BlogController::class, 'index'])->name('admin.get.blog');
         Route::post('create-blog', [BlogController::class, 'createBlog'])->name('admin.create.blog');
     });
+
+    Route::prefix('setting')->group(function(){
+        Route::get('change-password', [AuthController::class, 'getSetting'])->name('admin.setting.get.change.password');
+        Route::post('update-password', [AuthController::class, 'updatePassword'])->name('admin.setting.update.password');
+    });
 });

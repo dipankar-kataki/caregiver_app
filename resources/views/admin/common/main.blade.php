@@ -56,15 +56,15 @@
                           <div class="page-title-box">
                               <div class="page-title-right">
                                   <ol class="breadcrumb m-0">
-                                      <li class="breadcrumb-item"><a href="javascript: void(0);">Peaceworc</a></li>
+                                      <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Peaceworc</a></li>
                                       <li class="breadcrumb-item"><a href="javascript: void(0);" style="text-transform:capitalize;">{{Request::segment(2)}} </a></li>
-                                      <li class="breadcrumb-item"><a href="javascript: void(0);" style="text-transform:capitalize;">{{Request::segment(3)}} </a></li>
+                                      {{-- <li class="breadcrumb-item"><a href="javascript: void(0);" style="text-transform:capitalize;">{{Request::segment(3)}} </a></li> --}}
                                   </ol>
                               </div>
-                              @if (Request::segment(2) != null)
-                                <h4 class="page-title" style="text-transform:capitalize; ">{{Request::segment(2)}}</h4>                                  
-                              @else
+                              @if (Request::segment(3) != null)
                                 <h4 class="page-title" style="text-transform:capitalize; ">{{Request::segment(3)}}</h4>                                  
+                              @else
+                                <h4 class="page-title" style="text-transform:capitalize; ">{{Request::segment(2)}}</h4>                                  
                               @endif
                           </div>
                       </div>
@@ -135,10 +135,12 @@
     <script src="{{asset('admin/assets/js/app.min.js')}}"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js" integrity="sha512-lbwH47l/tPXJYG9AcFNoJaTMhGvYWhVM9YI43CT+uteTRRaiLCui8snIgyAN8XWgNjNhCqlAUdzZptso6OCoFQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
     
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/additional-methods.min.js"></script>
 
-
-    @yield('cunstomJS')
+    @yield('customJs')
 
 
     <script>

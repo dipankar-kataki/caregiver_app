@@ -30,6 +30,6 @@
 @endsection
 
 
-@section('cunstomJS')
+@section('customJs')
 
 @endsection

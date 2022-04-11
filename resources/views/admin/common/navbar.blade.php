@@ -171,7 +171,7 @@
               </a>
 
               <!-- item-->
-              <a href="javascript:void(0);" class="dropdown-item notify-item">
+              <a href="{{route('admin.setting.get.change.password')}}" class="dropdown-item notify-item">
                   <i class="mdi mdi-settings-outline"></i>
                   <span>Settings</span>
               </a>
@@ -191,7 +191,7 @@
 
   <!-- LOGO -->
   <div class="logo-box">
-      <a href="index.html" class="logo text-center">
+      <a href="{{route('admin.dashboard')}}" class="logo text-center">
           <span class="logo-lg">
               <img src="{{asset('admin/assets/images/logo-main.png')}}" alt="" width="180">
               <!-- <span class="logo-lg-text-light">Zircos</span> -->

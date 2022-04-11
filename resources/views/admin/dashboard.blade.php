@@ -20,7 +20,7 @@
                         <i class="mdi mdi-hospital font-30 widget-icon rounded-circle avatar-title text-primary"></i>
                     </div>
                     <div class="wigdet-one-content">
-                        <p class="m-0 text-uppercase font-weight-bold text-muted" title="Statistics">Caregivers</p>
+                        <p class="m-0 text-uppercase font-weight-bold text-muted" title="Total Caregivers">Caregivers</p>
                         <h2><span data-plugin="counterup">{{$total_caregivers}}</span> <i class="mdi {{$total_caregivers == 0 ? '' : 'mdi-arrow-up'}} text-success font-24"></i></h2>
                     </div>
                 </div>
@@ -35,7 +35,7 @@
                         <i class="mdi mdi-hospital-building font-30 widget-icon rounded-circle avatar-title text-warning"></i>
                     </div>
                     <div class="wigdet-one-content">
-                        <p class="m-0 text-uppercase font-weight-bold text-muted" title="User This Month">Agencies</p>
+                        <p class="m-0 text-uppercase font-weight-bold text-muted" title="Total Agencies">Agencies</p>
                         <h2><span data-plugin="counterup">{{$total_agencies}} </span> <i class="mdi {{$total_agencies == 0 ? '' : 'mdi-arrow-up'}} text-success font-24"></i></h2>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
                         <i class="mdi mdi-briefcase font-30 widget-icon rounded-circle avatar-title text-danger"></i>
                     </div>
                     <div class="wigdet-one-content">
-                        <p class="m-0 text-uppercase font-weight-bold text-muted" title="Statistics">Jobs Posted</p>
+                        <p class="m-0 text-uppercase font-weight-bold text-muted" title="Total Jobs Posted">Jobs Posted</p>
                         <h2><span data-plugin="counterup">{{$total_jobs_posted}} </span> <i class="mdi {{$total_jobs_posted == 0 ? '' : 'mdi-arrow-up'}} text-success font-24"></i></h2>
                     </div>
                 </div>
@@ -65,7 +65,7 @@
                         <i class="mdi mdi-currency-usd font-30 widget-icon rounded-circle avatar-title text-success"></i>
                     </div>
                     <div class="wigdet-one-content">
-                        <p class="m-0 text-uppercase font-weight-bold text-muted" title="User Today">Revenue Generated</p>
+                        <p class="m-0 text-uppercase font-weight-bold text-muted" title="Total Revenue Generated">Revenue Generated</p>
                         <h2><span data-plugin="counterup">895</span> <i class="mdi mdi-arrow-up text-success font-24"></i></h2>
                     </div>
                 </div>
@@ -305,6 +305,6 @@
 @endsection
 
 
-@section('cunstomJS')
+@section('customJs')
 
 @endsection

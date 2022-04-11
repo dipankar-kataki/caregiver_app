@@ -91,7 +91,7 @@
 @endsection
 
 
-@section('cunstomJS')
+@section('customJs')
     <script>
 
         $('#blogCloseModalBtn').on('click',function(){

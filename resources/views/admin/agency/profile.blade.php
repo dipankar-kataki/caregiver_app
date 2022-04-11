@@ -225,7 +225,7 @@
 @endsection
 
 
-@section('cunstomJS')
+@section('customJs')
 <script>
         $('.approveUser').on('click', function(){
             let id = $(this).data('id');

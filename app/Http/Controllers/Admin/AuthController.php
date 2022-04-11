@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AuthController extends Controller
 {
@@ -39,5 +41,38 @@ class AuthController extends Controller
         $request->session()->invalidate();     
         $request->session()->regenerateToken();     
         return redirect()->route('auth.login');
+    }
+
+    public function getSetting(){
+        return view('admin.setting.get-setting');
+    }
+
+    public function updatePassword(Request $request){
+        $validator = Validator::make($request->all(), [
+            'oldPassword' => 'required',
+            'newPassword' => 'required',
+            'confirmPassword' => 'required'
+        ]);
+        if($validator->fails()){
+            return response()->json(['message' => 'Whoops! Something went wrong.', 'error' => $validator->errors()]);
+        }else{
+            $password = User::where('id', Auth::user()->id)->first();
+            if ( ! Hash::check($request->oldPassword, $password->password)) {
+               return response()->json(['message' => 'Whoops! Old password not matched.', 'status' => 2]);
+            }else{
+                if($request->newPassword != $request->confirmPassword){
+                    return response()->json(['message' => 'Whoops! Confirm password not matched.', 'status' => 2]);
+                }else{
+                    $update = User::where('id', Auth::user()->id)->update([
+                        'password' => Hash::make($request->newPassword)
+                    ]);
+                    if($update){
+                        return response()->json(['message' => 'Password updated successfully', 'status' => 1]);
+                    }else{
+                        return response()->json(['message' => 'Whoops! Something went wrong. Failed to update password.', 'status' => 2]);
+                    }
+                }
+            }
+        }
     }
 }
