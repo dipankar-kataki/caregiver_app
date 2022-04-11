@@ -75,4 +75,28 @@ class AuthController extends Controller
             }
         }
     }
+
+    public function updateBasicInfo(Request $request){
+        $validator = Validator::make($request->all(), [
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'email' => 'required | email'
+        ]);
+
+        if($validator->fails()){
+            return response()->json(['message' => 'Whoops! Something went wrong.', 'error' => $validator->errors()]);
+        }else{
+            $update = User::where('id', Auth::user()->id)->update([
+                'firstname' => $request->firstname,
+                'lastname' => $request->lastname,
+                'email' => $request->email
+            ]);
+
+            if($update){
+                return response()->json(['message' => 'Basic information updated successfully', 'status' => 1]);
+            }else{
+                return response()->json(['message' => 'Whoops! Something went wrong. Failed to update password.', 'status' => 2]);
+            }
+        }
+    }
 }

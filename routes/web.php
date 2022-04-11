@@ -55,6 +55,6 @@ Route::group([
     Route::prefix('setting')->group(function(){
         Route::get('overview', [AuthController::class, 'getSetting'])->name('admin.setting.get.overview');
         Route::post('update-password', [AuthController::class, 'updatePassword'])->name('admin.setting.update.password');
-        
+        Route::post('update-basic-info', [AuthController::class, 'updateBasicInfo'])->name('admin.setting.update.basic.info');
     });
 });
