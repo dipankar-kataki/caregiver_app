@@ -2,9 +2,6 @@
 
 @section('cunstomHeader')
     <style>
-        .profile-documents{
-            display:flex;
-        }
         .profile-documents li{
             list-style-type: numeric;
             margin-left:10px;
@@ -60,7 +57,7 @@
                                 <p class="text-muted font-13"><strong>Location :</strong> <span class="ml-2">{{$user_details->address->street}}, {{$user_details->address->city}}, {{$user_details->address->state}}.</span></p>
                             </div>
 
-                            <ul class="social-links list-inline mt-4">
+                            {{-- <ul class="social-links list-inline mt-4">
                                 <li class="list-inline-item">
                                     <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="#" data-original-title="Facebook"><i class="fab fa-facebook-f"></i></a>
                                 </li>
@@ -70,7 +67,7 @@
                                 <li class="list-inline-item">
                                     <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="#" data-original-title="Skype"><i class="fab fa-skype"></i></a>
                                 </li>
-                            </ul>
+                            </ul> --}}
 
                         </div>
 
@@ -223,9 +220,12 @@
                                                 <div class="card">
                                                     <div class="card-body" style="padding:0.5rem">
                                                         <ul class="profile-documents">
-                                                            <li>
-                                                                <h6>Document: <a href="{{asset($item->tuberculosis[$key]['image'])}}" target="_blank">Click to view</a></h6>
-                                                            </li>
+                                                            @foreach ($documents[$key]['tuberculosis'] as  $item2)
+                                                                <li>
+                                                                    <h6>Document: <a href="{{asset($item2->image])}}" target="_blank">Click to view</a></h6>
+                                                                </li>
+                                                            @endforeach
+                                                            
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -238,14 +238,11 @@
                                                 <div class="card">
                                                     <div class="card-body" style="padding:0.5rem">
                                                         <ul class="profile-documents">
-                                                            @forelse ($documents as $key => $item)
+                                                            @foreach ($documents[$key]['covid'] as  $item2)
                                                                 <li>
-                                                                    <h6>Document: <a href="{{asset($item->covid[$key]['image'])}}" target="_blank">Click to view</a></h6>
+                                                                    <h6>Document: <a href="{{asset($item2->image)}}" target="_blank">Click to view</a></h6>
                                                                 </li>
-                                                            @empty
-                                                                <li>No documents to show.</li>
-                                                            @endforelse
-                                                        
+                                                            @endforeach
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -258,14 +255,11 @@
                                                 <div class="card">
                                                     <div class="card-body" style="padding:0.5rem">
                                                         <ul class="profile-documents">
-                                                            @forelse ($documents as $key => $item)
+                                                            @foreach ($documents[$key]['criminal'] as  $item2)
                                                                 <li>
-                                                                    <h6>Document: <a href="{{asset($item->criminal[$key]['image'])}}" target="_blank">Click to view</a></h6>
+                                                                    <h6>Document: <a href="{{asset($item2->image])}}" target="_blank">Click to view</a></h6>
                                                                 </li>
-                                                            @empty
-                                                                <li>No documents to show.</li>
-                                                            @endforelse
-                                                        
+                                                            @endforeach
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -278,14 +272,11 @@
                                                 <div class="card">
                                                     <div class="card-body" style="padding:0.5rem">
                                                         <ul class="profile-documents">
-                                                            @forelse ($documents as $key => $item)
+                                                            @foreach ($documents[$key]['childAbuse'] as  $item2)
                                                                 <li>
-                                                                    <h6>Document: <a href="{{asset($item->childAbuse[$key]['image'])}}" target="_blank">Click to view</a></h6>
+                                                                    <h6>Document: <a href="{{asset($item2->image])}}" target="_blank">Click to view</a></h6>
                                                                 </li>
-                                                            @empty
-                                                                <li>No documents to show.</li>
-                                                            @endforelse
-                                                        
+                                                            @endforeach
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -299,14 +290,11 @@
                                                 <div class="card">
                                                     <div class="card-body" style="padding:0.5rem">
                                                         <ul class="profile-documents">
-                                                            @forelse ($documents as $key => $item)
-                                                                <li>
-                                                                    <h6>Document: <a href="{{asset($item->w_4_form[$key]['image'])}}" target="_blank">Click to view</a></h6>
-                                                                </li>
-                                                            @empty
-                                                                <li>No documents to show.</li>
-                                                            @endforelse
-                                                        
+                                                        @foreach ($documents[$key]['w_4_form'] as  $item2)
+                                                            <li>
+                                                                <h6>Document: <a href="{{asset($item2->image])}}" target="_blank">Click to view</a></h6>
+                                                            </li>
+                                                        @endforeach
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -319,14 +307,11 @@
                                                 <div class="card">
                                                     <div class="card-body" style="padding:0.5rem">
                                                         <ul class="profile-documents">
-                                                            @forelse ($documents as $key => $item)
+                                                            @foreach ($documents[$key]['employment'] as  $item2)
                                                                 <li>
-                                                                    <h6>Document: <a href="{{asset($item->employment[$key]['image'])}}" target="_blank">Click to view</a></h6>
+                                                                    <h6>Document: <a href="{{asset($item2->image])}}" target="_blank">Click to view</a></h6>
                                                                 </li>
-                                                            @empty
-                                                                <li>No documents to show.</li>
-                                                            @endforelse
-                                                        
+                                                            @endforeach
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -339,14 +324,11 @@
                                                 <div class="card">
                                                     <div class="card-body" style="padding:0.5rem">
                                                         <ul class="profile-documents">
-                                                            @forelse ($documents as $key => $item)
+                                                            @foreach ($documents[$key]['driving'] as  $item2)
                                                                 <li>
-                                                                    <h6>Document: <a href="{{asset($item->driving[$key]['image'])}}" target="_blank">Click to view</a></h6>
+                                                                    <h6>Document: <a href="{{asset($item2->image])}}" target="_blank">Click to view</a></h6>
                                                                 </li>
-                                                            @empty
-                                                                <li>No documents to show.</li>
-                                                            @endforelse
-                                                        
+                                                            @endforeach
                                                         </ul>
                                                     </div>
                                                 </div>
@@ -359,14 +341,11 @@
                                                 <div class="card">
                                                     <div class="card-body" style="padding:0.5rem">
                                                         <ul class="profile-documents">
-                                                            @forelse ($documents as $key => $item)
+                                                            @foreach ($documents[$key]['identification'] as  $item2)
                                                                 <li>
-                                                                    <h6>Document: <a href="{{asset($item->identification[$key]['image'])}}" target="_blank">Click to view</a></h6>
+                                                                    <h6>Document: <a href="{{asset($item2->image])}}" target="_blank">Click to view</a></h6>
                                                                 </li>
-                                                            @empty
-                                                                <li>No documents to show.</li>
-                                                            @endforelse
-                                                        
+                                                            @endforeach
                                                         </ul>
                                                     </div>
                                                 </div>
