@@ -315,7 +315,7 @@
 
                                         @if (!($documents[$key]['employment']->isEmpty()))
                                             <div class="col-sm-4">
-                                                <p>Employment Eligibility Verification form (I-9)</p>
+                                                <p>Employment Eligibility form (I-9)</p>
                                                 <div class="card">
                                                     <div class="card-body">
                                                         <ul class="profile-documents">
