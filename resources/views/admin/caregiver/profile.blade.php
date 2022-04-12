@@ -222,7 +222,7 @@
                                                         <ul class="profile-documents">
                                                             @foreach ($documents[$key]['tuberculosis'] as  $item2)
                                                                 <li>
-                                                                    <h6>Document: <a href="{{asset($item2->image])}}" target="_blank">Click to view</a></h6>
+                                                                    <h6>Document: <a href="{{asset($item2->image)}}" target="_blank">Click to view</a></h6>
                                                                 </li>
                                                             @endforeach
                                                             
@@ -257,7 +257,7 @@
                                                         <ul class="profile-documents">
                                                             @foreach ($documents[$key]['criminal'] as  $item2)
                                                                 <li>
-                                                                    <h6>Document: <a href="{{asset($item2->image])}}" target="_blank">Click to view</a></h6>
+                                                                    <h6>Document: <a href="{{asset($item2->image)}}" target="_blank">Click to view</a></h6>
                                                                 </li>
                                                             @endforeach
                                                         </ul>
@@ -274,7 +274,7 @@
                                                         <ul class="profile-documents">
                                                             @foreach ($documents[$key]['childAbuse'] as  $item2)
                                                                 <li>
-                                                                    <h6>Document: <a href="{{asset($item2->image])}}" target="_blank">Click to view</a></h6>
+                                                                    <h6>Document: <a href="{{asset($item2->image)}}" target="_blank">Click to view</a></h6>
                                                                 </li>
                                                             @endforeach
                                                         </ul>
@@ -292,7 +292,7 @@
                                                         <ul class="profile-documents">
                                                         @foreach ($documents[$key]['w_4_form'] as  $item2)
                                                             <li>
-                                                                <h6>Document: <a href="{{asset($item2->image])}}" target="_blank">Click to view</a></h6>
+                                                                <h6>Document: <a href="{{asset($item2->image)}}" target="_blank">Click to view</a></h6>
                                                             </li>
                                                         @endforeach
                                                         </ul>
@@ -309,7 +309,7 @@
                                                         <ul class="profile-documents">
                                                             @foreach ($documents[$key]['employment'] as  $item2)
                                                                 <li>
-                                                                    <h6>Document: <a href="{{asset($item2->image])}}" target="_blank">Click to view</a></h6>
+                                                                    <h6>Document: <a href="{{asset($item2->image)}}" target="_blank">Click to view</a></h6>
                                                                 </li>
                                                             @endforeach
                                                         </ul>
@@ -326,7 +326,7 @@
                                                         <ul class="profile-documents">
                                                             @foreach ($documents[$key]['driving'] as  $item2)
                                                                 <li>
-                                                                    <h6>Document: <a href="{{asset($item2->image])}}" target="_blank">Click to view</a></h6>
+                                                                    <h6>Document: <a href="{{asset($item2->image)}}" target="_blank">Click to view</a></h6>
                                                                 </li>
                                                             @endforeach
                                                         </ul>
@@ -343,7 +343,7 @@
                                                         <ul class="profile-documents">
                                                             @foreach ($documents[$key]['identification'] as  $item2)
                                                                 <li>
-                                                                    <h6>Document: <a href="{{asset($item2->image])}}" target="_blank">Click to view</a></h6>
+                                                                    <h6>Document: <a href="{{asset($item2->image)}}" target="_blank">Click to view</a></h6>
                                                                 </li>
                                                             @endforeach
                                                         </ul>
