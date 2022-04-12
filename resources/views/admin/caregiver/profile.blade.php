@@ -26,9 +26,9 @@
                         <div class="member-card">
                             <div class="avatar-xl member-thumb mb-3 mx-auto d-block">
                                 @if ($user_details->profile->profile_image == null)
-                                    <img src="{{asset('admin/assets/images/placeholder.jpg')}}" class="rounded-circle img-thumbnail" alt="profile-image" style="height:100px; width:100px;">                                    
+                                    <img src="{{asset('admin/assets/images/placeholder.jpg')}}" class="rounded-circle img-thumbnail" alt="profile-image" style="height:100px; width:100px;object-fit: cover;object-position: top;">                                    
                                 @else
-                                    <img src="{{asset($user_details->profile->profile_image)}}" class="rounded-circle img-thumbnail" alt="profile-image" style="height:100px; width:100px;">                                    
+                                    <img src="{{asset($user_details->profile->profile_image)}}" class="rounded-circle img-thumbnail" alt="profile-image" style="height:100px; width:100px;object-fit: cover;object-position: top;">                                    
                                 @endif
                                 <i class="mdi mdi-star-circle member-star text-success"></i>
                             </div>
