@@ -218,7 +218,7 @@
                                 <div class="row">
                                     @forelse ($documents as $key => $item)
                                         @if (!($documents[$key]['tuberculosis']->isEmpty()))
-                                            <div class="col-sm-12">
+                                            <div class="col-sm-4">
                                                 <p>Tuberculosis Test</p>
                                                 <div class="card">
                                                     <div class="card-body">
@@ -233,7 +233,7 @@
                                         @endif
 
                                         @if (!($documents[$key]['covid']->isEmpty()))
-                                            <div class="col-sm-12">
+                                            <div class="col-sm-4">
                                                 <p>Covid-19 Vaccination Card</p>
                                                 <div class="card">
                                                     <div class="card-body">
@@ -253,7 +253,7 @@
                                         @endif
 
                                         @if (!($documents[$key]['criminal']->isEmpty()))
-                                            <div class="col-sm-12">
+                                            <div class="col-sm-4">
                                                 <p>Criminal Background Result</p>
                                                 <div class="card">
                                                     <div class="card-body">
@@ -273,7 +273,7 @@
                                         @endif
 
                                         @if (!($documents[$key]['childAbuse']->isEmpty()))
-                                            <div class="col-sm-12">
+                                            <div class="col-sm-4">
                                                 <p>Child Abuse Clearance</p>
                                                 <div class="card">
                                                     <div class="card-body">
@@ -294,7 +294,7 @@
 
 
                                         @if (!($documents[$key]['w_4_form']->isEmpty()))
-                                            <div class="col-sm-12">
+                                            <div class="col-sm-4">
                                                 <p>W-4 Form</p>
                                                 <div class="card">
                                                     <div class="card-body">
@@ -314,7 +314,7 @@
                                         @endif
 
                                         @if (!($documents[$key]['employment']->isEmpty()))
-                                            <div class="col-sm-12">
+                                            <div class="col-sm-4">
                                                 <p>Employment Eligibility Verification form (I-9)</p>
                                                 <div class="card">
                                                     <div class="card-body">
@@ -334,7 +334,7 @@
                                         @endif
 
                                         @if (!($documents[$key]['driving']->isEmpty()))
-                                            <div class="col-sm-12">
+                                            <div class="col-sm-4">
                                                 <p>Driving License</p>
                                                 <div class="card">
                                                     <div class="card-body">
@@ -354,7 +354,7 @@
                                         @endif
 
                                         @if (!($documents[$key]['identification']->isEmpty()))
-                                            <div class="col-sm-12">
+                                            <div class="col-sm-4">
                                                 <p>Identification</p>
                                                 <div class="card">
                                                     <div class="card-body">
