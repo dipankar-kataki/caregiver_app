@@ -221,7 +221,7 @@
                                             <div class="col-sm-4">
                                                 <p>Tuberculosis Test</p>
                                                 <div class="card">
-                                                    <div class="card-body">
+                                                    <div class="card-body" style="padding:0.5rem">
                                                         <ul class="profile-documents">
                                                             <li>
                                                                 <h6>Document: <a href="{{asset($item->tuberculosis[$key]['image'])}}" target="_blank">Click to view</a></h6>
@@ -236,7 +236,7 @@
                                             <div class="col-sm-4">
                                                 <p>Covid-19 Vaccination Card</p>
                                                 <div class="card">
-                                                    <div class="card-body">
+                                                    <div class="card-body" style="padding:0.5rem">
                                                         <ul class="profile-documents">
                                                             @forelse ($documents as $key => $item)
                                                                 <li>
@@ -256,7 +256,7 @@
                                             <div class="col-sm-4">
                                                 <p>Criminal Background Result</p>
                                                 <div class="card">
-                                                    <div class="card-body">
+                                                    <div class="card-body" style="padding:0.5rem">
                                                         <ul class="profile-documents">
                                                             @forelse ($documents as $key => $item)
                                                                 <li>
@@ -276,7 +276,7 @@
                                             <div class="col-sm-4">
                                                 <p>Child Abuse Clearance</p>
                                                 <div class="card">
-                                                    <div class="card-body">
+                                                    <div class="card-body" style="padding:0.5rem">
                                                         <ul class="profile-documents">
                                                             @forelse ($documents as $key => $item)
                                                                 <li>
@@ -297,7 +297,7 @@
                                             <div class="col-sm-4">
                                                 <p>W-4 Form</p>
                                                 <div class="card">
-                                                    <div class="card-body">
+                                                    <div class="card-body" style="padding:0.5rem">
                                                         <ul class="profile-documents">
                                                             @forelse ($documents as $key => $item)
                                                                 <li>
@@ -317,7 +317,7 @@
                                             <div class="col-sm-4">
                                                 <p>Employment Eligibility form (I-9)</p>
                                                 <div class="card">
-                                                    <div class="card-body">
+                                                    <div class="card-body" style="padding:0.5rem">
                                                         <ul class="profile-documents">
                                                             @forelse ($documents as $key => $item)
                                                                 <li>
@@ -337,7 +337,7 @@
                                             <div class="col-sm-4">
                                                 <p>Driving License</p>
                                                 <div class="card">
-                                                    <div class="card-body">
+                                                    <div class="card-body" style="padding:0.5rem">
                                                         <ul class="profile-documents">
                                                             @forelse ($documents as $key => $item)
                                                                 <li>
@@ -357,7 +357,7 @@
                                             <div class="col-sm-4">
                                                 <p>Identification</p>
                                                 <div class="card">
-                                                    <div class="card-body">
+                                                    <div class="card-body" style="padding:0.5rem">
                                                         <ul class="profile-documents">
                                                             @forelse ($documents as $key => $item)
                                                                 <li>
