@@ -32,7 +32,7 @@
                             <td>{{$key + 1}}</td>
                             <td>{{$item->firstname}} {{$item->lastname}}</td>
                             <td>{{$item->email}}</td>
-                            <td>{{$item->profile->dob}}</td>
+                            <td>{{Carbon\Carbon::parse($item->profile->dob)->format('m-d-Y')}}</td>
                             <td>{{$item->profile->phone}}</td>
                             <td>{{$item->profile->gender}}</td>
                             <td><a href="{{route('admin.caregiver.view.profile', ['id' => Crypt::encrypt($item->id)])}}" class="btn btn-sm btn-primary waves-effect width-md waves-light">View Profile</a></td>

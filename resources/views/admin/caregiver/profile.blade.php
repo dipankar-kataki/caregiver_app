@@ -26,9 +26,9 @@
                         <div class="member-card">
                             <div class="avatar-xl member-thumb mb-3 mx-auto d-block">
                                 @if ($user_details->profile->profile_image == null)
-                                    <img src="{{asset('admin/assets/images/placeholder.jpg')}}" class="rounded-circle img-thumbnail" alt="profile-image">                                    
+                                    <img src="{{asset('admin/assets/images/placeholder.jpg')}}" class="rounded-circle img-thumbnail" alt="profile-image" style="height:100px; 100px;">                                    
                                 @else
-                                    <img src="{{asset($user_details->profile->profile_image)}}" class="rounded-circle img-thumbnail" alt="profile-image">                                    
+                                    <img src="{{asset($user_details->profile->profile_image)}}" class="rounded-circle img-thumbnail" alt="profile-image" style="height:100px; 100px;">                                    
                                 @endif
                                 <i class="mdi mdi-star-circle member-star text-success"></i>
                             </div>
@@ -127,7 +127,11 @@
                             
                             <div class="pt-2">
                                 <h6 class="font-16 mb-1">Bio</h6>
-                                <p class="mb-0">{{$user_details->profile->bio}}</p>
+                                @if ($user_details->profile->bio == null)
+                                    <p class="mb-0">Not found.</p>
+                                @else
+                                    <p class="mb-0">{{$user_details->profile->bio}}</p>
+                                @endif
                             </div>
                             <hr/>
                             <div class="row">
@@ -140,7 +144,12 @@
                                 <div class="col-md-3 col-sm-12">
                                     <div class=" pt-2">
                                         <h6 class="font-16 mb-1">Work Type</h6>
-                                        <p class="mb-0">{{$user_details->profile->work_type}}</p>
+                                        @if ($user_details->profile->work_type == null)
+                                            <p class="mb-0">Not found.</p>
+                                        @else
+                                            <p class="mb-0">{{$user_details->profile->work_type}}</p>
+                                        @endif
+                                        
                                     </div>
                                 </div>
                                 <div class="col-md-3 col-sm-12">
@@ -184,7 +193,7 @@
                                         <div class="col-md-2 col-sm-12">
                                             <div class=" pt-2">
                                                 <h6 class="font-16 mb-1">Duration</h6>
-                                                <p class="mb-0">{{$item->city}}, {{$item->state}}</p>
+                                                <p class="mb-0">{{$item->duration}}</p>
                                             </div>
                                         </div>
                                         <div class="col-md-2 col-sm-12">

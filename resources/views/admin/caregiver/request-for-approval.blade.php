@@ -32,9 +32,13 @@
                             <td>{{$key + 1}}</td>
                             <td>{{$item->firstname}} {{$item->lastname}}</td>
                             <td>{{$item->email}}</td>
-                            <td>{{$item->profile->dob}}</td>
+                            <td>{{Carbon\Carbon::parse($item->profile->dob)->format('m-d-Y')}}</td>
                             <td>{{$item->profile->phone}}</td>
-                            <td>{{$item->profile->experience}}</td>
+                            @if ($item->profile->experience == null)
+                                <td>0</td>
+                            @else
+                                <td>{{$item->profile->experience}}</td>
+                            @endif
                             <td><a href="{{route('admin.caregiver.view.profile', ['id' => Crypt::encrypt($item->id)])}}" class="btn btn-sm btn-primary waves-effect width-md waves-light">View Profile</a></td>
                             <td><button  type="button" class="btn btn-sm btn-warning waves-effect width-md waves-light approveUser" data-id="{{Crypt::encrypt($item->id)}}">Approve User</button></td>
                         </tr>

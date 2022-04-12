@@ -32,7 +32,7 @@
                         <span class="menu-arrow"></span>
                     </a>
                     <ul class="nav-second-level" aria-expanded="false">
-                        <li><a href="{{route('admin.agency.list.approved')}}">Approved Caregivers</a></li>
+                        <li><a href="{{route('admin.agency.list.approved')}}">Approved Agency</a></li>
                         <li><a href="{{route('admin.agency.request.for.approval')}}">Request For Approval</a></li>
                     </ul>
                 </li>
