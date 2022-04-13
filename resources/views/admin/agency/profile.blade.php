@@ -35,15 +35,22 @@
                             </div>
 
                             @if ($user_details->is_user_approved == 0)
-                                <button  type="button" class="btn btn-sm btn-warning waves-effect width-md waves-light approveUser" data-id="{{Crypt::encrypt($user_details->id)}}">Approve User</button>                                
+                                <button  type="button" class="btn btn-sm btn-purple waves-effect width-md waves-light approveUser" data-id="{{Crypt::encrypt($user_details->id)}}">Approve User</button>                                
                             @else
-                                <button type="button" class="btn btn-success btn-rounded btn-sm width-sm waves-effect mt-2 waves-light">User Approved</button>                                
+                                <div class="btn-group-vertical mb-2">
+                                    <button type="button" class="btn btn-success btn-sm  btn-sm width-sm waves-effect mt-2 waves-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        User Approved
+                                        <i class="mdi mdi-chevron-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        @if ($user_details->is_user_approved == 0)
+                                            <li><a href="#" class="dropdown-item text-success approveUser"  data-id="{{Crypt::encrypt($user_details->id)}}">Approve user</a></li>
+                                        @else
+                                            <li><a href="#" class="dropdown-item text-danger suspendUser"  data-id="{{Crypt::encrypt($user_details->id)}}">Suspend user</a></li>  
+                                        @endif
+                                    </ul>
+                                </div>                                
                             @endif
-
-
-                            {{-- <p class="sub-header mt-3">
-                               {{Str::of($user_details->profile->bio)->limit(150)}}
-                            </p> --}}
 
                             <hr/>
 
@@ -55,18 +62,6 @@
 
                                 <p class="text-muted font-13"><strong>Location :</strong> <span class="ml-2">{{$user_details->address->street}}, {{$user_details->address->city}}, {{$user_details->address->state}}.</span></p>
                             </div>
-
-                            <ul class="social-links list-inline mt-4">
-                                <li class="list-inline-item">
-                                    <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="#" data-original-title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                                </li>
-                                <li class="list-inline-item">
-                                    <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="#" data-original-title="Twitter"><i class="fab fa-twitter"></i></a>
-                                </li>
-                                <li class="list-inline-item">
-                                    <a title="" data-placement="top" data-toggle="tooltip" class="tooltips" href="#" data-original-title="Skype"><i class="fab fa-skype"></i></a>
-                                </li>
-                            </ul>
 
                         </div>
 
@@ -252,6 +247,36 @@
                         toastr.error('Whoops! Something went wron. Failed to approve user.');
                         $('.approveUser').text('Approve User');
                         $('.approveUser').attr('disabled', false);
+                    }
+                }
+            });
+        });
+
+        $('.suspendUser').on('click', function(){
+            let id = $(this).data('id');
+            $(this).text('Please wait...');
+            $(this).attr('disabled', true);
+            $.ajax({
+                url:"{{route('admin.agency.profile.suspend.user')}}",
+                type:"POST",
+                data:{
+                    '_token' : "{{csrf_token()}}",
+                    'id' : id
+                },
+                success:function(data){
+                    if(data.status == 1){
+                        toastr.success(data.message);
+                        location.reload(true);
+                    }else{
+                        toastr.error(data.message);
+                        $('.suspendUser').text('Approve User');
+                        $('.suspendUser').attr('disabled', false);
+                    }
+                },error:function(xhr, status, error){
+                    if(xhr.status == 500 || xhr.status == 422){
+                        toastr.error('Whoops! Something went wron. Failed to approve user.');
+                        $('.suspendUser').text('Approve User');
+                        $('.suspendUser').attr('disabled', false);
                     }
                 }
             });

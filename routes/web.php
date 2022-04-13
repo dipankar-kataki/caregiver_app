@@ -38,6 +38,7 @@ Route::group([
         Route::get('request-for-approval', [CaregiverController::class, 'newJoiner'])->name('admin.caregiver.request.for.approval');
         Route::post('update-status', [CaregiverController::class, 'updateStatus'])->name('admin.caregiver.update.status');
         Route::get('profile/{id}', [CaregiverController::class, 'viewProfile'])->name('admin.caregiver.view.profile');
+        Route::post('suspend-user', [CaregiverController::class, 'suspendUser'])->name('admin.caregiver.profile.suspend.user');
     });
 
     Route::prefix('agency')->group(function(){
@@ -45,6 +46,7 @@ Route::group([
         Route::get('request-for-approval', [AgencyController::class, 'newJoiner'])->name('admin.agency.request.for.approval');
         Route::post('update-status', [AgencyController::class, 'updateStatus'])->name('admin.agency.update.status');
         Route::get('profile/{id}', [AgencyController::class, 'viewProfile'])->name('admin.agency.view.profile');
+        Route::post('suspend-user', [AgencyController::class, 'suspendUser'])->name('admin.agency.profile.suspend.user');
     });
 
     Route::prefix('blog')->group(function(){

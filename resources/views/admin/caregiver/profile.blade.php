@@ -36,9 +36,21 @@
                             </div>
 
                             @if ($user_details->is_user_approved == 0)
-                                <button  type="button" class="btn btn-sm btn-warning waves-effect width-md waves-light approveUser" data-id="{{Crypt::encrypt($user_details->id)}}">Approve User</button>                                
+                                <button  type="button" class="btn btn-sm btn-purple waves-effect width-md waves-light approveUser"  data-id="{{Crypt::encrypt($user_details->id)}}">Approve User</button>                                
                             @else
-                                <button type="button" class="btn btn-success btn-rounded btn-sm width-sm waves-effect mt-2 waves-light">User Approved</button>                                
+                                <div class="btn-group-vertical mb-2">
+                                    <button type="button" class="btn btn-success btn-sm  btn-sm width-sm waves-effect mt-2 waves-light" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        User Approved
+                                        <i class="mdi mdi-chevron-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        @if ($user_details->is_user_approved == 0)
+                                            <li><a href="#" class="dropdown-item text-success approveUser"  data-id="{{Crypt::encrypt($user_details->id)}}">Approve user</a></li>
+                                        @else
+                                            <li><a href="#" class="dropdown-item text-danger suspendUser"  data-id="{{Crypt::encrypt($user_details->id)}}">Suspend user</a></li>  
+                                        @endif
+                                    </ul>
+                                </div>
                             @endif
 
 
@@ -54,7 +66,7 @@
 
                                 <p class="text-muted font-13"><strong>Email :</strong> <span class="ml-2">{{$user_details->email}}</span></p>
 
-                                <p class="text-muted font-13"><strong>Location :</strong> <span class="ml-2">{{$user_details->address->street}}, {{$user_details->address->city}}, {{$user_details->address->state}}.</span></p>
+                                <p class="text-muted font-13"><strong>Location :</strong> <span class="ml-2">{{$user_details->address->street}}, {{$user_details->address->city}}, {{$user_details->address->state}}, {{$user_details->address->zip_code}}.</span></p>
                             </div>
 
                             {{-- <ul class="social-links list-inline mt-4">
@@ -215,7 +227,7 @@
                                 <div class="row">
                                     @forelse ($documents as $key => $item)
                                         @if (!($documents[$key]['tuberculosis']->isEmpty()))
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-12">
                                                 <p>Tuberculosis Test</p>
                                                 <div class="card">
                                                     <div class="card-body" style="padding:0.5rem">
@@ -233,7 +245,7 @@
                                         @endif
 
                                         @if (!($documents[$key]['covid']->isEmpty()))
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-12">
                                                 <p>Covid-19 Vaccination Card</p>
                                                 <div class="card">
                                                     <div class="card-body" style="padding:0.5rem">
@@ -250,7 +262,7 @@
                                         @endif
 
                                         @if (!($documents[$key]['criminal']->isEmpty()))
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-12">
                                                 <p>Criminal Background Result</p>
                                                 <div class="card">
                                                     <div class="card-body" style="padding:0.5rem">
@@ -267,7 +279,7 @@
                                         @endif
 
                                         @if (!($documents[$key]['childAbuse']->isEmpty()))
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-12">
                                                 <p>Child Abuse Clearance</p>
                                                 <div class="card">
                                                     <div class="card-body" style="padding:0.5rem">
@@ -285,7 +297,7 @@
 
 
                                         @if (!($documents[$key]['w_4_form']->isEmpty()))
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-12">
                                                 <p>W-4 Form</p>
                                                 <div class="card">
                                                     <div class="card-body" style="padding:0.5rem">
@@ -302,7 +314,7 @@
                                         @endif
 
                                         @if (!($documents[$key]['employment']->isEmpty()))
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-12">
                                                 <p>Employment Eligibility form (I-9)</p>
                                                 <div class="card">
                                                     <div class="card-body" style="padding:0.5rem">
@@ -319,7 +331,7 @@
                                         @endif
 
                                         @if (!($documents[$key]['driving']->isEmpty()))
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-12">
                                                 <p>Driving License</p>
                                                 <div class="card">
                                                     <div class="card-body" style="padding:0.5rem">
@@ -336,7 +348,7 @@
                                         @endif
 
                                         @if (!($documents[$key]['identification']->isEmpty()))
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-12">
                                                 <p>Identification</p>
                                                 <div class="card">
                                                     <div class="card-body" style="padding:0.5rem">
@@ -402,6 +414,37 @@
                         toastr.error('Whoops! Something went wron. Failed to approve user.');
                         $('.approveUser').text('Approve User');
                         $('.approveUser').attr('disabled', false);
+                    }
+                }
+            });
+        });
+
+        $('.suspendUser').on('click', function(){
+            let id = $(this).data('id');
+            $(this).text('Please wait...');
+            $(this).attr('disabled', true);
+            $.ajax({
+                url:"{{route('admin.caregiver.profile.suspend.user')}}",
+                type:"POST",
+                data:{
+                    '_token' : "{{csrf_token()}}",
+                    'id' : id
+                },
+                success:function(data){
+                   
+                    if(data.status == 1){
+                        toastr.success(data.message);
+                        location.reload(true);
+                    }else{
+                        toastr.error(data.message);
+                        $('.suspendUser').text('Approve User');
+                        $('.suspendUser').attr('disabled', false);
+                    }
+                },error:function(xhr, status, error){
+                    if(xhr.status == 500 || xhr.status == 422){
+                        toastr.error('Whoops! Something went wron. Failed to approve user.');
+                        $('.suspendUser').text('Approve User');
+                        $('.suspendUser').attr('disabled', false);
                     }
                 }
             });

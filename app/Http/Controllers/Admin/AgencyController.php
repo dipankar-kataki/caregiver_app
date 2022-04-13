@@ -37,4 +37,17 @@ class AgencyController extends Controller
         $details = User::with('jobs', 'business_information', 'address')->where('id', $user_id)->where('role', 3)->first();
         return view('admin.agency.profile')->with('user_details' , $details);
     }
+
+    
+    public function suspendUser(Request $request){
+        $id = Crypt::decrypt($request->id);
+        $update = User::where('id', $id)->update([
+            'is_user_approved' => 0
+        ]);
+        if($update){
+            return response()->json(['message' => 'User suspended successfully', 'status' => 1]);
+        }else{
+            return response()->json(['message' => 'Whoops! Something went wrong. Not able to suspend user', 'status' => 2]);
+        }
+    }
 }

@@ -43,4 +43,16 @@ class CaregiverController extends Controller
         $documents = User::with('tuberculosis', 'covid', 'criminal', 'childAbuse', 'w_4_form', 'employment', 'driving', 'identification')->where('id', $id)->get();
         return view('admin.caregiver.profile')->with(['user_details' => $user_details, 'education' => $education, 'documents' => $documents]);
     }
+
+    public function suspendUser(Request $request){
+        $id = Crypt::decrypt($request->id);
+        $update = User::where('id', $id)->update([
+            'is_user_approved' => 0
+        ]);
+        if($update){
+            return response()->json(['message' => 'User suspended successfully', 'status' => 1]);
+        }else{
+            return response()->json(['message' => 'Whoops! Something went wrong. Not able to suspend user', 'status' => 2]);
+        }
+    }
 }
