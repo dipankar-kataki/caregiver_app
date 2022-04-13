@@ -432,6 +432,12 @@ class ProfileController extends Controller
         }
     }
 
+    public function deleteEducation(Request $request){
+        $id = $request->id;
+        Education::where('id', $id)->delete();
+        return $this->success('Education removed successfully.', null, 'null', 200);
+    }
+
     public function profileCompletionStatus(){
         $details = User::where('id',auth('sanctum')->user()->id)->first();
         $profile_completion_status = [

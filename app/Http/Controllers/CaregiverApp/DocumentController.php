@@ -157,7 +157,6 @@ class DocumentController extends Controller
         ];
         return $this->success('Document count fetched successfully.',  $documents_count, 'null', 200);
     }
-    // && ($details->childAbuse->count() > 0) && ($details->criminal->count() > 0) && ($details->driving->count() > 0) && ($details->employment->count() > 0) && ($details->identification->count() > 0) && ($details->tuberculosis->count() > 0) && ( $details->w_4_form->count() > 0)
 
     public function isDocumentUploaded(){
         $details = User::where('id', auth('sanctum')->user()->id)->with('covid','childAbuse','criminal','driving','employment','identification','tuberculosis','w_4_form')->first();
@@ -173,6 +172,41 @@ class DocumentController extends Controller
             }
         }else{
             return $this->error('Whoops! Something went wrong. Failed to update document status.',  null, 'null', 500);
+        }
+    }
+
+
+    public function deleteDocument(Request $request){
+       $documentCategory = $request->documentCategory;
+       $id = $request->id;
+        
+
+       if($documentCategory == 'covid'){
+            Covid::where('id', $id)->delete();
+            return $this->success('Document removed successfully.',  null, 'null', 200);
+        }else if($documentCategory == 'childAbuse'){
+            ChildAbuse::where('id', $id)->delete();
+            return $this->success('Document removed successfully.',  null, 'null', 200);
+        }else if($documentCategory == 'criminal'){
+            Criminal::where('id', $id)->delete();
+            return $this->success('Document removed successfully.',  null, 'null', 200);
+        }else if($documentCategory == 'driving'){
+            Driving::where('id', $id)->delete();
+            return $this->success('Document removed successfully.',  null, 'null', 200);
+        }else if($documentCategory == 'employment'){
+            EmploymentEligibility::where('id', $id)->delete();
+            return $this->success('Document removed successfully.',  null, 'null', 200);
+        }else if($documentCategory == 'identification'){
+            Identification::where('id', $id)->delete();
+            return $this->success('Document removed successfully.',  null, 'null', 200);
+        }else if($documentCategory == 'tuberculosis'){
+            Tuberculosis::where('id', $id)->delete();
+            return $this->success('Document removed successfully.',  null, 'null', 200);
+        }else if($documentCategory == 'w_4_form'){
+            w_4_form::where('id', $id)->delete();
+            return $this->success('Document removed successfully.',  null, 'null', 200);
+        }else {
+            return $this->error('Whoops!, Failed to remove document', null, 'null', 400);
         }
     }
 }

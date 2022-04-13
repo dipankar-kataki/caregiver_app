@@ -57,6 +57,7 @@ Route::prefix('caregiver')->group(function(){
             Route::post('document-upload',[DocumentController::class,'uploadDocument']);
             Route::get('document-count',[DocumentController::class,'documentCount']);
             Route::post('is-document-uploaded', [DocumentController::class,'isDocumentUploaded']);
+            Route::post('delete-document', [DocumentController::class,'deleteDocument']);
         });
         
 
@@ -91,6 +92,7 @@ Route::prefix('caregiver')->group(function(){
             Route::prefix('education')->group(function(){
                 Route::get('get-education',[ProfileController::class,'getEducation']);
                 Route::post('edit-education',[ProfileController::class,'editEducation']);
+                Route::post('delete-education',[ProfileController::class,'deleteEducation']);
             }); 
         });
 
