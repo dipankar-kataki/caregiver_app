@@ -15,6 +15,8 @@ use App\Http\Controllers\CaregiverApp\ProfileController;
 use App\Http\Controllers\CaregiverApp\RegistrationController;
 use App\Http\Controllers\CaregiverApp\SignUpController;
 use App\Http\Controllers\CaregiverApp\JobController;
+use App\Http\Controllers\CaregiverApp\SearchController;
+use App\Http\Controllers\CaregiverApp\SortbyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -70,6 +72,10 @@ Route::prefix('caregiver')->group(function(){
             Route::get('ongoing-job' , [JobController::class, 'ongoingJob']);
             Route::post('complete-job', [JobController::class, 'completeJob']);
             Route::get('past-job', [JobController::class, 'pastJob']);
+            Route::prefix('sort-by')->group(function(){
+                Route::get('price/{amount?}', [SortbyController::class, 'price']);
+            });
+            Route::get('search/{caretype?}/{city?}', [SearchController::class, 'search']);
         });
         
         Route::prefix('profile')->group(function(){
