@@ -135,6 +135,7 @@ class AgencyProfileController extends Controller
                 'bio' => $profile_details->business_information->bio,
                 'business_name' => $profile_details->business_name,
                 'business_number' => $profile_details->business_information->business_number,
+                'email' => $profile_details->email,
                 'legal_structure_of_business' => $profile_details->business_information->legal_structure,
                 'organization_type' => $profile_details->business_information->organization_type,
                 'tax_id' => $profile_details->business_information->tax_id,
