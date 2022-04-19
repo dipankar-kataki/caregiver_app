@@ -23,7 +23,7 @@ class CaregiverReviewController extends Controller
         if($validator->fails()){
             return $this->error('Whoops! Something went wrong. Failed to add review.',  $validator->fails(), 'null', 400);
         }else{
-            $user_details = JobByAgency::where('id', $request->job_id)->where('is_activate', 0)->first();
+            $user_details = JobByAgency::where('id', $request->job_id)->where('is_activate', 1)->first();
 
             $create = Review::create([
                 'rating' => $request->rating,
