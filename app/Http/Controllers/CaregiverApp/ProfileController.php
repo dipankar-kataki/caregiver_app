@@ -46,6 +46,7 @@ class ProfileController extends Controller
             $profile = [
                 'firstname' => $details->firstname,
                 'lastname' => $details->lastname,
+                'email' => $details->email,
                 'total_percent' =>  $total_profile_percentage
             ];
             return $this->success('Profile Details.', $profile, 'null', 200);
@@ -54,6 +55,7 @@ class ProfileController extends Controller
             $profile = [
                 'firstname' => $details->firstname,
                 'lastname' => $details->lastname,
+                'email' => $details->email,
                 'profile_image' => $details->profile->profile_image,
                 'bio' => $details->profile->bio,
                 'work_type' => $details->profile->work_type,
