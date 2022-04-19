@@ -75,7 +75,7 @@ Route::prefix('caregiver')->group(function(){
             Route::prefix('sort-by')->group(function(){
                 Route::get('price/{amount?}', [SortbyController::class, 'price']);
             });
-            Route::get('search/{caretype?}/{city?}', [SearchController::class, 'search']);
+            Route::get('search', [SearchController::class, 'search']);
         });
         
         Route::prefix('profile')->group(function(){
