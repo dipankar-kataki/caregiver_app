@@ -40,4 +40,18 @@ class AnswerController extends Controller
             return $this->success('Answer submitted successfully.', null, 'null', 201);
         }    
     }
+
+
+    public function getAnswer(){
+        $answer = Answer::with('question')->where('user_id', auth('sanctum')->user()->id)->get();
+        $new_details = [];
+        foreach($answer as $key => $item){
+            $details = [
+                'slug' => $item->question->slug,
+                'answer' => $item->answer
+            ];
+            array_push($new_details, $details);
+        }
+        return $this->success('Answer fetched successfully.', $new_details, 'null', 200);
+    }
 }

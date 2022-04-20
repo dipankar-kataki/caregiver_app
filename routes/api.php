@@ -51,6 +51,7 @@ Route::prefix('caregiver')->group(function(){
 
         Route::prefix('answer')->group(function(){
             Route::post('add',[ AnswerController::class, 'addAnswer']);
+            Route::get('get-answer',[ AnswerController::class, 'getAnswer']);
         });
 
 

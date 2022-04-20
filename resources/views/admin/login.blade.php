@@ -54,13 +54,13 @@
                                 </div>
                                 <div class="mt-3">
                                     <button type="submit"
-                                        class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn">SIGN
+                                        class="btn btn-block btn-gradient-primary btn-lg font-weight-medium auth-form-btn" style="background: linear-gradient( 327deg, rgba(0, 232, 101, 1) 0%, rgba(0, 105, 224, 1) 100% );">SIGN
                                         IN</button>
                                 </div>
                                 <div class="my-2 d-flex justify-content-between align-items-center">
                                     <div class="form-check">
-                                        <label class="form-check-label text-muted">
-                                            <input type="checkbox" class="form-check-input"> Keep me signed in </label>
+                                        {{-- <label class="form-check-label text-muted">
+                                        <input type="checkbox" class="form-check-input"> Keep me signed in </label> --}}
                                     </div>
                                     <a href="#" class="auth-link text-black">Forgot password?</a>
                                 </div>
