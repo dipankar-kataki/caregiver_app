@@ -73,7 +73,7 @@ Route::prefix('caregiver')->group(function(){
             Route::post('complete-job', [JobController::class, 'completeJob']);
             Route::get('past-job', [JobController::class, 'pastJob']);
             Route::prefix('sort-by')->group(function(){
-                Route::get('price/{amount?}', [SortbyController::class, 'price']);
+                Route::get('price', [SortbyController::class, 'price']);
             });
             Route::get('search', [SearchController::class, 'search']);
         });
