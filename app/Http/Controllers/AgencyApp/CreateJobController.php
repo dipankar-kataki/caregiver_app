@@ -234,11 +234,21 @@ class CreateJobController extends Controller
         foreach($closed_job as $key => $item){
             $agency_name = User::where('id', $item->agency_id)->first();
             $user = User::with('profile')->where('id', $item->caregiver_id)->first();
-            $caregiver_details = [
-                'name' => $user->firstname.', '.$user->lastname,
-                'work_type' => $user->profile->work_type,
-                'rating' => $user->profile->rating
-            ];
+            $caregiver_details = [];
+            if($user->profile != null){
+                $caregiver_details = [
+                    'name' => $user->firstname.', '.$user->lastname,
+                    'work_type' => $user->profile->work_type,
+                    'rating' => $user->profile->rating
+                ];
+            }else{
+                $caregiver_details = [
+                    'name' => $user->firstname.', '.$user->lastname,
+                    'work_type' => null,
+                    'rating' => 0
+                ];
+            }
+            
             $details = [
 
                 'id' => $item->jobByAgency->id,
