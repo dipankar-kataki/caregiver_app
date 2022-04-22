@@ -16,7 +16,7 @@
                 <thead>
                     <tr>
                         <th>Sl No</th>
-                        <th>Agency Name</th>
+                        <th>Agency</th>
                         <th>Job Title</th>
                         <th>Amount/hr</th>
                         <th>Posted On</th>
