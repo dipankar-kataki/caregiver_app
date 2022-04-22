@@ -22,6 +22,7 @@
                         <th>Job Status</th>
                         <th>Payment Status</th>
                         <th>View</th>
+                        <th>Visibility</th>
                     </tr>
                 </thead>
 
@@ -43,6 +44,10 @@
                                 @endif
                                 <td>NULL</td>
                                 <td><a href="{{route('admin.agency.view.profile', ['id' => Crypt::encrypt($item->id)])}}"  target="_blank" class="btn btn-sm btn-primary waves-effect width-md waves-light">View Profile</a></td>
+                                <td>
+                                    <input type="checkbox" id="switch1" checked data-switch="none" />
+                                    <label for="switch1" data-on-label="Online" data-off-label="Offline"></label>
+                                </td>
                             </tr>
                         @endforeach
                     @endforeach
