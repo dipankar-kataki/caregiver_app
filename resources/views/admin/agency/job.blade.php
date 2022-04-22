@@ -30,7 +30,7 @@
                     @foreach($job_details as $key =>  $item)
                         @foreach ($item->jobs as $key2 => $item2)
                             <tr>
-                                <td>{{$key + 1}}</td>
+                                <td>{{$key + $key2}}</td>
                                 <td>{{$item->business_name}}</td>
                                 <td>{{$item2->job_title}}</td>
                                 <td>{{$item2->amount_per_hour}}</td>
