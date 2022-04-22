@@ -15,7 +15,6 @@
             <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                 <thead>
                     <tr>
-                        <th>Sl No</th>
                         <th>Agency</th>
                         <th>Job Title</th>
                         <th>Amount/hr</th>
@@ -28,24 +27,24 @@
 
                 <tbody>
                     @foreach($job_details as $key =>  $item)
-                        
-                        <tr>
-                            <td>{{$key + 1 }}</td>
-                            <td>{{$item->jobs[$key]['business_name']}}</td>
-                            <td>{{$item->jobs[$key]['job_title']}}</td>
-                            <td>{{$item->jobs[$key]['amount_per_hour']}}</td>
-                            <td>{{$item->jobs[$key]['created_at']}}</td>
-                            
-                            @if ($item->jobs[$key]['is_activate'] == 1)
-                            <td class="text-success">Newly Posted</td> 
-                            @elseif($item->jobs[$key]['is_activate'] == 2)
-                                <td class="text-primary">On Going</td>
-                            @else
-                                <td class="text-danger">Closed</td>
-                            @endif
-                            <td>NULL</td>
-                            <td><a href="{{route('admin.agency.view.profile', ['id' => Crypt::encrypt($item->id)])}}"  target="_blank" class="btn btn-sm btn-primary waves-effect width-md waves-light">View Profile</a></td>
-                        </tr>
+                        @foreach ($item->jobs as $key2 => $item2)
+                            <tr>
+                                <td>{{$item->business_name}}</td>
+                                <td>{{$item2->job_title}}</td>
+                                <td>{{$item2->amount_per_hour}}</td>
+                                <td>{{$item2->created_at}}</td>
+                                
+                                @if ($item2->is_activate == 1)
+                                   <td class="text-success">Newly Posted</td> 
+                                @elseif($item2->is_activate == 2)
+                                    <td class="text-primary">On Going</td>
+                                @else
+                                    <td class="text-danger">Closed</td>
+                                @endif
+                                <td>NULL</td>
+                                <td><a href="{{route('admin.agency.view.profile', ['id' => Crypt::encrypt($item->id)])}}"  target="_blank" class="btn btn-sm btn-primary waves-effect width-md waves-light">View Profile</a></td>
+                            </tr>
+                        @endforeach
                     @endforeach
                 </tbody>
             </table>
