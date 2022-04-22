@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminForgotPasswordController;
 use App\Http\Controllers\Admin\AgencyController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
@@ -27,6 +28,14 @@ Route::get('privacy-policy', [SiteController::class, 'privacy'])->name('site.pri
 
 Route::match(['get', 'post'], 'login', [AuthController::class, 'login'])->name('auth.login');
 Route::get('logout', [AuthController::class, 'logout'])->name('auth.logout');
+
+
+Route::prefix('forgot-password')->group(function(){
+    Route::get('get', [AdminForgotPasswordController::class, 'forgotPassword'])->name('admin.forgot.password.get');
+    Route::post('send-reset-link', [AdminForgotPasswordController::class, 'sendResetLink'])->name('admin.forgot.password.send.reset.link');
+    Route::post('verify-otp', [AdminForgotPasswordController::class, 'verifyOTP'])->name('admin.forgot.password.verify.otp');
+    Route::post('change-password', [AdminForgotPasswordController::class, 'changePassword'])->name('admin.forgot.password.change.password');
+});
 
 Route::group([
         'prefix' => 'web',
@@ -59,4 +68,5 @@ Route::group([
         Route::post('update-password', [AuthController::class, 'updatePassword'])->name('admin.setting.update.password');
         Route::post('update-basic-info', [AuthController::class, 'updateBasicInfo'])->name('admin.setting.update.basic.info');
     });
+
 });

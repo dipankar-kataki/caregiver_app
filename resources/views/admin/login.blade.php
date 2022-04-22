@@ -62,7 +62,7 @@
                                         {{-- <label class="form-check-label text-muted">
                                         <input type="checkbox" class="form-check-input"> Keep me signed in </label> --}}
                                     </div>
-                                    <a href="#" class="auth-link text-black">Forgot password?</a>
+                                    <a href="{{route('admin.forgot.password.get')}}" class="auth-link text-black">Forgot password?</a>
                                 </div>
                                 <div class="text-center mt-4 font-weight-light"> Go to <a href="/"
                                         class="text-primary">Home</a>
