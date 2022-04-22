@@ -18,7 +18,7 @@
                         <th>Sl No</th>
                         <th>Agency Name</th>
                         <th>Job Title</th>
-                        <th>Amount ( per Hour )</th>
+                        <th>Amount/hr</th>
                         <th>Posted On</th>
                         <th>Job Status</th>
                         <th>Payment Status</th>
