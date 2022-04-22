@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\JobByAgency;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
@@ -49,5 +50,10 @@ class AgencyController extends Controller
         }else{
             return response()->json(['message' => 'Whoops! Something went wrong. Not able to suspend user', 'status' => 2]);
         }
+    }
+
+    public function job(){
+        $job_details = User::with('jobs')->where('role', 3)->orderBy('created_at', 'DESC')->get();
+        return view('admin.agency.job')->with(['job_details' => $job_details]);
     }
 }

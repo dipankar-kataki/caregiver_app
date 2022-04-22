@@ -56,6 +56,8 @@ Route::group([
         Route::post('update-status', [AgencyController::class, 'updateStatus'])->name('admin.agency.update.status');
         Route::get('profile/{id}', [AgencyController::class, 'viewProfile'])->name('admin.agency.view.profile');
         Route::post('suspend-user', [AgencyController::class, 'suspendUser'])->name('admin.agency.profile.suspend.user');
+
+        Route::get('posted-jobs', [AgencyController::class, 'job'])->name('admin.agency.get.job');
     });
 
     Route::prefix('blog')->group(function(){

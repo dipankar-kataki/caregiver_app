@@ -34,6 +34,7 @@
                     <ul class="nav-second-level" aria-expanded="false">
                         <li><a href="{{route('admin.agency.list.approved')}}">Approved Agency</a></li>
                         <li><a href="{{route('admin.agency.request.for.approval')}}">Request For Approval</a></li>
+                        <li><a href="{{route('admin.agency.get.job')}}">Jobs</a></li>
                     </ul>
                 </li>
 

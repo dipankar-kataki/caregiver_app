@@ -85,7 +85,7 @@
 
                         <div class="col-lg-3 col-sm-6 text-center">
                             <div class="pt-2" dir="ltr">
-                                <input data-plugin="knob" data-width="120" data-height="120" data-linecap=round data-fgColor="#17bf44" value="2" data-max="5" data-skin="tron" data-angleOffset="180" data-readOnly=true data-thickness=".1" />
+                                <input data-plugin="knob" data-width="120" data-height="120" data-linecap=round data-fgColor="#17bf44" value="{{$user_details->business_information->rating != null ? $user_details->business_information->rating : 0 }}" data-max="5" data-skin="tron" data-angleOffset="180" data-readOnly=true data-thickness=".1" />
                                 <h6 class="text-muted mt-2">Rating</h6>
                             </div>
                         </div>
@@ -101,7 +101,7 @@
 
                         <div class="col-lg-3 col-sm-6 text-center">
                             <div class="pt-2" dir="ltr">
-                                <input data-plugin="knob" data-width="120" data-height="120" data-linecap=round data-fgColor="#2abfcc" value="50" data-skin="tron" data-angleOffset="180" data-readOnly=true data-thickness=".1" />
+                                <input data-plugin="knob" data-width="120" data-height="120" data-linecap=round data-fgColor="#2abfcc" value="{{$user_details->business_information->total_reviews != null ? $user_details->business_information->total_reviews : 0 }}"" data-skin="tron" data-angleOffset="180" data-readOnly=true data-thickness=".1" />
                                 <h6 class="text-muted mt-2">Total Reviews</h6>
                             </div>
                         </div>
