@@ -15,7 +15,7 @@
             <table id="datatable-buttons" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                 <thead>
                     <tr>
-                        {{-- <th>Sl No</th> --}}
+                        <th>Sl No</th>
                         <th>Agency</th>
                         <th>Job Title</th>
                         <th>Amount/hr</th>
@@ -30,6 +30,13 @@
                     @foreach($job_details as $key =>  $item)
                         @foreach ($item->jobs as $key2 => $item2)
                             <tr>
+                                @if ($key == $key2)
+                                <td>{{$key + 1 }}</td>
+                                    
+                                @else
+                                <td>{{$key + 2 }}</td>
+                                    
+                                @endif
                                 <td>{{$item->business_name}}</td>
                                 <td>{{$item2->job_title}}</td>
                                 <td>{{$item2->amount_per_hour}}</td>
