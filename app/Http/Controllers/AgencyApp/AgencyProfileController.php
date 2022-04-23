@@ -97,6 +97,7 @@ class AgencyProfileController extends Controller
 
             $details = [
                 'business_name' => $profile_details->business_name,
+                'email' => $profile_details->email,
                 'phone' => $profile_details->business_information->business_number,
                 'year_started' => $year_started->format('Y').' ('.$profile_details->business_information->years_in_business.' '.'years)',
                 'legal_structure_of_business' => $profile_details->business_information->legal_structure,
