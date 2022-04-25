@@ -125,7 +125,7 @@ class JobController extends Controller
                 ]);
                 if($createJob){
                     JobByAgency::where('id', $request->job_id)->update([
-                        'is_activate' => 2
+                        'job_status' => 1
                     ]);
                     return $this->success('Job accepted successfully.',  null, 'null', 200);
                 }else{
@@ -176,7 +176,8 @@ class JobController extends Controller
             $registration = Registration::where('user_id', auth('sanctum')->user()->id)->first();
             $details = AcceptedJob::where('job_by_agencies_id', $request->job_id)->first();
             $updateJobByAgencyTable = JobByAgency::where('id', $details->job_by_agencies_id)->update([
-                'is_activate' => 0
+                'is_activate' => 0,
+                'job_status' => 2
             ]);
             $updateJobAcceptedTable = AcceptedJob::where('job_by_agencies_id', $request->job_id)->update([
                 'is_activate' => 0

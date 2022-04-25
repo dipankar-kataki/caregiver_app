@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AgencyApp\AgencyForgotPasswordController;
+use App\Http\Controllers\AgencyApp\AgencyPaymentController;
 use App\Http\Controllers\AgencyApp\AgencyProfileController;
 use App\Http\Controllers\AgencyApp\AuthController;
 use App\Http\Controllers\AgencyApp\AuthorizedOfficerController;
@@ -193,6 +194,7 @@ Route::prefix('caregiver')->group(function(){
                 Route::post('delete-job', [CreateJobController::class, 'deleteJob']);
                 Route::get('caregiver-profile/{id}', [CreateJobController::class, 'getCaregiverProfile']);
                 Route::get('closed-job', [CreateJobController::class, 'getClosedJob']);
+                Route::post('save-payment-details', [AgencyPaymentController::class, 'savePaymentDetails']);
             });
 
 

@@ -53,7 +53,43 @@ class AgencyController extends Controller
     }
 
     public function job(){
-        $job_details = User::with('jobs')->where('role', 3)->orderBy('created_at', 'DESC')->get();
-        return view('admin.agency.job')->with(['job_details' => $job_details]);
+        $job_details = JobByAgency::with('user')->orderBy('created_at', 'DESC')->get();
+        return view('admin.agency.job.job')->with(['job_details' => $job_details]);
+    }
+
+    public function disableJob(Request $request){
+        $job_id = $request->job_id;
+        $status = $request->active;
+        $update = JobByAgency::where('id', $job_id)->update([
+            'is_activate' => $status
+        ]);
+
+        if($update){
+            if($status == 1){
+                return response()->json(['message' => 'Visibility changed from hide to show.', 'status' => 1]);
+            }else{
+                return response()->json(['message' => 'Visibility changed from show to hide.', 'status' => 1]);
+            }
+        }else{
+            return response()->json(['message' => 'Whoops! Something went wrong. Failed to update visibility status', 'status' => 500]);
+        }
+    }   
+
+
+    public function newlyPosted(){
+       $newly_posted = JobByAgency::with('user')->where('job_status', 0)->where('is_activate', 0)->orderBy('created_at', 'DESC')->get();
+       return view('admin.agency.job.newly-posted')->with(['newly_posted' => $newly_posted ]);
+    }
+
+    public function publish(Request $request){
+        $post = JobByAgency::where('id', $request->job_id)->where('job_status', 0)->where('is_activate', 0)->update([
+            'is_activate' => 1
+        ]);
+
+        if($post){
+            return response()->json(['message' => 'Job published successfully', 'status' => 1]);
+        }else{
+            return response()->json(['message' => 'Whoops! Something went wrong. Failed to publish job.', 'status' => 2]);
+        }
     }
 }

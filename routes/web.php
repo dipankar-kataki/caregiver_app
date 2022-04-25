@@ -57,7 +57,13 @@ Route::group([
         Route::get('profile/{id}', [AgencyController::class, 'viewProfile'])->name('admin.agency.view.profile');
         Route::post('suspend-user', [AgencyController::class, 'suspendUser'])->name('admin.agency.profile.suspend.user');
 
-        Route::get('posted-jobs', [AgencyController::class, 'job'])->name('admin.agency.get.job');
+        Route::prefix('job')->group(function(){
+            Route::get('posted-jobs', [AgencyController::class, 'job'])->name('admin.agency.job.get.job');
+            Route::post('disable-job', [AgencyController::class, 'disableJob'])->name('admin.agency.job.disable.job');
+            Route::get('newly-posted', [AgencyController::class, 'newlyPosted'])->name('admin.agency.job.newly.posted');
+            Route::post('publish', [AgencyController::class, 'publish'])->name('admin.agency.job.publish');
+        });
+
     });
 
     Route::prefix('blog')->group(function(){

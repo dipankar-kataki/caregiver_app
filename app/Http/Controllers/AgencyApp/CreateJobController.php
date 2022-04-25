@@ -63,7 +63,9 @@ class CreateJobController extends Controller
                     'medical_history' => serialize($request->medical_history),
                     'essential_prior_expertise' => serialize($request->essential_prior_expertise),
                     'other_requirements' => serialize($request->other_requirements),
-                    'user_id' => auth('sanctum')->user()->id
+                    'user_id' => auth('sanctum')->user()->id,
+                    'is_activate' => 0,
+                    'job_status' => 0
                 ]);
                 if($create){
                     return $this->success('Job posted successfully.',  null, 'null', 201);
