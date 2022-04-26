@@ -217,6 +217,8 @@ class CreateJobController extends Controller
                 $profile = [
                     'image' =>  $details->profile->profile_image,
                     'name' =>  $details->firstname.' '.$details->lastname,
+                    'email' => $details->email,
+                    'phone' => $details->profile->phone,
                     'work_type' => $details->profile->work_type.' caregiver',
                     'rating' => $details->profile->rating,
                     'experience' => $details->profile->experience.' yrs',
