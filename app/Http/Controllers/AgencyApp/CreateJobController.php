@@ -68,7 +68,8 @@ class CreateJobController extends Controller
                     'job_status' => 0
                 ]);
                 if($create){
-                    return $this->success('Job posted successfully.',  null, 'null', 201);
+                    $job_id = JobByAgency::where('user_id', auth('sanctum')->user()->id)->latest()->first();
+                    return $this->success('Job posted successfully.',  $job_id->id, 'null', 201);
                 }else{
                     return $this->error('Whoops! Something went wrong. Failed to post job.',  null, 'null', 500);
                 }

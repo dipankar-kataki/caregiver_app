@@ -53,8 +53,25 @@ class AgencyController extends Controller
     }
 
     public function job(){
-        $job_details = JobByAgency::with('user')->orderBy('created_at', 'DESC')->get();
-        return view('admin.agency.job.job')->with(['job_details' => $job_details]);
+        $job_details = JobByAgency::with('user', 'payment_status')->orderBy('created_at', 'DESC')->get();
+        $new_details = [];
+        foreach($job_details as $key => $item){
+            foreach($item->payment_status as $key2 => $item2){
+                $details = [
+                    'agency' => $item->user->business_name,
+                    'job' => $item->job_title,
+                    'user_id' => $item->user_id,
+                    'amount' => $item->amount_per_hour,
+                    'posted_on' => $item->created_at,
+                    'job_status' => $item->job_status,
+                    'payment_status' =>  $item2->payment_status
+                ];
+
+                array_push($new_details, $details);
+            }
+            
+        }
+        return view('admin.agency.job.job')->with(['job_details' => $new_details]);
     }
 
     public function disableJob(Request $request){

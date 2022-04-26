@@ -22,7 +22,7 @@
                         <th>Job Status</th>
                         <th>Payment Status</th>
                         <th>View</th>
-                        <th>Visibility</th>
+                        {{-- <th>Visibility</th> --}}
                     </tr>
                 </thead>
 
@@ -30,24 +30,24 @@
                     @foreach ($job_details as $key => $item)
                         <tr>
                             <td>{{$key + 1}}</td>
-                            <td>{{$item->user->business_name}}</td>
-                            <td title="{{$item->job_title}}">{{Str::of($item->job_title)->limit(15)}}</td>
-                            <td>{{$item->amount_per_hour}}</td>
-                            <td>{{$item->created_at}}</td>
+                            <td>{{$item['agency']}}</td>
+                            <td title="{{$item['job']}}">{{Str::of($item['job'])->limit(15)}}</td>
+                            <td>{{$item['amount']}}</td>
+                            <td>{{$item['posted_on']}}</td>
                             <td>
-                                @if ($item->is_activate == 1)
+                                @if ($item['job_status'] == 0)
                                     <p class="text-success">NEWLY POSTED</p>
-                                @elseif($item->is_activate == 2)
+                                @elseif($item['job_status'] == 1)
                                     <p class="text-primary">ON GOING</p>
-                                @elseif($item->is_activate == 0)
+                                @elseif($item['job_status'] == 2)
                                     <p class="text-danger">CLOSED</p>
                                 @else
                                     <p class="text-muted">JOB SUSPENDED</p>
                                 @endif
                             </td>
-                            <td>NULL</td>
-                            <td><a href="{{route('admin.agency.view.profile', ['id' => Crypt::encrypt($item->user_id)])}}"  target="_blank" class="btn btn-sm btn-primary waves-effect width-md waves-light">Agency Profile</a></td>
-                            <td>
+                            <td class="text-success" style="text-transform:uppercase;">{{$item['payment_status']}}</td>
+                            <td><a href="{{route('admin.agency.view.profile', ['id' => Crypt::encrypt($item['user_id'])])}}"  target="_blank" class="btn btn-sm btn-primary waves-effect width-md waves-light">Agency Profile</a></td>
+                            {{-- <td>
                                 @if ($item->is_activate == 1)
                                     <label class="switch">
                                         <input type="checkbox" id="disableJob" data-id="{{ $item->id }}" checked>
@@ -59,7 +59,7 @@
                                         <span class="slider round text-white"></span>
                                     </label>
                                 @endif
-                            </td>
+                            </td> --}}
                         </tr>
                     @endforeach
                 </tbody>

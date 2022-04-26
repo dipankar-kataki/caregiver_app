@@ -41,7 +41,7 @@
                             </a>
                             <ul class="nav-second-level" aria-expanded="false">
                                 <li><a href="{{route('admin.agency.job.get.job')}}">All Jobs</a></li>
-                                <li><a href="{{route('admin.agency.job.newly.posted')}}">Newly Posted</a></li>
+                                {{-- <li><a href="{{route('admin.agency.job.newly.posted')}}">Newly Posted</a></li> --}}
                             </ul>
                         </li>
                     </ul>
