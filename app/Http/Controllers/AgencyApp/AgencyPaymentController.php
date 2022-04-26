@@ -32,13 +32,13 @@ class AgencyPaymentController extends Controller
             ]);
 
             if($create){
-                if($request->payment_status == 'success'){
+                if($request->payment_status == 'Success' || $request->payment_status == 'success' || $request->payment_status == 'SUCCESS'){
                     JobByAgency::where('id', $request->job_id)->update([
                         'is_activate' => 1
                     ]);
                     return $this->success('Payment details saved successfully.', null, 'null', 201);
                 }else{
-                    return $this->error('Failed to save payment details.', null, 'null', 500);
+                    return $this->error('Failed to save payment details.', null, 'null', 400);
                 }
                 
             }else{
