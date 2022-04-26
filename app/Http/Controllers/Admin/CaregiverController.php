@@ -58,6 +58,6 @@ class CaregiverController extends Controller
 
 
     public function test(){
-        return response('This is a test api');
+        return response('This is a post api');
     }
 }

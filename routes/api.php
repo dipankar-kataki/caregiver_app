@@ -231,5 +231,7 @@ Route::prefix('caregiver')->group(function(){
         });
     });
 
-
+    Route::get('get-test-api', function(){
+        return response('This is a get request');
+    });
   Route::post('test-api', [CaregiverController::class, 'test']);
