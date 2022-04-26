@@ -231,6 +231,4 @@ Route::prefix('caregiver')->group(function(){
     });
 
 
-    Route::get('test-api', function(){
-        echo 'TEST API';
-    });
+  
