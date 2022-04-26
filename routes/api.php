@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\CaregiverController;
 use App\Http\Controllers\AgencyApp\AgencyForgotPasswordController;
 use App\Http\Controllers\AgencyApp\AgencyPaymentController;
 use App\Http\Controllers\AgencyApp\AgencyProfileController;
@@ -231,4 +232,4 @@ Route::prefix('caregiver')->group(function(){
     });
 
 
-  
+  Route::post('test-api', [CaregiverController::class, 'test']);

@@ -55,4 +55,9 @@ class CaregiverController extends Controller
             return response()->json(['message' => 'Whoops! Something went wrong. Not able to suspend user', 'status' => 2]);
         }
     }
+
+
+    public function test(){
+        return response('This is a test api');
+    }
 }
