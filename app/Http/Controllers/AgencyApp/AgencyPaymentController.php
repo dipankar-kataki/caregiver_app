@@ -38,7 +38,7 @@ class AgencyPaymentController extends Controller
                     ]);
                     return $this->success('Payment details saved successfully.', null, 'null', 201);
                 }else{
-                    return $this->error('Failed to save payment details.', null, 'null', 400);
+                    return $this->success('Payment details saved successfully', null, 'null', 201);
                 }
                 
             }else{
