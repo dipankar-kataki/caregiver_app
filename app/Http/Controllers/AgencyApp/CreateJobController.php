@@ -189,44 +189,48 @@ class CreateJobController extends Controller
         }
     }
 
-    public function getCaregiverProfile($id){
+    public function getCaregiverProfile(){
 
-        $details = User::with('profile', 'address')->where('id', $id)->first();
-        $education = Education::where('user_id', $id)->get();
-        $answer = Answer::where('user_id', $id)->get();
-        $final_question = [];
-        foreach($answer as $key => $item){
-            $question = Question::where('id', $answer[$key]['question_id'])->get();
-            foreach($question as $key => $item2){
-                $new_question = [
-                    'question' => $item2->slug,
-                    'answer' => $item->answer
-                ];
-
-                array_push($final_question, $new_question);
-            }
-        }
-        if($details == null){
-            return $this->error('Whoops! Caregiver not found. ',  null, 'null', 404);
+        if(! isset($_GET['id']) ){
+            return $this->error('Whoops! Invalid params passed. ',  null, 'null', 404);
         }else{
-            $dobFormat = $diff = date_diff(date_create( $details->profile->dob), date_create(date('Y-m-d')));
-            $profile = [
-                'image' =>  $details->profile->profile_image,
-                'name' =>  $details->firstname.' '.$details->lastname,
-                'work_type' => $details->profile->work_type.' caregiver',
-                'rating' => $details->profile->rating,
-                'experience' => $details->profile->experience.' yrs',
-                'age' => $dobFormat->format('%y').' yrs',
-                'care_completed' => $details->profile->total_care_completed,
-                'total_review' => $details->profile->total_reviews,
-                'bio' => $details->profile->bio,
-                'address' => $details->address->street.', '.$details->address->city.', '.$details->address->state.', '.$details->address->zip_code,
-                'education' => $education,
-                'reviews' => [],
-                'question' => $final_question
-            ];
-            
-            return $this->success('Caregiver profile fetched successfully.',  $profile, 'null', 200);
+            $details = User::with('profile', 'address')->where('id', $_GET['id'])->first();
+            $education = Education::where('user_id', $_GET['id'])->get();
+            $answer = Answer::where('user_id', $_GET['id'])->get();
+            $final_question = [];
+            foreach($answer as $key => $item){
+                $question = Question::where('id', $answer[$key]['question_id'])->get();
+                foreach($question as $key => $item2){
+                    $new_question = [
+                        'question' => $item2->slug,
+                        'answer' => $item->answer
+                    ];
+
+                    array_push($final_question, $new_question);
+                }
+            }
+            if($details == null){
+                return $this->error('Whoops! Caregiver not found. ',  null, 'null', 404);
+            }else{
+                $dobFormat = $diff = date_diff(date_create( $details->profile->dob), date_create(date('Y-m-d')));
+                $profile = [
+                    'image' =>  $details->profile->profile_image,
+                    'name' =>  $details->firstname.' '.$details->lastname,
+                    'work_type' => $details->profile->work_type.' caregiver',
+                    'rating' => $details->profile->rating,
+                    'experience' => $details->profile->experience.' yrs',
+                    'age' => $dobFormat->format('%y').' yrs',
+                    'care_completed' => $details->profile->total_care_completed,
+                    'total_review' => $details->profile->total_reviews,
+                    'bio' => $details->profile->bio,
+                    'address' => $details->address->street.', '.$details->address->city.', '.$details->address->state.', '.$details->address->zip_code,
+                    'education' => $education,
+                    'reviews' => [],
+                    'question' => $final_question
+                ];
+                
+                return $this->success('Caregiver profile fetched successfully.',  $profile, 'null', 200);
+            }
         }
     }
 

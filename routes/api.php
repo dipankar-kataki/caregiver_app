@@ -192,7 +192,7 @@ Route::prefix('caregiver')->group(function(){
                 Route::get('ongoing-job', [CreateJobController::class, 'getOngoingJob']);
                 Route::post('update-job-status', [CreateJobController::class, 'updateJobStatus']);
                 Route::post('delete-job', [CreateJobController::class, 'deleteJob']);
-                Route::get('caregiver-profile/{id}', [CreateJobController::class, 'getCaregiverProfile']);
+                Route::get('caregiver-profile', [CreateJobController::class, 'getCaregiverProfile']);
                 Route::get('closed-job', [CreateJobController::class, 'getClosedJob']);
                 Route::post('save-payment-details', [AgencyPaymentController::class, 'savePaymentDetails']);
             });
