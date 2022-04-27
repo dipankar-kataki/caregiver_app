@@ -59,7 +59,7 @@ class CaregiverController extends Controller
     }
 
     public function completedJob(){
-        $completed_job = AcceptedJob::with('jobByAgency', 'caregiver', 'agency', 'profile')->where('is_activate', 0)->get();
+        $completed_job = AcceptedJob::with('jobByAgency', 'caregiver', 'agency', 'profile')->where('is_activate', 0)->latest()->get();
         // dd($completed_job);
         return view('admin.caregiver.completed-job')->with(['completed_job' => $completed_job]);
     }
