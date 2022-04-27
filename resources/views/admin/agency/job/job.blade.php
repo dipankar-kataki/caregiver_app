@@ -18,6 +18,7 @@
                         <th>Agency</th>
                         <th>Job Title</th>
                         <th>Amount/hr</th>
+                        <th>Amount Paid</th>
                         <th>Posted On</th>
                         <th>Job Status</th>
                         <th>Payment Status</th>
@@ -32,7 +33,8 @@
                             <td>{{$key + 1}}</td>
                             <td>{{$item['agency']}}</td>
                             <td title="{{$item['job']}}">{{Str::of($item['job'])->limit(15)}}</td>
-                            <td>{{$item['amount']}}</td>
+                            <td>{{$item['amount_per_hour']}}</td>
+                            <td>{{$item['amount_paid']}}</td>
                             <td>{{$item['posted_on']}}</td>
                             <td>
                                 @if ($item['job_status'] == 0)

@@ -264,7 +264,7 @@ class CreateJobController extends Controller
             
             $details = [
 
-                'id' => $item->jobByAgency->id,
+                'job_id' => $item->jobByAgency->id,
                 'agency_name' => $agency_name->business_name,
                 'job_title' => $item->jobByAgency->job_title,
                 'amount' => $item->jobByAgency->amount_per_hour,

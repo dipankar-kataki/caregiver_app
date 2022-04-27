@@ -61,7 +61,8 @@ class AgencyController extends Controller
                     'agency' => $item->user->business_name,
                     'job' => $item->job_title,
                     'user_id' => $item->user_id,
-                    'amount' => $item->amount_per_hour,
+                    'amount_per_hour' => $item->amount_per_hour,
+                    'amount_paid' => $item2->amount,
                     'posted_on' => $item->created_at,
                     'job_status' => $item->job_status,
                     'payment_status' =>  $item2->payment_status
