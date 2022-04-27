@@ -6,11 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Models\JobByAgency;
 use App\Models\Registration;
 use App\Models\Review;
+use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class AgencyReviewController extends Controller
 {
+    use ApiResponser;
     public function addReview(Request $request){
         $validator = Validator::make($request->all(),[
             'job_id' => 'required',
