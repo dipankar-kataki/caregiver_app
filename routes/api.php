@@ -10,6 +10,7 @@ use App\Http\Controllers\AgencyApp\AuthorizedOfficerController;
 use App\Http\Controllers\AgencyApp\BusinessInformationController;
 use App\Http\Controllers\AgencyApp\CreateJobController;
 use App\Http\Controllers\CaregiverApp\AnswerController;
+use App\Http\Controllers\CaregiverApp\CaregiverBankAccountController;
 use App\Http\Controllers\CaregiverApp\CaregiverReviewController;
 use App\Http\Controllers\CaregiverApp\DocumentController;
 use App\Http\Controllers\CaregiverApp\ForgotPasswordController;
@@ -104,6 +105,11 @@ Route::prefix('caregiver')->group(function(){
                 Route::post('edit-education',[ProfileController::class,'editEducation']);
                 Route::post('delete-education',[ProfileController::class,'deleteEducation']);
             }); 
+        });
+
+        Route::prefix('bank')->group(function(){
+            Route::post('add-bank', [CaregiverBankAccountController::class, 'addBank']);
+            Route::get('get-bank-details', [CaregiverBankAccountController::class, 'getBankDetails']);
         });
 
 

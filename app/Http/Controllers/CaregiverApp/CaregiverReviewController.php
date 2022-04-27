@@ -21,7 +21,7 @@ class CaregiverReviewController extends Controller
             'content' => 'required'
         ]);
         if($validator->fails()){
-            return $this->error('Whoops! Something went wrong. Failed to add review.',  $validator->fails(), 'null', 400);
+            return $this->error('Whoops! Something went wrong. Failed to add review.',  $validator->errors(), 'null', 400);
         }else{
             $user_details = JobByAgency::where('id', $request->job_id)->first();
 
