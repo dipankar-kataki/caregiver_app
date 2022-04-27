@@ -180,10 +180,26 @@
                                     </th>
                                     <td>
                                         <h5 class="m-0 font-15">{{$item->business_name}}</h5>
-                                        <p class="m-0 text-muted"><small>Organization: {{$item->business_information->organization_type}}</small></p>
+                                        @if ($item->business_information != null)
+                                            <p class="m-0 text-muted"><small>Organization: {{$item->business_information->organization_type}}</small></p>
+                                        @else
+                                            <p class="m-0 text-muted"><small>Organization: NULL</small></p>
+                                        @endif
                                     </td>
-                                    <td>{{$item->business_information->business_number}}</td>
-                                    <td>{{$item->address->city}}</td>
+                                    <td>
+                                        @if ($item->business_information != null)
+                                            {{$item->business_information->business_number}}
+                                        @else
+                                            NULL
+                                        @endif
+                                        </td>
+                                    <td>
+                                        @if ($item->business_information != null)
+                                            {{$item->address->city}}
+                                        @else
+                                            NULL
+                                        @endif
+                                    </td>
                                     <td>{{$item->created_at->diffForHumans()}}</td>
                                 </tr>
                             @endforeach

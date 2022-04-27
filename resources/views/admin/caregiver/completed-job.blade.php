@@ -19,10 +19,10 @@
                         <th>Caregiver Name</th>
                         <th>Job Title</th>
                         <th>Care Type</th>
-                        <th>Job Amount/hr</th>
-                        <th>Job Posted By</th>
-                        <th>Job Status</th>
-                        <th>Job Completiton Date</th>
+                        <th>Amount/hr</th>
+                        <th>Posted By</th>
+                        <th>Status</th>
+                        <th>Completiton Date & Time</th>
                         <th>Action</th>
                     </tr>
                 </thead>
