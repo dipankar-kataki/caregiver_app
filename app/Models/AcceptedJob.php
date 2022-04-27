@@ -15,4 +15,16 @@ class AcceptedJob extends Model
     public function jobByAgency(){
         return $this->belongsTo(JobByAgency::class, 'job_by_agencies_id', 'id');
     }
+
+    public function caregiver(){
+        return $this->belongsTo(User::class, 'caregiver_id', 'id');
+    }
+
+    public function agency(){
+        return $this->belongsTo(User::class, 'agency_id', 'id');
+    }
+
+    public function profile(){
+        return $this->belongsTo(Registration::class, 'caregiver_id', 'user_id');
+    }
 }

@@ -22,7 +22,7 @@
                     <ul class="nav-second-level" aria-expanded="false">
                         <li><a href="{{route('admin.caregiver.list.approved')}}">Approved Caregivers</a></li>
                         <li><a href="{{route('admin.caregiver.request.for.approval')}}">Request For Approval</a></li>
-                        <li><a href="#">Completed Jobs</a></li>
+                        <li><a href="{{route('admin.caregiver.completed.job')}}">Completed Jobs</a></li>
                     </ul>
                 </li>
 

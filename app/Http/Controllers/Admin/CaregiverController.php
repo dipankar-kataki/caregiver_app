@@ -3,10 +3,12 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AcceptedJob;
 use App\Models\ChildAbuse;
 use App\Models\Covid;
 use App\Models\Criminal;
 use App\Models\Education;
+use App\Models\JobByAgency;
 use App\Models\Tuberculosis;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -56,8 +58,15 @@ class CaregiverController extends Controller
         }
     }
 
+    public function completedJob(){
+        $completed_job = AcceptedJob::with('jobByAgency', 'caregiver', 'agency', 'profile')->where('is_activate', 0)->get();
+        // dd($completed_job);
+        return view('admin.caregiver.completed-job')->with(['completed_job' => $completed_job]);
+    }
 
     public function test(){
         return response('This is a post api');
     }
+
+
 }
