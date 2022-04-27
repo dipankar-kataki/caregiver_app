@@ -17,7 +17,7 @@ class JobController extends Controller
 {
     use ApiResponser;
     public function recomendedJobs(){
-        $jobs = JobByAgency::with('user')->where('is_activate', 1)->orderBy('created_at', 'DESC')->get();
+        $jobs = JobByAgency::with('user')->where('is_activate', 1)->where('job_status', 0)->orderBy('created_at', 'DESC')->get();
         $new_details = [];
         foreach($jobs as $key => $item){
             $details = [
