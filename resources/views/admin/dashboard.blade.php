@@ -120,7 +120,7 @@
     <div class="row">
         <div class="col-xl-6">
             <div class="card-box">
-                <h4 class="header-title mb-4">Recent Users</h4>
+                <h4 class="header-title mb-4">Recently Joined Caregiver</h4>
 
                 <div class="table-responsive">
                     <table class="table table-hover table-centered m-0">
@@ -134,71 +134,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>
-                                    <img src="assets/images/users/avatar-1.jpg" alt="user" class="avatar-sm rounded-circle" />
-                                </th>
-                                <td>
-                                    <h5 class="m-0 font-15">Louis Hansen</h5>
-                                    <p class="m-0 text-muted"><small>Web designer</small></p>
-                                </td>
-                                <td>+12 3456 789</td>
-                                <td>USA</td>
-                                <td>07/08/2016</td>
-                            </tr>
-
-                            <tr>
-                                <th>
-                                    <img src="assets/images/users/avatar-2.jpg" alt="user" class="avatar-sm rounded-circle" />
-                                </th>
-                                <td>
-                                    <h5 class="m-0 font-15">Craig Hause</h5>
-                                    <p class="m-0 text-muted"><small>Programmer</small></p>
-                                </td>
-                                <td>+89 345 6789</td>
-                                <td>Canada</td>
-                                <td>29/07/2016</td>
-                            </tr>
-
-                            <tr>
-                                <th>
-                                    <img src="assets/images/users/avatar-3.jpg" alt="user" class="avatar-sm rounded-circle" />
-                                </th>
-                                <td>
-                                    <h5 class="m-0 font-15">Edward Grimes</h5>
-                                    <p class="m-0 text-muted"><small>Founder</small></p>
-                                </td>
-                                <td>+12 29856 256</td>
-                                <td>Brazil</td>
-                                <td>22/07/2016</td>
-                            </tr>
-
-                            <tr>
-                                <th>
-                                    <img src="assets/images/users/avatar-4.jpg" alt="user" class="avatar-sm rounded-circle" />
-                                </th>
-                                <td>
-                                    <h5 class="m-0 font-15">Bret Weaver</h5>
-                                    <p class="m-0 text-muted"><small>Web designer</small></p>
-                                </td>
-                                <td>+00 567 890</td>
-                                <td>USA</td>
-                                <td>20/07/2016</td>
-                            </tr>
-
-                            <tr>
-                                <th>
-                                    <img src="assets/images/users/avatar-5.jpg" alt="user" class="avatar-sm rounded-circle" />
-                                </th>
-                                <td>
-                                    <h5 class="m-0 font-15">Mark</h5>
-                                    <p class="m-0 text-muted"><small>Web design</small></p>
-                                </td>
-                                <td>+91 123 456</td>
-                                <td>India</td>
-                                <td>07/07/2016</td>
-                            </tr>
-
+                            @foreach ($recently_joined_caregiver as $key => $item)
+                                <tr>
+                                    <th>
+                                        <img src="{{asset($item->profile->profile_image)}}" alt="user" class="avatar-sm rounded-circle" />
+                                    </th>
+                                    <td>
+                                        <h5 class="m-0 font-15">{{$item->firstname}} {{$item->lastname}}</h5>
+                                        <p class="m-0 text-muted"><small>{{$item->profile->work_type}}</small></p>
+                                    </td>
+                                    <td>{{$item->profile->phone}}</td>
+                                    <td>{{$item->address->city}}</td>
+                                    <td>{{$item->created_at->diffForHumans()}}</td>
+                                </tr>
+                            @endforeach
                         </tbody>
                     </table>
 
@@ -211,8 +160,7 @@
 
         <div class="col-xl-6">
             <div class="card-box">
-                <h4 class="header-title mb-4">Recent Users</h4>
-
+                <h4 class="header-title mb-4">Recently Joined Agency</h4>
                 <div class="table-responsive">
                     <table class="table table-hover table-centered m-0">
                         <thead>
@@ -225,71 +173,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th>
-                                    <span class="avatar-sm-box bg-success">L</span>
-                                </th>
-                                <td>
-                                    <h5 class="m-0 font-15">Louis Hansen</h5>
-                                    <p class="m-0 text-muted"><small>Web designer</small></p>
-                                </td>
-                                <td>+12 3456 789</td>
-                                <td>USA</td>
-                                <td>07/08/2016</td>
-                            </tr>
-
-                            <tr>
-                                <th>
-                                    <span class="avatar-sm-box bg-primary">C</span>
-                                </th>
-                                <td>
-                                    <h5 class="m-0 font-15">Craig Hause</h5>
-                                    <p class="m-0 text-muted"><small>Programmer</small></p>
-                                </td>
-                                <td>+89 345 6789</td>
-                                <td>Canada</td>
-                                <td>29/07/2016</td>
-                            </tr>
-
-                            <tr>
-                                <th>
-                                    <span class="avatar-sm-box bg-brown">E</span>
-                                </th>
-                                <td>
-                                    <h5 class="m-0 font-15">Edward Grimes</h5>
-                                    <p class="m-0 text-muted"><small>Founder</small></p>
-                                </td>
-                                <td>+12 29856 256</td>
-                                <td>Brazil</td>
-                                <td>22/07/2016</td>
-                            </tr>
-
-                            <tr>
-                                <th>
-                                    <span class="avatar-sm-box bg-pink">B</span>
-                                </th>
-                                <td>
-                                    <h5 class="m-0 font-15">Bret Weaver</h5>
-                                    <p class="m-0 text-muted"><small>Web designer</small></p>
-                                </td>
-                                <td>+00 567 890</td>
-                                <td>USA</td>
-                                <td>20/07/2016</td>
-                            </tr>
-
-                            <tr>
-                                <th>
-                                    <span class="avatar-sm-box bg-orange">M</span>
-                                </th>
-                                <td>
-                                    <h5 class="m-0 font-15">Mark</h5>
-                                    <p class="m-0 text-muted"><small>Web design</small></p>
-                                </td>
-                                <td>+91 123 456</td>
-                                <td>India</td>
-                                <td>07/07/2016</td>
-                            </tr>
-
+                            {{-- @foreach ($recently_joined_agency as $item)
+                                <tr>
+                                    <th>
+                                        <span class="avatar-sm-box bg-success">L</span>
+                                    </th>
+                                    <td>
+                                        <h5 class="m-0 font-15">{{$item->business_name}}</h5>
+                                        <p class="m-0 text-muted"><small>Organization: {{$recently_joined_agency->business_information}}</small></p>
+                                    </td>
+                                    <td>{{$item->business_information->business_number}}</td>
+                                    <td>{{$item['address']['city']}}</td>
+                                    <td>{{$item->created_at->diffForHumans()}}</td>
+                                </tr>
+                            @endforeach --}}
                         </tbody>
                     </table>
 

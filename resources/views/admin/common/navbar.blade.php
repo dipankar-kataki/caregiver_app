@@ -191,7 +191,7 @@
 
   <!-- LOGO -->
   <div class="logo-box">
-      <a href="{{route('admin.dashboard')}}" class="logo text-center">
+      <a href="{{route('admin.dashboard.home')}}" class="logo text-center">
           <span class="logo-lg">
               <img src="{{asset('admin/assets/images/logo-main.png')}}" alt="" width="180">
               <!-- <span class="logo-lg-text-light">Zircos</span> -->

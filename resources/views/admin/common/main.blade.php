@@ -57,7 +57,7 @@
                           <div class="page-title-box">
                               <div class="page-title-right">
                                   <ol class="breadcrumb m-0">
-                                      <li class="breadcrumb-item"><a href="{{route('admin.dashboard')}}">Peaceworc</a></li>
+                                      <li class="breadcrumb-item"><a href="{{route('admin.dashboard.home')}}">Peaceworc</a></li>
                                       <li class="breadcrumb-item"><a href="javascript: void(0);" style="text-transform:capitalize;">{{Request::segment(2)}} </a></li>
                                       {{-- <li class="breadcrumb-item"><a href="javascript: void(0);" style="text-transform:capitalize;">{{Request::segment(3)}} </a></li> --}}
                                   </ol>

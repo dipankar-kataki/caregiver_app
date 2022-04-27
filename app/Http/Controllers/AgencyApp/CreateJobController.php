@@ -140,12 +140,13 @@ class CreateJobController extends Controller
         foreach($jobs as $key => $item){
             $user = User::with('profile')->where('id', $item->caregiver_id)->first();
             $caregiver_details = [
-                'name' => $user->firstname.', '.$user->lastname,
+                'name' => $user->firstname.' '.$user->lastname,
                 'work_type' => $user->profile->work_type,
                 'profile_image' => $user->profile->profile_image,
                 'rating' => $user->profile->rating
             ];
             $details = [
+                'job_id' => $item->jobByAgency->job_by_agencies_id,
                 'job_title' => $item->jobByAgency->job_title,
                 'amount' => '$'.$item->jobByAgency->amount_per_hour,
                 'care_type' => $item->jobByAgency->care_type,
@@ -247,14 +248,14 @@ class CreateJobController extends Controller
             $caregiver_details = [];
             if($user->profile != null){
                 $caregiver_details = [
-                    'name' => $user->firstname.', '.$user->lastname,
+                    'name' => $user->firstname.' '.$user->lastname,
                     'profile_image' => $user->profile->profile_image,
                     'work_type' => $user->profile->work_type,
                     'rating' => $user->profile->rating
                 ];
             }else{
                 $caregiver_details = [
-                    'name' => $user->firstname.', '.$user->lastname,
+                    'name' => $user->firstname.' '.$user->lastname,
                     'profile_image' => null,
                     'work_type' => null,
                     'rating' => 0

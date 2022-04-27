@@ -9,7 +9,7 @@
 
                 <li class="menu-title">Navigation</li>
                 <li>
-                    <a href="{{route('admin.dashboard')}}" class="waves-effect waves-light">
+                    <a href="{{route('admin.dashboard.home')}}" class="waves-effect waves-light">
                         <i class="mdi mdi-view-dashboard"></i>Dashboard  
                     </a>
                 </li>

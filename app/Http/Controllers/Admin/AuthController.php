@@ -15,7 +15,7 @@ class AuthController extends Controller
     public function login(Request $request){
         if($request->isMethod('get')){
             if (Auth::user()) {   // Check is user logged in
-                return redirect()->route('admin.dashboard');
+                return redirect()->route('admin.dashboard.home');
             } else {
                 return view('admin.login');
             }
@@ -31,7 +31,7 @@ class AuthController extends Controller
             if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])){
                 return redirect()->back()->with('error', 'Invalid Credientials');   
             }else{
-                return redirect()->route('admin.dashboard');
+                return redirect()->route('admin.dashboard.home');
             }
         }
     }

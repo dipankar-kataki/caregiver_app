@@ -41,7 +41,13 @@ Route::group([
         'prefix' => 'web',
         'middleware' => 'auth'
     ], function () {
-    Route::get('dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+
+    Route::prefix('dashboard')->group(function(){
+        Route::get('home', [DashboardController::class, 'index'])->name('admin.dashboard.home');
+    });  
+
+
+
     Route::prefix('caregiver')->group(function(){
         Route::get('approved-caregivers', [CaregiverController::class, 'approvedCaregiverList'])->name('admin.caregiver.list.approved');
         Route::get('request-for-approval', [CaregiverController::class, 'newJoiner'])->name('admin.caregiver.request.for.approval');
