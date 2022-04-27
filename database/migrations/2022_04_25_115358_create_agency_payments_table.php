@@ -18,7 +18,7 @@ class CreateAgencyPaymentsTable extends Migration
             $table->unsignedBigInteger('agency_id');
             $table->unsignedBigInteger('job_id');
             $table->string('customer_id');
-            $table->decimal('amount',5,2);
+            $table->decimal('amount',10,2);
             $table->string('payment_status');
             $table->string('payment_mode')->nullable();
             $table->timestamps();

@@ -142,6 +142,7 @@ class CreateJobController extends Controller
             $caregiver_details = [
                 'name' => $user->firstname.', '.$user->lastname,
                 'work_type' => $user->profile->work_type,
+                'profile_image' => $user->profile->profile_image,
                 'rating' => $user->profile->rating
             ];
             $details = [
@@ -247,12 +248,14 @@ class CreateJobController extends Controller
             if($user->profile != null){
                 $caregiver_details = [
                     'name' => $user->firstname.', '.$user->lastname,
+                    'profile_image' => $user->profile->profile_image,
                     'work_type' => $user->profile->work_type,
                     'rating' => $user->profile->rating
                 ];
             }else{
                 $caregiver_details = [
                     'name' => $user->firstname.', '.$user->lastname,
+                    'profile_image' => null,
                     'work_type' => null,
                     'rating' => 0
                 ];
