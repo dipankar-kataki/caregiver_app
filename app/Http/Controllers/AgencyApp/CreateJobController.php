@@ -129,7 +129,7 @@ class CreateJobController extends Controller
     }
 
     public function getActiveJob(){
-        $jobs = JobByAgency::where('user_id', auth('sanctum')->user()->id)->where('is_activate', 1)->orderBy('created_at', 'DESC')->get();
+        $jobs = JobByAgency::where('user_id', auth('sanctum')->user()->id)->where('is_activate', 1)->where('job_status', 0)->orderBy('created_at', 'DESC')->get();
         return $this->success('Job posted successfully.',  $jobs, 'null', 200);
     }
 
