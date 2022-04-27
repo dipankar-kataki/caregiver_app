@@ -4,6 +4,7 @@ use App\Http\Controllers\Admin\CaregiverController;
 use App\Http\Controllers\AgencyApp\AgencyForgotPasswordController;
 use App\Http\Controllers\AgencyApp\AgencyPaymentController;
 use App\Http\Controllers\AgencyApp\AgencyProfileController;
+use App\Http\Controllers\AgencyApp\AgencyReviewController;
 use App\Http\Controllers\AgencyApp\AuthController;
 use App\Http\Controllers\AgencyApp\AuthorizedOfficerController;
 use App\Http\Controllers\AgencyApp\BusinessInformationController;
