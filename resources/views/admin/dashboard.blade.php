@@ -194,7 +194,7 @@
                                         @endif
                                         </td>
                                     <td>
-                                        @if ($item->business_information != null)
+                                        @if ($item->address != null)
                                             {{$item->address->city}}
                                         @else
                                             NULL
