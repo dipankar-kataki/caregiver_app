@@ -146,7 +146,7 @@ class CreateJobController extends Controller
                 'rating' => $user->profile->rating
             ];
             $details = [
-                'job_id' => $item->jobByAgency->job_by_agencies_id,
+                'job_id' => $item->job_by_agencies_id,
                 'job_title' => $item->jobByAgency->job_title,
                 'amount' => '$'.$item->jobByAgency->amount_per_hour,
                 'care_type' => $item->jobByAgency->care_type,
