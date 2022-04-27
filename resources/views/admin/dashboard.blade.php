@@ -173,20 +173,20 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {{-- @foreach ($recently_joined_agency as $item)
+                            @foreach ($recently_joined_agency as $key =>  $item)
                                 <tr>
                                     <th>
-                                        <span class="avatar-sm-box bg-success">L</span>
+                                        <span class="avatar-sm-box bg-success" style="text-transform: uppercase;">{{substr($item->business_name, 0, 1)}}</span>
                                     </th>
                                     <td>
                                         <h5 class="m-0 font-15">{{$item->business_name}}</h5>
-                                        <p class="m-0 text-muted"><small>Organization: {{$recently_joined_agency->business_information}}</small></p>
+                                        <p class="m-0 text-muted"><small>Organization: {{$item->business_information->organization_type}}</small></p>
                                     </td>
                                     <td>{{$item->business_information->business_number}}</td>
-                                    <td>{{$item['address']['city']}}</td>
+                                    <td>{{$item->address->city}}</td>
                                     <td>{{$item->created_at->diffForHumans()}}</td>
                                 </tr>
-                            @endforeach --}}
+                            @endforeach
                         </tbody>
                     </table>
 
