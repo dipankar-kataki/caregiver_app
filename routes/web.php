@@ -54,7 +54,7 @@ Route::group([
         Route::post('update-status', [CaregiverController::class, 'updateStatus'])->name('admin.caregiver.update.status');
         Route::get('profile/{id}', [CaregiverController::class, 'viewProfile'])->name('admin.caregiver.view.profile');
         Route::post('suspend-user', [CaregiverController::class, 'suspendUser'])->name('admin.caregiver.profile.suspend.user');
-        Route::
+        // Route::
     });
 
     Route::prefix('agency')->group(function(){
