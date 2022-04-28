@@ -114,7 +114,7 @@ Route::prefix('caregiver')->group(function(){
 
 
         Route::prefix('review')->group(function(){
-            Route::get('get-review/{id}', [CaregiverReviewController::class, 'getReview']);
+            Route::get('get-review', [CaregiverReviewController::class, 'getReview']);
             Route::post('add-review', [CaregiverReviewController::class, 'addReview']);
         });
 
@@ -216,7 +216,7 @@ Route::prefix('caregiver')->group(function(){
 
             /******************************** Review Api's *******************************/
             Route::prefix('review')->group(function(){
-                Route::get('get-review/{id}', [AgencyReviewController::class, 'getReview']);
+                Route::get('get-review', [AgencyReviewController::class, 'getReview']);
                 Route::post('add-review', [AgencyReviewController::class, 'addReview']);
             });
 

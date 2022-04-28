@@ -44,4 +44,10 @@ class AgencyReviewController extends Controller
             }
         }
     }
+
+
+    public function getReview(){
+        $review = Review::where('agency_id', auth('sanctum')->user()->id)->get();
+        return $this->success('Review fetched successfully.',  $review, 'null', 200);
+    }
 }

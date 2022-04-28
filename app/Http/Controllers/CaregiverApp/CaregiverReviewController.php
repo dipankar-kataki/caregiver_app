@@ -45,4 +45,9 @@ class CaregiverReviewController extends Controller
             }
         }
     }
+
+    public function getReview(){
+        $review = Review::where('caregiver_id', auth('sanctum')->user()->id)->get();
+        return $this->success('Review fetched successfully.',  $review, 'null', 200);
+    }
 }
