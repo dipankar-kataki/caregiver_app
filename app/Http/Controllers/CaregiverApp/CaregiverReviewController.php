@@ -47,7 +47,19 @@ class CaregiverReviewController extends Controller
     }
 
     public function getReview(){
-        $review = Review::where('caregiver_id', auth('sanctum')->user()->id)->get();
-        return $this->success('Review fetched successfully.',  $review, 'null', 200);
+        $review = Review::with('agency')->where('caregiver_id', auth('sanctum')->user()->id)->latest()->get();
+        $new_details = [];
+        foreach($review as $key => $item){
+            $details = [
+                'rating' => $item->rating,
+                'content' => $item->content,
+                'posted_by' => $item->agency->business_name,
+                'photo' => null,
+                'created_at' => $item->created_at->diffForHumans()
+            ];
+            
+            array_push($new_details, $details);
+        }
+        return $this->success('Review fetched successfully.',  $new_details, 'null', 200);
     }
 }

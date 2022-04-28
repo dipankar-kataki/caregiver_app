@@ -45,7 +45,7 @@
                             </td>
                             <td>{{Carbon\Carbon::parse($item->updated_at)->format('m-d-Y h:i:s')}}</td>
                             <td>
-                                <button class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-lg" data-backdrop="static" data-keyboard="false">Make Payment</button>
+                                <button class="btn btn-primary waves-effect waves-light make-payment-btn" data-toggle="modal" data-target=".bs-example-modal-lg" data-backdrop="static" data-keyboard="false" data-agency="{{$item->job_by_agencies_id}}" data-caregiver="{{$item->caregiver_id}}">Make Payment</button>
                                 {{-- <a href="#custom-modal" class="btn btn-primary waves-effect waves-light" data-animation="blur" data-plugin="custommodal" data-overlaySpeed="100" data-overlayColor="#36404a">Make Payment</a> --}}
                             </td>
                         </tr>

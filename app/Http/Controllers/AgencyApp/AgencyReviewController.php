@@ -47,7 +47,19 @@ class AgencyReviewController extends Controller
 
 
     public function getReview(){
-        $review = Review::where('agency_id', auth('sanctum')->user()->id)->get();
-        return $this->success('Review fetched successfully.',  $review, 'null', 200);
+        $review = Review::with('caregiver', 'profile')->where('agency_id', auth('sanctum')->user()->id)->latest()->get();
+        $new_details = [];
+        foreach($review as $key => $item){
+            $details = [
+                'rating' => $item->rating,
+                'content' => $item->content,
+                'posted_by' => $item->caregiver->firstname.' '.$item->caregiver->lastname,
+                'photo' => $item->profile->profile_image,
+                'created_at' => $item->created_at->diffForHumans()
+            ];
+            
+            array_push($new_details, $details);
+        }
+        return $this->success('Review fetched successfully.',  $new_details, 'null', 200);
     }
 }
