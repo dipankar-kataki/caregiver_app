@@ -44,7 +44,10 @@
                                 @endif
                             </td>
                             <td>{{Carbon\Carbon::parse($item->updated_at)->format('m-d-Y h:i:s')}}</td>
-                            <td><button class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#full-width-modal">Make Payment</button></td>
+                            <td>
+                                <button class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target=".bs-example-modal-lg" data-backdrop="static" data-keyboard="false">Make Payment</button>
+                                {{-- <a href="#custom-modal" class="btn btn-primary waves-effect waves-light" data-animation="blur" data-plugin="custommodal" data-overlaySpeed="100" data-overlayColor="#36404a">Make Payment</a> --}}
+                            </td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -53,26 +56,47 @@
     </div>
 </div>
 
-<div id="full-width-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
-    <div class="modal-dialog modal-full">
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title mt-0"></h5>
+                <h5 class="modal-title mt-0">Payment Modal</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <h5 class="font-18">To,</h5>
-                <p>Caregiver: Sikhar Dhawan</p>
-                <p>Address: Demoruguri, Nagaon. Assam, 782001</p>
+                <div class="row">
+                    <div class="col-12">
+                        <h6>Job Description</h6>
+                        <p style="font-size:14px;">
+                            <span style="color:#282727;">Posted By</span> : Dk Industries<br>
+                            <span style="color:#282727;">Job Title</span> : Urgent required caregiver<br>
+                            <span style="color:#282727;">Care Type</span> : Patient Care<br>
+                            <span style="color:#282727;">Amount Per Hour</span> : <span class="mdi mdi-currency-usd text-success"></span>100 <br>
+                            <span style="color:#282727;">Amount Paid By Agency to Peaceworc</span> : <span class="mdi mdi-currency-usd text-success"></span>300 ( Payment Status : <span class="text-success">SUCCESS</span> )<br>
+                            <span style="color:#282727;">Job Completion Status</span> : <span class="text-success">COMPLETED</span> <br>
+                            <span style="color:#282727;">Job Completion Time</span> : 04-02-2022 11:04:12
+                        </p>
+                    </div>
+                </div>
+                <h6>Payment To,</h6>
+                <p style="font-size:14px;">
+                    <span style="color:#282727;">Name :</span> Sikhar Dhawan <br>
+                    <span style="color:#282727;">Address :</span> Demoruguri, Nagaon, Assam, 782001
+                </p>
+                <p style="font-size:14px;">
+                    <span style="color:#282727;">Bank Name :</span> Canara Bank <br>
+                    <span style="color:#282727;">Account Number :</span> 2563210110148 <br>
+                    <span style="color:#282727;">Routing Number :</span> 4154125412
+                </p>
                 <hr>
-                <h5 class="font-18">Overflowing text to show scroll behavior</h5>
-                <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary waves-effect" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary waves-effect waves-light">Save changes</button>
+                <div>
+                    <h4 style="float:left;">
+                        Total amount to be paid : <span class="mdi mdi-currency-usd text-success"></span>2000
+                    </h4>
+                    <button class="btn btn-purple waves-effect waves-light" style="float:right;">Pay Now</button>
+                </div>
             </div>
         </div>
         <!-- /.modal-content -->

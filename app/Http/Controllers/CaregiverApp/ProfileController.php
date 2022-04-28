@@ -47,7 +47,8 @@ class ProfileController extends Controller
                 'firstname' => $details->firstname,
                 'lastname' => $details->lastname,
                 'email' => $details->email,
-                'total_percent' =>  $total_profile_percentage
+                'total_percent' =>  $total_profile_percentage,
+                'is_user_approved' => $details->is_user_approved
             ];
             return $this->success('Profile Details.', $profile, 'null', 200);
         }else{
