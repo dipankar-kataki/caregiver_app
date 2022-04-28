@@ -74,7 +74,7 @@
                             <span style="color:#282727;">Job Title</span> : Urgent required caregiver<br>
                             <span style="color:#282727;">Care Type</span> : Patient Care<br>
                             <span style="color:#282727;">Amount Per Hour</span> : <span class="mdi mdi-currency-usd text-success"></span>100 <br>
-                            <span style="color:#282727;">Amount Paid By Agency to Peaceworc</span> : <span class="mdi mdi-currency-usd text-success"></span>300 ( Payment Status : <span class="text-success">SUCCESS</span> )<br>
+                            <span style="color:#282727;">Amount Paid By Agency to Peaceworc incl. tax</span> : <span class="mdi mdi-currency-usd text-success"></span>300 ( Payment Status : <span class="text-success">SUCCESS</span> )<br>
                             <span style="color:#282727;">Job Completion Status</span> : <span class="text-success">COMPLETED</span> <br>
                             <span style="color:#282727;">Job Completion Time</span> : 04-02-2022 11:04:12
                         </p>
