@@ -23,6 +23,7 @@ return array(
     'App\\Http\\Controllers\\AgencyApp\\BusinessInformationController' => $baseDir . '/app/Http/Controllers/AgencyApp/BusinessInformationController.php',
     'App\\Http\\Controllers\\AgencyApp\\CreateJobController' => $baseDir . '/app/Http/Controllers/AgencyApp/CreateJobController.php',
     'App\\Http\\Controllers\\CaregiverApp\\AnswerController' => $baseDir . '/app/Http/Controllers/CaregiverApp/AnswerController.php',
+    'App\\Http\\Controllers\\CaregiverApp\\CaregiverBankAccountController' => $baseDir . '/app/Http/Controllers/CaregiverApp/CaregiverBankAccountController.php',
     'App\\Http\\Controllers\\CaregiverApp\\CaregiverReviewController' => $baseDir . '/app/Http/Controllers/CaregiverApp/CaregiverReviewController.php',
     'App\\Http\\Controllers\\CaregiverApp\\DocumentController' => $baseDir . '/app/Http/Controllers/CaregiverApp/DocumentController.php',
     'App\\Http\\Controllers\\CaregiverApp\\ForgotPasswordController' => $baseDir . '/app/Http/Controllers/CaregiverApp/ForgotPasswordController.php',

@@ -44,8 +44,7 @@
                                 @endif
                             </td>
                             <td>{{Carbon\Carbon::parse($item->updated_at)->format('m-d-Y h:i:s')}}</td>
-                            <td><button class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#full-width-modal">Full width Modal</button></td>
-                            {{-- <td><button  type="button" class="btn btn-sm btn-purple waves-effect width-md waves-light approveUser"  data-id="{{Crypt::encrypt($item->id)}}">Approve User</button></td> --}}
+                            <td><button class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#full-width-modal">Make Payment</button></td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -58,14 +57,15 @@
     <div class="modal-dialog modal-full">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title mt-0">Modal Heading</h5>
+                <h5 class="modal-title mt-0"></h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <h5 class="font-18">Text in a modal</h5>
-                <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
+                <h5 class="font-18">To,</h5>
+                <p>Caregiver: Sikhar Dhawan</p>
+                <p>Address: Demoruguri, Nagaon. Assam, 782001</p>
                 <hr>
                 <h5 class="font-18">Overflowing text to show scroll behavior</h5>
                 <p>Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec ullamcorper nulla non metus auctor fringilla.</p>

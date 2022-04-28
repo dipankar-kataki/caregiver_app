@@ -14,6 +14,7 @@ class CaregiverBankAccountController extends Controller
     use ApiResponser;
     public function addBank(Request $request){
         $validator = Validator::make($request->all(),[
+            'bank_name' =>  'required',
             'routing_number' => 'required',
             'account_number' => 'required'
         ]);
@@ -26,6 +27,7 @@ class CaregiverBankAccountController extends Controller
                 'user_id' => auth('sanctum')->user()->id,
                 'name' => $user->firstname.' '.$user->lastname,
                 'address' => $user->address->street.' '.$user->address->city.' '.$user->address->state.' '.$user->address->zip_code,
+                'bank_name' => $request->bank_name,
                 'routing_number' => $request->routing_number,
                 'account_number' => $request->account_number
             ]);
