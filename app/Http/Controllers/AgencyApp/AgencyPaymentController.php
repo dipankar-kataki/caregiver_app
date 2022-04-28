@@ -27,6 +27,9 @@ class AgencyPaymentController extends Controller
                 'agency_id' => auth('sanctum')->user()->id,
                 'job_id' => $request->job_id,
                 'customer_id' => $request->customer_id,
+                'caregiver_charge' =>$request->caregiver_charge,
+                'peaceworc_charge' => $request->peaceworc_charge,
+                'peaceworc_percentage' => $request->peaceworc_percentage,
                 'amount' => $request->amount,
                 'payment_status' => $request->payment_status
             ]);
