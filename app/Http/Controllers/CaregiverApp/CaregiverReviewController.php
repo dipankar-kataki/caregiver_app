@@ -7,6 +7,7 @@ use App\Models\BusinessInformation;
 use App\Models\JobByAgency;
 use App\Models\Registration;
 use App\Models\Review;
+use App\Models\User;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -26,16 +27,18 @@ class CaregiverReviewController extends Controller
             $user_details = JobByAgency::where('id', $request->job_id)->first();
 
             $create = Review::create([
+                'review_by' => auth('sanctum')->user()->id,
+                'role' => 'caregiver',
                 'rating' => $request->rating,
                 'content' => $request->content,
-                'caregiver_id' => auth('sanctum')->user()->id,
-                'agency_id' => $user_details->user_id
+                'review_to' => $user_details->user_id,
+                'job_id' => $request->job_id
             ]);
 
             if($create){
-                $total_review = Review::where('agency_id', $user_details->user_id)->count();
-                $total_rating = Review::where('agency_id', $user_details->user_id)->avg('rating');
-                BusinessInformation::where('user_id', $user_details->user_id)->update([
+                $total_review = Review::where('review_to', auth('sanctum')->user()->id)->count();
+                $total_rating = Review::where('review_to', auth('sanctum')->user()->id)->avg('rating');
+                Registration::where('user_id', auth('sanctum')->user()->id)->update([
                     'total_reviews' =>  $total_review,
                     'rating' => $total_rating
                 ]);
@@ -47,13 +50,14 @@ class CaregiverReviewController extends Controller
     }
 
     public function getReview(){
-        $review = Review::with('agency')->where('caregiver_id', auth('sanctum')->user()->id)->latest()->get();
+        $review = Review::with('agency')->where('review_to', auth('sanctum')->user()->id)->latest()->get();
         $new_details = [];
         foreach($review as $key => $item){
+            $user = User::where('id', $item->review_by)->first();
             $details = [
                 'rating' => $item->rating,
                 'content' => $item->content,
-                'posted_by' => $item->agency->business_name,
+                'posted_by' => $user->business_name,
                 'photo' => null,
                 'created_at' => $item->created_at->diffForHumans()
             ];
