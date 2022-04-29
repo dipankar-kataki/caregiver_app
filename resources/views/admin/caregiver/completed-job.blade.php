@@ -19,7 +19,6 @@
                         <th>Caregiver Name</th>
                         <th>Job Title</th>
                         <th>Care Type</th>
-                        <th>Amount/hr</th>
                         <th>Posted By</th>
                         <th>Status</th>
                         <th>Completiton Date & Time</th>
@@ -34,7 +33,6 @@
                             <td>{{$item->caregiver->firstname}} {{$item->caregiver->lastname}}</td>
                             <td>{{$item->jobByAgency->job_title}}</td>
                             <td>{{$item->jobByAgency->care_type}}</td>
-                            <td>{{$item->jobByAgency->amount_per_hour}}</td>
                             <td>{{$item->agency->business_name}}</td>
                             <td>
                                 @if ($item->jobByAgency->job_status == 2)
@@ -45,8 +43,7 @@
                             </td>
                             <td>{{Carbon\Carbon::parse($item->updated_at)->format('m-d-Y h:i:s')}}</td>
                             <td>
-                                <button class="btn btn-primary waves-effect waves-light make-payment-btn" data-toggle="modal" data-target=".bs-example-modal-lg" data-backdrop="static" data-keyboard="false" data-agency="{{$item->job_by_agencies_id}}" data-caregiver="{{$item->caregiver_id}}">Make Payment</button>
-                                {{-- <a href="#custom-modal" class="btn btn-primary waves-effect waves-light" data-animation="blur" data-plugin="custommodal" data-overlaySpeed="100" data-overlayColor="#36404a">Make Payment</a> --}}
+                                <a href="{{route('admin.caregiver.make.payment.page', ['id' => Crypt::encrypt($item->job_by_agencies_id)])}}" class="btn btn-primary waves-effect waves-light">Make Payment</a>
                             </td>
                         </tr>
                     @endforeach

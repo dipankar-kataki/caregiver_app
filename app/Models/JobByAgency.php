@@ -40,6 +40,9 @@ class JobByAgency extends Model
     public function payment_status(){
         return $this->hasMany(AgencyPayments::class, 'job_id', 'id');
     }
-
+    
+    public function accepted_job(){
+        return $this->hasMany(AcceptedJob::class, 'job_by_agencies_id', 'id');
+    }
   
 }

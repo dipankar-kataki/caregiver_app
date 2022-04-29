@@ -63,6 +63,13 @@ class CaregiverController extends Controller
         return view('admin.caregiver.completed-job')->with(['completed_job' => $completed_job]);
     }
 
+    public function makePaymentPage(Request $request, $id){
+        $job_id = Crypt::decrypt($id);
+        $job_details = JobByAgency::with('user', 'payment_status', 'accepted_job')->where('id', $job_id)->first();
+        return view('admin.caregiver.make-payment-page')->with(['job_details' => $job_details]);
+    }
+
+
     public function test(){
         return response('This is a post api');
     }

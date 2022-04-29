@@ -23,15 +23,18 @@ class CaregiverBankAccountController extends Controller
             return $this->error('Whoops! Something went wrong. Failed to add bank account.',  $validator->errors(), 'null', 400);
         }else{
             $user = User::with('address')->where('id', auth('sanctum')->user()->id)->first();
-            $create = CaregiverBankAccount::create([
-                'user_id' => auth('sanctum')->user()->id,
-                'name' => $user->firstname.' '.$user->lastname,
-                'address' => $user->address->street.' '.$user->address->city.' '.$user->address->state.' '.$user->address->zip_code,
-                'bank_name' => $request->bank_name,
-                'routing_number' => $request->routing_number,
-                'account_number' => $request->account_number
-            ]);
-
+            if($user->address == null){
+                return $this->error('Whoops! Failed to add bank account. Please complete your profile first.',  null, 'null', 400);
+            }else{
+                $create = CaregiverBankAccount::create([
+                    'user_id' => auth('sanctum')->user()->id,
+                    'name' => $user->firstname.' '.$user->lastname,
+                    'address' => $user->address->street.' '.$user->address->city.' '.$user->address->state.' '.$user->address->zip_code,
+                    'bank_name' => $request->bank_name,
+                    'routing_number' => $request->routing_number,
+                    'account_number' => $request->account_number
+                ]);
+            }
             if($create){
                 $details = CaregiverBankAccount::where('user_id', auth('sanctum')->user()->id)->first();
                 return $this->success('Bank account added successfully.',  $details, 'null', 201);
