@@ -7,6 +7,7 @@ use App\Models\AcceptedJob;
 use Illuminate\Http\Request;
 use App\Models\JobByAgency;
 use App\Models\Registration;
+use App\Models\Review;
 use App\Traits\ApiResponser;
 use App\Models\User;
 use Carbon\Carbon;
@@ -62,6 +63,22 @@ class JobController extends Controller
 
             $get_job_details =  JobByAgency::where('id', $job_id)->first();
             $profile_details = User::with('address', 'business_information')->where('id', $get_job_details->user_id)->first();
+
+            $review = Review::with('agency')->where('review_to', $get_job_details->user_id)->latest()->get();
+            $new_review_details = [];
+            foreach($review as $key => $item){
+                $user = User::with('profile')->where('id', $item->review_by)->first();
+                $details = [
+                    'rating' => $item->rating,
+                    'content' => $item->content,
+                    'posted_by' => $user->firstname.''.$user->lastname,
+                    'photo' => $user->profile->profile_image,
+                    'created_at' => $item->created_at->diffForHumans()
+                ];
+                
+                array_push($new_review_details, $details);
+            }
+
             if($profile_details->business_information  != null){
                 $year_started =  Carbon::now()->subYears($profile_details->business_information->years_in_business);
                 
@@ -89,7 +106,8 @@ class JobController extends Controller
                     'annual_business_revenue' => '$ '.$profile_details->business_information->annual_business_revenue,
                     'bio' => $profile_details->business_information->bio,
                     'our_beneficiaries' => $beneficiary,
-                    'homecare_services' => $homecare_service
+                    'homecare_services' => $homecare_service,
+                    'review' => $new_review_details
                 ];
                 return $this->success('Profile details fetched successfully.',  $details, 'null', 200);
             }else{

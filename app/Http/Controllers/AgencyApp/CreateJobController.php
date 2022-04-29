@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\JobByAgency;
 use App\Models\Question;
+use App\Models\Review;
 use App\Models\User;
 use DateTime;
 use Carbon\Carbon;
@@ -197,7 +198,7 @@ class CreateJobController extends Controller
         if(! isset($_GET['id']) ){
             return $this->error('Whoops! Invalid params passed. ',  null, 'null', 404);
         }else{
-            $details = User::with('profile', 'address')->where('id', $_GET['id'])->first();
+            $details = User::with('profile', 'address',)->where('id', $_GET['id'])->first();
             $education = Education::where('user_id', $_GET['id'])->get();
             $answer = Answer::where('user_id', $_GET['id'])->get();
             $final_question = [];
@@ -212,6 +213,23 @@ class CreateJobController extends Controller
                     array_push($final_question, $new_question);
                 }
             }
+
+            $review = Review::where('review_to', $_GET['id'])->latest()->get();
+            $new_review_details = [];
+            foreach($review as $key => $item){
+                $user = User::with('business_information')->where('id', $item->review_by)->first();
+                $review_details = [
+                    'rating' => $item->rating,
+                    'content' => $item->content,
+                    'posted_by' => $user->business_name,
+                    'photo' => null,
+                    'created_at' => $item->created_at->diffForHumans()
+                ];
+                
+                array_push($new_review_details, $review_details);
+            }
+
+
             if($details == null){
                 return $this->error('Whoops! Caregiver not found. ',  null, 'null', 404);
             }else{
@@ -230,7 +248,7 @@ class CreateJobController extends Controller
                     'bio' => $details->profile->bio,
                     'address' => $details->address->street.', '.$details->address->city.', '.$details->address->state.', '.$details->address->zip_code,
                     'education' => $education,
-                    'reviews' => [],
+                    'reviews' => $new_review_details ,
                     'question' => $final_question
                 ];
                 
