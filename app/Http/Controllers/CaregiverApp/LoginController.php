@@ -63,7 +63,7 @@ class LoginController extends Controller
             }else{
                 $details = User::where('id', auth('sanctum')->user()->id)->where('role', 2)->first();
                 if(! (Hash::check($request->old_password, $details->password))){
-                    return $this->error('Enter a valid password.', null, 'null', 400);
+                    return $this->error('Invalid old password.', null, 'null', 400);
                 }else{
                     
                     $update = User::where('id', auth('sanctum')->user()->id)->where('role', 2)->update([
