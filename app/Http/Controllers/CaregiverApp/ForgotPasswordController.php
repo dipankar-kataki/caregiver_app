@@ -36,7 +36,7 @@ class ForgotPasswordController extends Controller
                 $otp = rand(100000, 999999);
                 Cache::put('otp', $otp, now()->addMinutes(5));
                 Mail::to($request->email)->send(new SendResetPasswordLink($name, $otp));
-                return $this->success('Otp sent successfully to email.', null, 'null', 200);
+                return $this->success('OTP sent successfully to email.', null, 'null', 200);
             }
            
         }
@@ -47,7 +47,7 @@ class ForgotPasswordController extends Controller
         $validator = Validator::make($request->all(),[
             'otp' => 'required',
         ],[
-            'otp.required' => 'OTP is required. Please enter a valid otp.',
+            'otp.required' => 'OTP is required. Please enter a valid OTP.',
         ]);
 
         if($validator->fails()){

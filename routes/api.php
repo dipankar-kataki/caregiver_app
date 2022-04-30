@@ -13,6 +13,7 @@ use App\Http\Controllers\CaregiverApp\AnswerController;
 use App\Http\Controllers\CaregiverApp\CaregiverBankAccountController;
 use App\Http\Controllers\CaregiverApp\CaregiverReviewController;
 use App\Http\Controllers\CaregiverApp\DocumentController;
+use App\Http\Controllers\CaregiverApp\EarningController;
 use App\Http\Controllers\CaregiverApp\ForgotPasswordController;
 use App\Http\Controllers\CaregiverApp\LoginController;
 use App\Http\Controllers\CaregiverApp\ProfileController;
@@ -110,6 +111,10 @@ Route::prefix('caregiver')->group(function(){
         Route::prefix('bank')->group(function(){
             Route::post('add-bank', [CaregiverBankAccountController::class, 'addBank']);
             Route::get('get-bank-details', [CaregiverBankAccountController::class, 'getBankDetails']);
+        });
+
+        Route::prefix('earning')->group(function(){
+            Route::get('get-earning-details', [EarningController::class, 'getEarningDetails']);
         });
 
 

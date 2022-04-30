@@ -11,4 +11,8 @@ class CaregiverPayment extends Model
 
     protected $table ='caregiver_payments';
     protected $guarded = [];
+
+    public function job(){
+        return $this->belongsTo(JobByAgency::class, 'job_id', 'id');
+    }
 }
