@@ -4,6 +4,7 @@ namespace App\Http\Controllers\CaregiverApp;
 
 use App\Http\Controllers\Controller;
 use App\Models\AcceptedJob;
+use App\Models\CaregiverBankAccount;
 use Illuminate\Http\Request;
 use App\Models\JobByAgency;
 use App\Models\Registration;
@@ -126,6 +127,7 @@ class JobController extends Controller
             return $this->error('Whoops! Something went wrong. Failed to accept job.', $validator->errors(), 'null', 400);
         }else{
             $check_user = User::where('id', auth('sanctum')->user()->id)->first();
+            $check_bank_details = CaregiverBankAccount::where('user_id', auth('sanctum')->user()->id)->exists();
             if($check_user->is_user_approved == 0){
                 $profile_completion_status = [
                     'is_registration_completed' => $check_user->is_registration_completed,
@@ -134,6 +136,8 @@ class JobController extends Controller
                     'is_user_approved' => $check_user->is_user_approved
                 ];
                 return $this->error('Whoops! Failed to accept job.', $profile_completion_status , 'null', 400);
+            }else if($check_bank_details == false){
+                return $this->error('Please add bank details to accept job.', null , 'null', 400);
             }else{
                 $get_agency = JobByAgency::where('id', $request->job_id)->first();
                 $createJob = AcceptedJob::create([
