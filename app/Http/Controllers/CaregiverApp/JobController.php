@@ -107,6 +107,7 @@ class JobController extends Controller
                     'bio' => $profile_details->business_information->bio,
                     'our_beneficiaries' => $beneficiary,
                     'homecare_services' => $homecare_service,
+                    'rating' =>  $profile_details->business_information->rating,
                     'review' => $new_review_details
                 ];
                 return $this->success('Profile details fetched successfully.',  $details, 'null', 200);
