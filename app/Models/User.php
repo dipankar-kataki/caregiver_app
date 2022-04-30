@@ -96,4 +96,8 @@ class User extends Authenticatable
     public function jobs(){
         return $this->hasMany(JobByAgency::class);
     }
+
+    public function caregiverBank(){
+        return $this->hasMany(CaregiverBankAccount::class, 'user_id', 'id');
+    }
 }
