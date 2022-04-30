@@ -128,6 +128,12 @@ class JobController extends Controller
         }else{
             $check_user = User::with('caregiverBank')->where('id', auth('sanctum')->user()->id)->first();
             $check_bank = CaregiverBankAccount::where('user_id', auth('sanctum')->user()->id)->first();
+            $is_bank_added = 0;
+            if($check_bank != null){
+                $is_bank_added = 1;
+            }else{
+                $is_bank_added = 0;
+            }
             // $check_bank_details = CaregiverBankAccount::where('user_id', auth('sanctum')->user()->id)->exists();
             $profile_completion_status = [];
             if($check_user->is_user_approved == 0){
@@ -136,6 +142,7 @@ class JobController extends Controller
                     'is_questions_answered' => $check_user->is_questions_answered,
                     'is_documents_uploaded' => $check_user->is_documents_uploaded,
                     'is_user_approved' => $check_user->is_user_approved,
+                    'is_bank_details_added' =>  $is_bank_added
                 ];
                 return $this->error('Whoops! Failed to accept job.', $profile_completion_status , 'null', 400);
             }else if($check_user->is_user_approved == 1 &&  $check_bank == null){
@@ -144,7 +151,7 @@ class JobController extends Controller
                     'is_questions_answered' => $check_user->is_questions_answered,
                     'is_documents_uploaded' => $check_user->is_documents_uploaded,
                     'is_user_approved' => $check_user->is_user_approved,
-                    'is_bank_details_added' => 0
+                    'is_bank_details_added' =>  $is_bank_added
                 ];
                 return $this->error('Whoops! Failed to accept job.', $profile_completion_status , 'null', 400);
             }else{
