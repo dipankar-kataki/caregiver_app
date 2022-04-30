@@ -27,4 +27,8 @@ class AcceptedJob extends Model
     public function profile(){
         return $this->belongsTo(Registration::class, 'caregiver_id', 'user_id');
     }
+
+    public function caregiver_payment(){
+        return $this->hasMany(CaregiverPayment::class,  'job_id', 'job_by_agencies_id');
+    }
 }

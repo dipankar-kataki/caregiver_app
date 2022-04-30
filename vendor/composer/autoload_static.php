@@ -574,6 +574,7 @@ class ComposerStaticInite87ca7db50b454addc24a196833b4f2c
         'App\\Models\\Blog' => __DIR__ . '/../..' . '/app/Models/Blog.php',
         'App\\Models\\BusinessInformation' => __DIR__ . '/../..' . '/app/Models/BusinessInformation.php',
         'App\\Models\\CaregiverBankAccount' => __DIR__ . '/../..' . '/app/Models/CaregiverBankAccount.php',
+        'App\\Models\\CaregiverPayment' => __DIR__ . '/../..' . '/app/Models/CaregiverPayment.php',
         'App\\Models\\ChildAbuse' => __DIR__ . '/../..' . '/app/Models/ChildAbuse.php',
         'App\\Models\\Covid' => __DIR__ . '/../..' . '/app/Models/Covid.php',
         'App\\Models\\Criminal' => __DIR__ . '/../..' . '/app/Models/Criminal.php',

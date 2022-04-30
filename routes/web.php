@@ -56,6 +56,7 @@ Route::group([
         Route::post('suspend-user', [CaregiverController::class, 'suspendUser'])->name('admin.caregiver.profile.suspend.user');
         Route::get('completed-job', [CaregiverController::class, 'completedJob'])->name('admin.caregiver.completed.job');
         Route::get('make-payment-page/{id}', [CaregiverController::class, 'makePaymentPage'])->name('admin.caregiver.make.payment.page');
+        Route::post('update-payment-status', [CaregiverController::class, 'updatePaymentStatus'])->name('admin.caregiver.update.payment.status');
     });
 
     Route::prefix('agency')->group(function(){

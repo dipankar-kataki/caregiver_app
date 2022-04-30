@@ -43,7 +43,11 @@
                             </td>
                             <td>{{Carbon\Carbon::parse($item->updated_at)->format('m-d-Y h:i:s')}}</td>
                             <td>
-                                <a href="{{route('admin.caregiver.make.payment.page', ['id' => Crypt::encrypt($item->job_by_agencies_id)])}}" class="btn btn-primary waves-effect waves-light">Make Payment</a>
+                                @if (! ($item->caregiver_payment->isEmpty()) )
+                                    <a href="javascript:void(0);" class="btn btn-success btn-sm btn-rounded waves-effect waves-light">SUCCESS</a>    
+                                @else
+                                    <a href="{{route('admin.caregiver.make.payment.page', ['id' => Crypt::encrypt($item->job_by_agencies_id)])}}" class="btn btn-primary btn-sm waves-effect waves-light">Make Payment</a>                                        
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -53,7 +57,7 @@
     </div>
 </div>
 
-<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+{{-- <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -99,7 +103,7 @@
         <!-- /.modal-content -->
     </div>
     <!-- /.modal-dialog -->
-</div>
+</div> --}}
 @endsection
 
 

@@ -59,6 +59,7 @@ return array(
     'App\\Models\\Blog' => $baseDir . '/app/Models/Blog.php',
     'App\\Models\\BusinessInformation' => $baseDir . '/app/Models/BusinessInformation.php',
     'App\\Models\\CaregiverBankAccount' => $baseDir . '/app/Models/CaregiverBankAccount.php',
+    'App\\Models\\CaregiverPayment' => $baseDir . '/app/Models/CaregiverPayment.php',
     'App\\Models\\ChildAbuse' => $baseDir . '/app/Models/ChildAbuse.php',
     'App\\Models\\Covid' => $baseDir . '/app/Models/Covid.php',
     'App\\Models\\Criminal' => $baseDir . '/app/Models/Criminal.php',

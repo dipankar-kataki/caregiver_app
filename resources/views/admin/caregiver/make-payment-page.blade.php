@@ -42,13 +42,13 @@
             <fieldset>
                 <legend>Payment To</legend>
                 <p style="font-size:15px;">
-                    <span style="color:#282727;">Name :</span> Sikhar Dhawan <br>
-                    <span style="color:#282727;">Address :</span> Demoruguri, Nagaon, Assam, 782001
+                    <span style="color:#282727;">Name :</span> {{$bank_details->name}} <br>
+                    <span style="color:#282727;">Address :</span> {{$bank_details->address}}
                 </p>
                 <p style="font-size:14px;margin-bottom:0.6rem;">
-                    <span style="color:#282727;">Bank Name :</span> Canara Bank <br>
-                    <span style="color:#282727;">Account Number :</span> 2563210110148 <br>
-                    <span style="color:#282727;">Routing Number :</span> 4154125412
+                    <span style="color:#282727;">Bank Name :</span> {{$bank_details->bank_name}} <br>
+                    <span style="color:#282727;">Account Number :</span> <span style="font-weight:bold;font-size:16px;">{{$bank_details->account_number}}</span> <br>
+                    <span style="color:#282727;">Routing Number :</span> <span style="font-weight:bold;font-size:16px;">{{$bank_details->routing_number}}</span>
                 </p>
             </fieldset>
         </div>
@@ -57,10 +57,51 @@
     <div class="row">
         <div class="col-12">
             <h3>Total Amount To Be Paid <span class="mdi mdi-currency-usd text-success"></span>{{$job_details->payment_status[0]['caregiver_charge']}}</h3>
+            <button class="btn btn-md btn-primary mark-as-paid-btn" data-user="{{Crypt::encrypt($bank_details->user_id)}}" data-job="{{Crypt::encrypt($job_details->id)}}" data-amount="{{$job_details->payment_status[0]['caregiver_charge']}}">Mark As Paid</button>
         </div>
     </div>
 @endsection
 
 
 @section('customJs')
+    <script>
+        $('.mark-as-paid-btn').on('click', function(){
+
+            $(this).attr('disabled', true);
+            $(this).text('Please wait.....');
+
+            let user_id = $(this).data('user');
+            let job_id = $(this).data('job');
+            let amount = $(this).data('amount');
+
+            $.ajax({
+                url:"{{route('admin.caregiver.update.payment.status')}}",
+                type:"POST",
+                data:{
+                    'user_id' : user_id,
+                    'job_id' : job_id,
+                    'amount' : amount,
+                    '_token' : "{{csrf_token()}}"
+                },
+                success:function(data){
+                    if(data.status == 1){
+                        toastr.success(data.message);
+                        location.replace("{{route('admin.caregiver.completed.job')}}");
+                    }else{
+                        toastr.error(data.message);
+
+                        $('.mark-as-paid-btn').attr('disabled', false);
+                        $('.mark-as-paid-btn').text('Mark As Paid');
+                    }
+                },
+                error:function(xhr, status, error){
+                    if(xhr.status == 500 || xhr.status == 422){
+                        toastr.error('Whoops! Something went wrong. Failed to update payment status.')
+                    }
+                    $('.mark-as-paid-btn').attr('disabled', false);
+                    $('.mark-as-paid-btn').text('Mark As Paid');
+                }
+            });
+        });
+    </script>
 @endsection

@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\AcceptedJob;
+use App\Models\AgencyPayments;
+use App\Models\CaregiverBankAccount;
+use App\Models\CaregiverPayment;
 use App\Models\ChildAbuse;
 use App\Models\Covid;
 use App\Models\Criminal;
@@ -59,16 +62,37 @@ class CaregiverController extends Controller
     }
 
     public function completedJob(){
-        $completed_job = AcceptedJob::with('jobByAgency', 'caregiver', 'agency', 'profile')->where('is_activate', 0)->latest()->get();
+        $completed_job = AcceptedJob::with('jobByAgency', 'caregiver', 'agency', 'profile', 'caregiver_payment')->where('is_activate', 0)->latest()->get();
         return view('admin.caregiver.completed-job')->with(['completed_job' => $completed_job]);
     }
 
     public function makePaymentPage(Request $request, $id){
         $job_id = Crypt::decrypt($id);
         $job_details = JobByAgency::with('user', 'payment_status', 'accepted_job')->where('id', $job_id)->first();
-        return view('admin.caregiver.make-payment-page')->with(['job_details' => $job_details]);
+        $accepted_job = AcceptedJob::where('job_by_agencies_id', $job_id)->first();
+        $bank_details = CaregiverBankAccount::where('user_id', $accepted_job->caregiver_id)->first();
+        return view('admin.caregiver.make-payment-page')->with(['job_details' => $job_details, 'bank_details' => $bank_details]);
     }
 
+    public function updatePaymentStatus(Request $request){
+        $user_id = Crypt::decrypt($request->user_id);
+        $job_id = Crypt::decrypt($request->job_id);
+        $amount = $request->amount;
+
+        $create = CaregiverPayment::create([
+            'user_id' => $user_id,
+            'job_id' => $job_id,
+            'amount' => $amount,
+            'payment_status' => 'success'
+        ]);
+
+        if($create){
+            return response()->json(['message' => 'Payment status updated successfully', 'status' => 1]);
+        }else{
+            return response()->json(['message' => 'Whoops! Failed to update payment status', 'status' => 2]);
+        }
+        
+    }
 
     public function test(){
         return response('This is a post api');
