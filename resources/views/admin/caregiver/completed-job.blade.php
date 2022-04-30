@@ -20,7 +20,7 @@
                         <th>Job Title</th>
                         <th>Care Type</th>
                         <th>Posted By</th>
-                        <th>Status</th>
+                        <th>Job Status</th>
                         <th>Completiton Date & Time</th>
                         <th>Action</th>
                     </tr>
@@ -44,7 +44,7 @@
                             <td>{{Carbon\Carbon::parse($item->updated_at)->format('m-d-Y h:i:s')}}</td>
                             <td>
                                 @if (! ($item->caregiver_payment->isEmpty()) )
-                                    <a href="javascript:void(0);" class="btn btn-success btn-sm btn-rounded waves-effect waves-light">SUCCESS</a>    
+                                    <a href="javascript:void(0);" class="btn btn-success btn-sm btn-rounded waves-effect waves-light">Payment Success</a>    
                                 @else
                                     <a href="{{route('admin.caregiver.make.payment.page', ['id' => Crypt::encrypt($item->job_by_agencies_id)])}}" class="btn btn-primary btn-sm waves-effect waves-light">Make Payment</a>                                        
                                 @endif
