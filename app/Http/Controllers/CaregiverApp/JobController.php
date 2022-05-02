@@ -47,7 +47,7 @@ class JobController extends Controller
     }
 
     public function recomendedJobsCount(){
-        $jobs = JobByAgency::where('is_activate', 1)->count();
+        $jobs = JobByAgency::where('is_activate', 1)->where('job_status', 0)->count();
         return $this->success('Total recomended jobs.',  $jobs, 'null', 200);
     }
 

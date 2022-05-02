@@ -18,7 +18,7 @@ class CreateJobByAgenciesTable extends Migration
             $table->string('job_title');
             $table->string('care_type');
             $table->integer('patient_age');
-            $table->string('amount_per_hour');
+            $table->decimal('amount_per_hour',8,2);
             $table->date('start_date_of_care');
             $table->date('end_date_of_care');
             $table->string('start_time');
