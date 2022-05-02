@@ -17,7 +17,7 @@ class SortbyController extends Controller
         }else{
             $start_price = $_GET['startprice'];
             $end_price = $_GET['endprice'];
-            $jobsByPrice = JobByAgency::whereBetween('amount_per_hour', [$start_price, $end_price])->where('is_activate', 1)->latest()->paginate(5);
+            $jobsByPrice = JobByAgency::whereBetween('amount_per_hour', [$start_price, $end_price])->where('job_status', 0)->where('is_activate', 1)->latest()->paginate(5);
             $new_details = [];
             foreach($jobsByPrice as $key => $item){
                 $details = [
