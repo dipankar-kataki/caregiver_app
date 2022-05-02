@@ -541,6 +541,7 @@ class ComposerStaticInite87ca7db50b454addc24a196833b4f2c
         'App\\Http\\Controllers\\CaregiverApp\\CaregiverBankAccountController' => __DIR__ . '/../..' . '/app/Http/Controllers/CaregiverApp/CaregiverBankAccountController.php',
         'App\\Http\\Controllers\\CaregiverApp\\CaregiverReviewController' => __DIR__ . '/../..' . '/app/Http/Controllers/CaregiverApp/CaregiverReviewController.php',
         'App\\Http\\Controllers\\CaregiverApp\\DocumentController' => __DIR__ . '/../..' . '/app/Http/Controllers/CaregiverApp/DocumentController.php',
+        'App\\Http\\Controllers\\CaregiverApp\\EarningController' => __DIR__ . '/../..' . '/app/Http/Controllers/CaregiverApp/EarningController.php',
         'App\\Http\\Controllers\\CaregiverApp\\ForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/CaregiverApp/ForgotPasswordController.php',
         'App\\Http\\Controllers\\CaregiverApp\\JobController' => __DIR__ . '/../..' . '/app/Http/Controllers/CaregiverApp/JobController.php',
         'App\\Http\\Controllers\\CaregiverApp\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/CaregiverApp/LoginController.php',
