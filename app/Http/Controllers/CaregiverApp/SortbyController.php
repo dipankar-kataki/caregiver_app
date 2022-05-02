@@ -15,7 +15,7 @@ class SortbyController extends Controller
         if(! (isset($_GET['startprice']) && isset($_GET['endprice'])) ){
             return $this->error('Whoops! Invalid price filter variables passed.', null , 'null', 200);
         }else{
-            $jobsByPrice = JobByAgency::whereBetween('amount_per_hour', [$_GET['startprice'], $_GET['endprice']])->where('is_activate', 1)->get();
+            $jobsByPrice = JobByAgency::whereBetween('amount_per_hour', [$_GET['startprice'], $_GET['endprice']])->where('is_activate', 1)->latest()->paginate(5);
             $new_details = [];
             foreach($jobsByPrice as $key => $item){
                 $details = [
