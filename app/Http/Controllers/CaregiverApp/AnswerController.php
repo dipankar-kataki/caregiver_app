@@ -46,7 +46,7 @@ class AnswerController extends Controller
         $answer = Answer::with('question')->where('user_id', auth('sanctum')->user()->id)->get();
         $new_details = [];
         foreach($answer as $key => $item){
-            if( ($item->answer == 'Yes') && ($item->answer == 'No')){
+            if( ($item->answer == 'Yes') || ($item->answer == 'No')){
                 $details = [
                     'slug' => $item->question->slug,
                     'answer' => $item->answer
