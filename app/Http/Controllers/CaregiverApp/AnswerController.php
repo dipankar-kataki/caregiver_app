@@ -43,7 +43,7 @@ class AnswerController extends Controller
 
 
     public function getAnswer(){
-        $answer = Answer::with('question')->where('user_id', auth('sanctum')->user()->id)->where('answer',  'Yes')->where('answer', 'No')->get();
+        $answer = Answer::with('question')->where('user_id', auth('sanctum')->user()->id)->get();
         $new_details = [];
         foreach($answer as $key => $item){
             $details = [
