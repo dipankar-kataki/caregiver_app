@@ -9,6 +9,7 @@ use App\Http\Controllers\AgencyApp\AuthController;
 use App\Http\Controllers\AgencyApp\AuthorizedOfficerController;
 use App\Http\Controllers\AgencyApp\BusinessInformationController;
 use App\Http\Controllers\AgencyApp\CreateJobController;
+use App\Http\Controllers\AgencyApp\PaymentHistoryController;
 use App\Http\Controllers\CaregiverApp\AnswerController;
 use App\Http\Controllers\CaregiverApp\CaregiverBankAccountController;
 use App\Http\Controllers\CaregiverApp\CaregiverReviewController;
@@ -108,10 +109,13 @@ Route::prefix('caregiver')->group(function(){
             }); 
         });
 
+        /************************************* Bank Api's ********************************************* */
         Route::prefix('bank')->group(function(){
             Route::post('add-bank', [CaregiverBankAccountController::class, 'addBank']);
             Route::get('get-bank-details', [CaregiverBankAccountController::class, 'getBankDetails']);
         });
+
+        /************************************* Earning Api's ********************************************* */
 
         Route::prefix('earning')->group(function(){
             Route::get('get-earning-details', [EarningController::class, 'getEarningDetails']);
@@ -218,6 +222,14 @@ Route::prefix('caregiver')->group(function(){
                 Route::get('get-profile-details',[AgencyProfileController::class, 'getProfileDetails']);
                 Route::get('get-formated-profile-details',[AgencyProfileController::class, 'getFormatedProfileDetails']);
             });
+
+
+             /******************************** Payment History Api's *******************************/
+
+            Route::prefix('history')->group(function(){
+                Route::get('payment', [PaymentHistoryController::class, 'getPaymentHistory']);
+            });
+
 
             /******************************** Review Api's *******************************/
             Route::prefix('review')->group(function(){
