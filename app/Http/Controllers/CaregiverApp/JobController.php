@@ -19,12 +19,13 @@ class JobController extends Controller
 {
     use ApiResponser;
     public function recomendedJobs(){
-        $jobs = JobByAgency::with('user')->where('is_activate', 1)->where('job_status', 0)->orderBy('created_at', 'DESC')->paginate(5);
+        $jobs = JobByAgency::with('user', 'agency_profile')->where('is_activate', 1)->where('job_status', 0)->orderBy('created_at', 'DESC')->paginate(5);
         $new_details = [];
         foreach($jobs as $key => $item){
             $details = [
                 'id' => $jobs[$key]['id'],
                 'agency_name' => $jobs[$key]['user']['business_name'],
+                'profile_image' =>  $jobs[$key]['agency_profile']['profile_image'],
                 'job_title' => $jobs[$key]['job_title'],
                 'amount_per_hour' => $jobs[$key]['amount_per_hour'],
                 'care_type' => $jobs[$key]['care_type'],
@@ -98,6 +99,7 @@ class JobController extends Controller
                 }
 
                 $details = [
+                    'profile_image' => $profile_details->business_information->profile_image,
                     'business_name' => $profile_details->business_name,
                     'phone' => $profile_details->business_information->business_number,
                     'year_started' => $year_started->format('Y').' ('.$profile_details->business_information->years_in_business.' '.'years)',
@@ -175,13 +177,14 @@ class JobController extends Controller
     }
 
     public function ongoingJob(){
-        $ongoing_job = AcceptedJob::with('jobByAgency')->where('caregiver_id', auth('sanctum')->user()->id)->where('is_activate', 1)->orderBy('created_at', 'DESC')->get();
+        $ongoing_job = AcceptedJob::with('jobByAgency', 'agency_profile')->where('caregiver_id', auth('sanctum')->user()->id)->where('is_activate', 1)->orderBy('created_at', 'DESC')->get();
         $new_details = [];
         foreach($ongoing_job as $key => $item){
             $agency_name = User::where('id', $item->agency_id)->first();
             $details = [
 
                 'id' => $item->jobByAgency->id,
+                'profile_image' => $item->agency_profile->profile_image,
                 'agency_name' => $agency_name->business_name,
                 'job_title' => $item->jobByAgency->job_title,
                 'amount_per_hour' => $item->jobByAgency->amount_per_hour,
@@ -236,13 +239,14 @@ class JobController extends Controller
     }
 
     public function pastJob(){
-        $ongoing_job = AcceptedJob::with('jobByAgency')->where('caregiver_id', auth('sanctum')->user()->id)->where('is_activate', 0)->orderBy('created_at', 'DESC')->get();
+        $ongoing_job = AcceptedJob::with('jobByAgency', 'agency_profile')->where('caregiver_id', auth('sanctum')->user()->id)->where('is_activate', 0)->orderBy('created_at', 'DESC')->get();
         $new_details = [];
         foreach($ongoing_job as $key => $item){
             $agency_name = User::where('id', $item->agency_id)->first();
             $details = [
 
                 'id' => $item->jobByAgency->id,
+                'profile_image' => $item->agency_profile->profile_image,
                 'agency_name' => $agency_name->business_name,
                 'job_title' => $item->jobByAgency->job_title,
                 'amount_per_hour' => $item->jobByAgency->amount_per_hour,

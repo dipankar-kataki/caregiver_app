@@ -45,5 +45,9 @@ class JobByAgency extends Model
     public function accepted_job(){
         return $this->hasMany(AcceptedJob::class, 'job_by_agencies_id', 'id');
     }
+
+    public function agency_profile(){
+        return $this->belongsTo(BusinessInformation::class, 'user_id', 'user_id');
+    }
   
 }

@@ -31,4 +31,8 @@ class AcceptedJob extends Model
     public function caregiver_payment(){
         return $this->hasMany(CaregiverPayment::class,  'job_id', 'job_by_agencies_id');
     }
+
+    public function agency_profile(){
+        return $this->belongsTo(BusinessInformation::class,'agency_id', 'user_id');
+    }
 }

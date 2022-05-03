@@ -157,4 +157,49 @@ class AgencyProfileController extends Controller
         }
         
     }
+
+    public function uploadProfilePic(Request $request){
+        $validator = Validator::make($request->all(), [
+            'profilePic' => 'required|image|mimes:jpg,png,jpeg|max:1024'
+        ],[
+            'profilePic.required' => 'Please choose an image to upload.'
+        ]);
+
+        if($validator->fails()){
+            return $this->error('Whoops!, Updated failed', $validator->errors(), 'null', 200);
+        }else{
+            $profilePic = $request->profilePic;
+            $file = '';
+
+            if($request->hasFile('profilePic')){
+                $new_name = date('d-m-Y-H-i-s') . '_' . $profilePic->getClientOriginalName();
+                $profilePic->move(public_path('agency-app/profile/'), $new_name);
+                $file = 'agency-app/profile/' . $new_name;
+            }
+            $details = BusinessInformation::where('user_id', auth('sanctum')->user()->id)->first();
+            if($details != null){
+                $update = BusinessInformation::where('user_id', auth('sanctum')->user()->id)->update([
+                    'profile_image' => $file
+                ]);
+
+                if($update){
+                    return $this->success('Profile image updated successfully', ['profile_image' => $file], 'null', 201);
+                }else{
+                    return $this->error('Whoops!, Failed to update profile image', null, 'null', 400);
+                }
+            }else{
+                $create =  BusinessInformation::create([
+                    'profile_image' => $file,
+                    'user_id' => auth('sanctum')->user()->id
+                ]);
+
+                if($create){
+                    return $this->success('Profile image added successfully', ['profile_image' => $file], 'null', 201);
+                }else{
+                    return $this->error('Whoops!, Failed to add profile image', null, 'null', 400);
+                }
+            }
+            
+        }
+    }
 }
