@@ -202,4 +202,10 @@ class AgencyProfileController extends Controller
             
         }
     }
+
+
+    public function getProfilePic(){
+        $get_profile_pic = BusinessInformation::where('user_id', auth('sanctum')->user()->id)->first();
+        return $this->success('Profile image fetched successfully', ['profile_image' => $get_profile_pic->profile_image], 'null', 200);
+    }
 }

@@ -222,6 +222,7 @@ Route::prefix('caregiver')->group(function(){
                 Route::get('get-profile-details',[AgencyProfileController::class, 'getProfileDetails']);
                 Route::get('get-formated-profile-details',[AgencyProfileController::class, 'getFormatedProfileDetails']);
                 Route::post('upload-profile-pic', [AgencyProfileController::class, 'uploadProfilePic']);
+                Route::get('get-profile-pic', [AgencyProfileController::class, 'getProfilePic']);
             });
 
 
