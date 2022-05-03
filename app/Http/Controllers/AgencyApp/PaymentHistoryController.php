@@ -16,7 +16,7 @@ class PaymentHistoryController extends Controller
         foreach( $payment_history as $item){
             $details = [
                 'amount' => $item->amount,
-                'job' => $item->job->job_title,
+                'job_title' => $item->job->job_title,
                 'paid_on' => $item->created_at->diffForHumans()
             ];
             array_push($new_details, $details);
