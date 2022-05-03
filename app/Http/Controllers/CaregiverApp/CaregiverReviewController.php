@@ -36,9 +36,9 @@ class CaregiverReviewController extends Controller
             ]);
 
             if($create){
-                $total_review = Review::where('review_to', auth('sanctum')->user()->id)->count();
-                $total_rating = Review::where('review_to', auth('sanctum')->user()->id)->avg('rating');
-                Registration::where('user_id', auth('sanctum')->user()->id)->update([
+                $total_review = Review::where('review_to', $user_details->user_id)->count();
+                $total_rating = Review::where('review_to', $user_details->user_id)->avg('rating');
+                BusinessInformation::where('user_id', $user_details->user_id)->update([
                     'total_reviews' =>  $total_review,
                     'rating' => $total_rating
                 ]);

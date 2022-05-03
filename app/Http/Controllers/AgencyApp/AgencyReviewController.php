@@ -37,9 +37,9 @@ class AgencyReviewController extends Controller
             ]);
 
             if($create){
-                $total_review = Review::where('review_to', auth('sanctum')->user()->id)->count();
-                $total_rating = Review::where('review_to', auth('sanctum')->user()->id)->avg('rating');
-                BusinessInformation::where('user_id', auth('sanctum')->user()->id)->update([
+                $total_review = Review::where('review_to', $request->accepted_by)->count();
+                $total_rating = Review::where('review_to', $request->accepted_by)->avg('rating');
+                Registration::where('user_id', $request->accepted_by)->update([
                     'total_reviews' =>  $total_review,
                     'rating' => $total_rating
                 ]);
