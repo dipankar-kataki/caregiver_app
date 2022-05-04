@@ -65,7 +65,7 @@
                         <i class="mdi mdi-currency-usd font-30 widget-icon rounded-circle avatar-title text-success"></i>
                     </div>
                     <div class="wigdet-one-content">
-                        <p class="m-0 text-uppercase font-weight-bold text-muted" title="Total Revenue Generated">Revenue Generated</p>
+                        <p class="m-0 text-uppercase font-weight-bold text-muted" title="Total Revenue Generated">Total Income</p>
                         <h2><span data-plugin="counterup">{{$total_agency_payments}}</span> <i class="mdi mdi-arrow-up text-success font-24"></i></h2>
                     </div>
                 </div>

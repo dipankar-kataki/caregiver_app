@@ -20,11 +20,13 @@ class SignUpController extends Controller
                 'lastname' => 'required',
                 'email' => 'required|email',
                 'password' => 'required | min:6',
+                'device_token' => 'required'
             ],[
                 'firstname.required' => 'First Name is required',
                 'lastname.required' => 'Last Name is required',
                 'email.required' => 'Email is required',
                 'password.required' => 'Password is required',
+                'device_token.required' => 'Device token not provided'
             ]);
 
         if($validator->fails()){
@@ -39,6 +41,7 @@ class SignUpController extends Controller
                     'lastname' => $request->lastname,
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
+                    'device_token' => $request->device_token,
                     'role' => 2
                 ]);
                 $token = $create->createToken('auth_token')->plainTextToken;
