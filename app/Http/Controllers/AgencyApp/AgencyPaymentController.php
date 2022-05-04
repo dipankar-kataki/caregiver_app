@@ -5,13 +5,15 @@ namespace App\Http\Controllers\AgencyApp;
 use App\Http\Controllers\Controller;
 use App\Models\AgencyPayments;
 use App\Models\JobByAgency;
+use App\Models\User;
 use App\Traits\ApiResponser;
+use App\Traits\PushNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class AgencyPaymentController extends Controller
 {
-    use ApiResponser;
+    use ApiResponser, PushNotification;
     public function savePaymentDetails(Request $request){
         $validator = Validator::make($request->all(),[
             'job_id' => 'required',
@@ -36,9 +38,21 @@ class AgencyPaymentController extends Controller
 
             if($create){
                 if($request->payment_status == 'Success' || $request->payment_status == 'success' || $request->payment_status == 'SUCCESS'){
+
+                    $user_token = User::where('id', auth('sanctum')->user()->id)->first();
+
                     JobByAgency::where('id', $request->job_id)->update([
                         'is_activate' => 1
                     ]);
+
+                    if($user_token->fcm_token != null){
+                        $data=[];
+                        $data['message']= "Job Posted Successfully";
+                        $token = [];
+                        $token[] = $user_token->fcm_token;
+                        $this->sendNotification($token, $data);
+                    }
+                    
                     return $this->success('Payment details saved successfully.', null, 'null', 201);
                 }else{
                     return $this->success('Payment details saved successfully', null, 'null', 201);

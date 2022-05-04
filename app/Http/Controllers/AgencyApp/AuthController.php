@@ -19,7 +19,6 @@ class AuthController extends Controller
             'business_name' => 'required',
             'email' => 'required|email',
             'password' => 'required | min:6',
-            'device_token' => 'required'
         ],[
             'business_name.required' => 'Business Name is required',
             'email.required' => 'Email is required',
@@ -37,7 +36,7 @@ class AuthController extends Controller
                     'business_name' => $request->business_name,
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
-                    'device_token' => $request->device_token,
+                    'fcm_token' => $request->fcm_token,
                     'role' => 3
                 ]);
                 $token = $create->createToken('auth_token')->plainTextToken;
