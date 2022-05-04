@@ -11,13 +11,14 @@ use App\Models\Registration;
 use App\Models\Review;
 use App\Traits\ApiResponser;
 use App\Models\User;
+use App\Traits\PushNotification;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 
 
 class JobController extends Controller
 {
-    use ApiResponser;
+    use ApiResponser, PushNotification;
     public function recomendedJobs(){
         $jobs = JobByAgency::with('user', 'agency_profile')->where('is_activate', 1)->where('job_status', 0)->orderBy('created_at', 'DESC')->paginate(5);
         $new_details = [];
@@ -130,6 +131,9 @@ class JobController extends Controller
         }else{
             $check_user = User::with('caregiverBank')->where('id', auth('sanctum')->user()->id)->first();
             $check_bank = CaregiverBankAccount::where('user_id', auth('sanctum')->user()->id)->first();
+            $get_agency = JobByAgency::where('id', $request->job_id)->first();
+            $get_fcm_token = User::where('id', $get_agency->user_id)->first();
+
             $is_bank_added = 0;
             if($check_bank != null){
                 $is_bank_added = 1;
@@ -157,7 +161,6 @@ class JobController extends Controller
                 ];
                 return $this->error('Whoops! Failed to accept job.', $profile_completion_status , 'null', 400);
             }else{
-                $get_agency = JobByAgency::where('id', $request->job_id)->first();
                 $createJob = AcceptedJob::create([
                     'job_by_agencies_id' =>  $request->job_id,
                     'caregiver_id' => auth('sanctum')->user()->id,
@@ -168,6 +171,15 @@ class JobController extends Controller
                     JobByAgency::where('id', $request->job_id)->update([
                         'job_status' => 1
                     ]);
+
+                    if($get_fcm_token->fcm_token != null){
+                        $data=[];
+                        $data['message']= "Job Accepted Successfully by ".$check_user->firstname.' '.$check_user->lastname;
+                        $token = [];
+                        $token[] = $get_fcm_token->fcm_token;
+                        $this->sendNotification($token, $data);
+                    }
+                    
                     return $this->success('Job accepted successfully.',  null, 'null', 200);
                 }else{
                     return $this->error('Whoops! Something went wrong. Failed to accept job.', null , 'null', 400);
@@ -215,7 +227,7 @@ class JobController extends Controller
         if($validator->fails()){
             return $this->error('Whoops! Something went wrong. Failed to complete job.', $validator->errors() , 'null', 500);
         }else{
-            $registration = Registration::where('user_id', auth('sanctum')->user()->id)->first();
+            $registration = Registration::with('user')->where('user_id', auth('sanctum')->user()->id)->first();
             $details = AcceptedJob::where('job_by_agencies_id', $request->job_id)->first();
             $updateJobByAgencyTable = JobByAgency::where('id', $details->job_by_agencies_id)->update([
                 'is_activate' => 0,
@@ -230,6 +242,16 @@ class JobController extends Controller
             ]);
 
             if(($updateJobByAgencyTable) && ($updateJobAcceptedTable)){
+
+                $get_fcm_token = User::where('id', $details->agency_id)->first();
+                if($get_fcm_token->fcm_token != null){
+                    $data=[];
+                    $data['message']= "Job Completed Successfully by ".$registration->user->firstname.' '.$registration->user->lastname;
+                    $token = [];
+                    $token[] = $get_fcm_token->fcm_token;
+                    $this->sendNotification($token, $data);
+                }
+
                 return $this->success('Job completed successfully',  null, 'null', 200);
             }else{
                 return $this->error('Whoops! Something went wrong. Failed to complete job.', null , 'null', 400);
