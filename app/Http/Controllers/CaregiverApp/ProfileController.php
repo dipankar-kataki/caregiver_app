@@ -186,7 +186,7 @@ class ProfileController extends Controller
                         'experience' => $details->profile->experience,
                         'work_type' => $details->profile->work_type
                     ];
-                    if(($details->is_registration_completed == 0) && ($details->address->street == null)){
+                    if(($details->is_registration_completed == 0) && ($details->address == null)){
                         User::where('id', auth('sanctum')->user()->id )->update([
                             'is_registration_completed' => 0
                         ]);
