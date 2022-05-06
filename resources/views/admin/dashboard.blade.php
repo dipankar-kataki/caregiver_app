@@ -66,7 +66,7 @@
                     </div>
                     <div class="wigdet-one-content">
                         <p class="m-0 text-uppercase font-weight-bold text-muted" title="Total Revenue Generated">Total Income</p>
-                        <h2><span data-plugin="counterup">{{$total_agency_payments}}</span> <i class="mdi mdi-arrow-up text-success font-24"></i></h2>
+                        <h2><span data-plugin="counterup">{{$total_agency_payments}}</span> <i class="mdi {{$total_agency_payments == 0 ? '' : 'mdi-arrow-up'}}  text-success font-24"></i></h2>
                     </div>
                 </div>
             </div>
