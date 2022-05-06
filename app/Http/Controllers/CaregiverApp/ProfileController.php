@@ -319,12 +319,12 @@ class ProfileController extends Controller
                     'user_id' => auth('sanctum')->user()->id
                 ]);
                 if($create){
-
+                    $add_details = Address::where('user_id', auth('sanctum')->user()->id)->first();
                     $address = [
-                        'street' => $details->address->street,
-                        'city' => $details->address->city,
-                        'state' => $details->address->state,
-                        'zip_code' => $details->address->zip_code,
+                        'street' => $add_details->street,
+                        'city' => $add_details->city,
+                        'state' => $add_details->state,
+                        'zip_code' => $add_details->zip_code,
                     ];
                     if(($details->profile == null) && ($details->is_registration_completed == 0) ){
                         User::where('id', auth('sanctum')->user()->id )->update([
@@ -363,7 +363,7 @@ class ProfileController extends Controller
                     }
                     return $this->success('Address updated successfully', $address, 'null', 201);
                 }else{
-                    return $this->error('Whoops!, Updated failed', null, 'null', 200);
+                    return $this->error('Whoops!, Updated failed', null, 'null', 400);
                 }
             }
         }
