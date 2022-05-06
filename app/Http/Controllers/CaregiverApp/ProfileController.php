@@ -108,7 +108,7 @@ class ProfileController extends Controller
             ]);
 
             if($updateUser){
-                if(($details->is_registration_completed == 0) && (($details->address->street == null) || ($details->address->city == null) || ($details->address->state == null) || ($details->address->zip_code == null))){
+                if(($details->is_registration_completed == 0) && ($details->address == null)){
                     User::where('id', auth('sanctum')->user()->id )->update([
                         'is_registration_completed' => 0
                     ]);

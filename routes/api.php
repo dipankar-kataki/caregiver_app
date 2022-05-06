@@ -67,6 +67,12 @@ Route::prefix('caregiver')->group(function(){
             Route::get('document-count',[DocumentController::class,'documentCount']);
             Route::post('is-document-uploaded', [DocumentController::class,'isDocumentUploaded']);
             Route::post('delete-document', [DocumentController::class,'deleteDocument']);
+            Route::get('download-bg-check', function(){
+
+                $myFile = public_path("caregiver-app/document-sample/Background-Check-Authorization-Form.pdf");
+    	        return response()->download($myFile);
+
+            });
         });
         
 
