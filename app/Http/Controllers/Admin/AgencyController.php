@@ -35,8 +35,9 @@ class AgencyController extends Controller
     
     public function viewProfile($id){
         $user_id = Crypt::decrypt($id);
-        $details = User::with('jobs', 'business_information', 'address')->where('id', $user_id)->where('role', 3)->first();
-        return view('admin.agency.profile')->with('user_details' , $details);
+        $details = User::with('business_information', 'address')->where('id', $user_id)->where('role', 3)->first();
+        $job_count = JobByAgency::where('job_status', 0)->where('is_activate','<>',0)->where('user_id', $user_id )->count();
+        return view('admin.agency.profile')->with(['user_details' => $details, 'job_count' => $job_count]);
     }
 
     

@@ -77,7 +77,7 @@
                     <div class="row mt-3">
                         <div class="col-lg-3 col-sm-6 text-center">
                             <div class="pt-2" dir="ltr">
-                                <input data-plugin="knob" data-width="120" data-height="120" data-linecap=round data-fgColor="#2abfcc" value="{{$user_details->jobs->count() != null ? $user_details->jobs->count() : 0 }}" data-max="1000" data-skin="tron" data-angleOffset="180" data-readOnly=true data-thickness=".1" />
+                                <input data-plugin="knob" data-width="120" data-height="120" data-linecap=round data-fgColor="#2abfcc" value="{{$job_count != null ? $job_count : 0 }}" data-max="1000" data-skin="tron" data-angleOffset="180" data-readOnly=true data-thickness=".1" />
                                 <h6 class="text-muted mt-2">Jobs Posted</h6>
                             </div>
                         </div>
