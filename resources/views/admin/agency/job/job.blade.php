@@ -48,7 +48,7 @@
                                 @endif
                             </td>
                             <td class="text-success" style="text-transform:uppercase;">
-                                @if ($item['payment_status'] == 'success')
+                                @if ($item['payment_status'] == 'Success' || $item['payment_status'] == 'success' || $item['payment_status'] == 'SUCCESS')
                                     <span class="text-success">Success</span>                                    
                                 @else
                                     <span class="text-danger">Failed</span>
