@@ -19,4 +19,8 @@ class BusinessInformation extends Model
     public function getHomecareServiceAttribute($value){
         return unserialize($value);
     }
+
+    public function user(){
+        return $this->belongsTo(User::class, 'user_id', 'id');
+    }
 }
