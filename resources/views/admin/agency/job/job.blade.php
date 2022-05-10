@@ -48,7 +48,7 @@
                                 @endif
                             </td>
                             <td class="text-success" style="text-transform:uppercase;">{{$item['payment_status']}}</td>
-                            <td><a href="{{route('admin.agency.view.profile', ['id' => Crypt::encrypt($item['user_id'])])}}"  target="_blank" class="btn btn-sm btn-primary waves-effect width-md waves-light">Agency Profile</a></td>
+                            <td><a href="{{route('admin.agency.view.profile', ['id' => Crypt::encrypt($item['user_id'])])}}"  target="_blank" class="btn btn-sm btn-primary waves-effect width-md waves-light">View Job Details</a></td>
                             {{-- <td>
                                 @if ($item->is_activate == 1)
                                     <label class="switch">

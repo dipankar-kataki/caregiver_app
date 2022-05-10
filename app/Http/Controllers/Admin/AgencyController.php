@@ -111,4 +111,8 @@ class AgencyController extends Controller
             return response()->json(['message' => 'Whoops! Something went wrong. Failed to publish job.', 'status' => 2]);
         }
     }
+
+    public function jobDetails(){
+
+    }
 }

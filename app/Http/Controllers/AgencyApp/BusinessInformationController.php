@@ -18,20 +18,20 @@ class BusinessInformationController extends Controller
         $validator = Validator::make($request->all(), [
             'business_number' => 'required',
             'legal_structure' => 'required',
-            'organization_type' => 'required',
-            'tax_id' => 'required',
-            'no_of_employee' => 'required',
-            'years_in_business' => 'required',
+            'organization_type' => 'required | string',
+            'tax_id' => 'required | numeric',
+            'no_of_employee' => 'required | numeric',
+            'years_in_business' => 'required | numeric | min:1',
             'country_of_business' => 'required',
-            'annual_business_revenue' => 'required',
+            'annual_business_revenue' => 'required | numeric',
             'street' => 'required',
             'city' => 'required',
             'state' => 'required',
-            'zip_code' => 'required'
+            'zip_code' => 'required | numeric'
         ]);
 
         if($validator->fails()){
-            return $this->error('Whoops! Registration failed.', $validator->errors(), 'null', 400);
+            return $this->error('Whoops! Registration failed. '.$validator->errors()->first(), null, 'null', 400);
         }else{
             $createBusinessInfo = BusinessInformation::create([
                 'business_number' => $request->business_number,
