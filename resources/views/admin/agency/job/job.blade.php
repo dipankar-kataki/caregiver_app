@@ -47,7 +47,13 @@
                                     <p class="text-muted">JOB SUSPENDED</p>
                                 @endif
                             </td>
-                            <td class="text-success" style="text-transform:uppercase;">{{$item['payment_status']}}</td>
+                            <td class="text-success" style="text-transform:uppercase;">
+                                @if ($item['payment_status'] == 'success')
+                                    <span class="text-success">Success</span>                                    
+                                @else
+                                    <span class="text-danger">Failed</span>
+                                @endif
+                            </td>
                             <td><a href="{{route('admin.agency.view.profile', ['id' => Crypt::encrypt($item['user_id'])])}}"  target="_blank" class="btn btn-sm btn-primary waves-effect width-md waves-light">View Job Details</a></td>
                             {{-- <td>
                                 @if ($item->is_activate == 1)
