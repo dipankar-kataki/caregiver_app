@@ -131,6 +131,7 @@ class JobController extends Controller
         }else{
             $check_user = User::with('caregiverBank')->where('id', auth('sanctum')->user()->id)->first();
             $check_bank = CaregiverBankAccount::where('user_id', auth('sanctum')->user()->id)->first();
+            $check_no_of_jobs_accepted = AcceptedJob::where('job_by_agencies_id', $request->job_id)->where('caregiver_id', auth('sanctum')->id)->where('is_activate', 1)->exists();
             $get_agency = JobByAgency::where('id', $request->job_id)->first();
             $get_fcm_token = User::where('id', $get_agency->user_id)->first();
 
@@ -160,6 +161,8 @@ class JobController extends Controller
                     'is_bank_details_added' =>  $is_bank_added
                 ];
                 return $this->error('Whoops! Failed to accept job.', $profile_completion_status , 'null', 400);
+            }else if($check_no_of_jobs_accepted){
+                return $this->error('Whoops! Failed to accept job. Existing job not completed. Caregiver can accept only one job at a time.', null , 'null', 400);
             }else{
                 $createJob = AcceptedJob::create([
                     'job_by_agencies_id' =>  $request->job_id,
