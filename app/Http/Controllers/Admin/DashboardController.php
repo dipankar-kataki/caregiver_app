@@ -14,8 +14,8 @@ class DashboardController extends Controller
     public function index(Request $request){
         $total_caregivers = User::where('role', 2)->where('is_user_approved', 1)->count();
         $total_agencies = User::where('role', 3)->where('is_user_approved', 1)->count();
-        $total_jobs_posted = JobByAgency::where('is_activate', 1)->count();
-        $total_agency_payments = AgencyPayments::where('payment_status', 'success')->sum('peaceworc_charge');
+        $total_jobs_posted = AgencyPayments::where('payment_status', 1)->count();
+        $total_agency_payments = AgencyPayments::where('payment_status', 1)->sum('peaceworc_charge');
         $recently_joined_caregiver = User::with('profile', 'address')->where('role', 2)->where('is_user_approved', 1)->latest()->take(5)->get();
         $recently_joined_agency = User::with('business_information', 'address')->where('role', 3)->where('is_user_approved', 1)->latest()->take(5)->get();
         return view('admin.dashboard')->with(['total_caregivers' => $total_caregivers,

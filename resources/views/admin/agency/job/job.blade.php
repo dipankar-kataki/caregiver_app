@@ -38,7 +38,7 @@
                             <td>{{$item['posted_on']}}</td>
                             <td>
                                 @if ($item['job_status'] == 0)
-                                    <p class="text-success">NEWLY POSTED</p>
+                                    <p class="text-success">NEW POST</p>
                                 @elseif($item['job_status'] == 1)
                                     <p class="text-primary">ON GOING</p>
                                 @elseif($item['job_status'] == 2)
@@ -47,8 +47,8 @@
                                     <p class="text-muted">JOB SUSPENDED</p>
                                 @endif
                             </td>
-                            <td class="text-success" style="text-transform:uppercase;">
-                                @if ($item['payment_status'] == 'Success' || $item['payment_status'] == 'success' || $item['payment_status'] == 'SUCCESS')
+                            <td style="text-transform:uppercase;">
+                                @if ($item['payment_status'] == 1)
                                     <span class="text-success">Success</span>                                    
                                 @else
                                     <span class="text-danger">Failed</span>

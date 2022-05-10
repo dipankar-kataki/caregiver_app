@@ -25,6 +25,15 @@ class AgencyPaymentController extends Controller
         if($validator->fails()){
             return $this->error('Failed to save payment details.', $validator->errors(), 'null', 400);
         }else{
+
+            $payment_status = '';
+
+            if($request->payment_status == 'Success' || $request->payment_status == 'success' || $request->payment_status == 'SUCCESS'){
+                $payment_status = 1;
+            }else{
+                $payment_status = 0;
+            }
+
             $create = AgencyPayments::create([
                 'agency_id' => auth('sanctum')->user()->id,
                 'job_id' => $request->job_id,
@@ -33,11 +42,11 @@ class AgencyPaymentController extends Controller
                 'peaceworc_charge' => $request->peaceworc_charge,
                 'peaceworc_percentage' => $request->peaceworc_percentage,
                 'amount' => $request->amount,
-                'payment_status' => $request->payment_status
+                'payment_status' => $payment_status
             ]);
 
             if($create){
-                if($request->payment_status == 'Success' || $request->payment_status == 'success' || $request->payment_status == 'SUCCESS'){
+                if($payment_status == 1){
 
                     JobByAgency::where('id', $request->job_id)->update([
                         'is_activate' => 1

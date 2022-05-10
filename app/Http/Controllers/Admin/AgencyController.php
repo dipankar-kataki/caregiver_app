@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AgencyPayments;
 use App\Models\JobByAgency;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -36,7 +37,7 @@ class AgencyController extends Controller
     public function viewProfile($id){
         $user_id = Crypt::decrypt($id);
         $details = User::with('business_information', 'address')->where('id', $user_id)->where('role', 3)->first();
-        $job_count = JobByAgency::where('job_status', 0)->where('is_activate','<>',0)->where('user_id', $user_id )->count();
+        $job_count = AgencyPayments::where('payment_status', 1)->where('agency_id', $user_id )->count();
         return view('admin.agency.profile')->with(['user_details' => $details, 'job_count' => $job_count]);
     }
 

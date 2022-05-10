@@ -18,7 +18,7 @@ class CreateCaregiverPaymentsTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('job_id');
             $table->decimal('amount',10,2);
-            $table->string('payment_status');
+            $table->boolean('payment_status');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
