@@ -71,6 +71,7 @@ Route::group([
             Route::post('disable-job', [AgencyController::class, 'disableJob'])->name('admin.agency.job.disable.job');
             Route::get('newly-posted', [AgencyController::class, 'newlyPosted'])->name('admin.agency.job.newly.posted');
             Route::post('publish', [AgencyController::class, 'publish'])->name('admin.agency.job.publish');
+            Route::get('job-details/{id}', [AgencyController::class, 'jobDetails'])->name('admin.agency.job.details');
         });
 
     });

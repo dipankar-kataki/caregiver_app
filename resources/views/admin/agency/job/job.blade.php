@@ -54,7 +54,10 @@
                                     <span class="text-danger">Failed</span>
                                 @endif
                             </td>
-                            <td><a href="{{route('admin.agency.view.profile', ['id' => Crypt::encrypt($item['user_id'])])}}"  target="_blank" class="btn btn-sm btn-primary waves-effect width-md waves-light">View Job Details</a></td>
+                            <td>
+                                {{-- <a href="{{route('admin.agency.job.details', ['id' => Crypt::encrypt($item['user_id'])])}}"  target="_blank" class="btn btn-sm btn-primary waves-effect width-md waves-light">View Job Details</a> --}}
+                                <a href="{{route('admin.agency.job.details', ['id' => Crypt::encrypt($item['job_id']) ])}}"  target="_blank" class="btn btn-sm btn-primary waves-effect width-md waves-light">View Job Details</a>
+                            </td>
                             {{-- <td>
                                 @if ($item->is_activate == 1)
                                     <label class="switch">

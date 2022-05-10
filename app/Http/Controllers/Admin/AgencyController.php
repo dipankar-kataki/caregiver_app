@@ -62,6 +62,7 @@ class AgencyController extends Controller
                 $details = [
                     'agency' => $item->user->business_name,
                     'job' => $item->job_title,
+                    'job_id' => $item2->job_id,
                     'user_id' => $item->user_id,
                     'amount_per_hour' => $item->amount_per_hour,
                     'amount_paid' => $item2->amount,
@@ -113,7 +114,9 @@ class AgencyController extends Controller
         }
     }
 
-    public function jobDetails(){
-
+    public function jobDetails($id){
+        $job_id = Crypt::decrypt($id);
+        $job_details = JobByAgency::with('user','payment_status')->where('id', $job_id)->first();
+        return view('admin.agency.job.job-details')->with('job_details' , $job_details);
     }
 }
