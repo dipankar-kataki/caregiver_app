@@ -141,6 +141,13 @@ class JobController extends Controller
             }else{
                 $is_bank_added = 0;
             }
+
+            $is_job_already_accepted = 0;
+            if($check_no_of_jobs_accepted){
+                $is_job_already_accepted = 1;
+            }else{
+                $is_job_already_accepted = 0;
+            }
             // $check_bank_details = CaregiverBankAccount::where('user_id', auth('sanctum')->user()->id)->exists();
             $profile_completion_status = [];
             if($check_user->is_user_approved == 0){
@@ -149,7 +156,8 @@ class JobController extends Controller
                     'is_questions_answered' => $check_user->is_questions_answered,
                     'is_documents_uploaded' => $check_user->is_documents_uploaded,
                     'is_user_approved' => $check_user->is_user_approved,
-                    'is_bank_details_added' =>  $is_bank_added
+                    'is_bank_details_added' =>  $is_bank_added,
+                    'is_job_already_accepted' => $is_job_already_accepted
                 ];
                 return $this->error('Whoops! Failed to accept job.', $profile_completion_status , 'null', 400);
             }else if($check_user->is_user_approved == 1 &&  $check_bank == null){
@@ -158,11 +166,20 @@ class JobController extends Controller
                     'is_questions_answered' => $check_user->is_questions_answered,
                     'is_documents_uploaded' => $check_user->is_documents_uploaded,
                     'is_user_approved' => $check_user->is_user_approved,
-                    'is_bank_details_added' =>  $is_bank_added
+                    'is_bank_details_added' =>  $is_bank_added,
+                    'is_job_already_accepted' => $is_job_already_accepted
                 ];
                 return $this->error('Whoops! Failed to accept job.', $profile_completion_status , 'null', 400);
             }else if($check_no_of_jobs_accepted){
-                return $this->error('Whoops! Failed to accept job. Existing job not completed. Caregiver can accept only one job at a time.', null , 'null', 400);
+                $profile_completion_status = [
+                    'is_registration_completed' => $check_user->is_registration_completed,
+                    'is_questions_answered' => $check_user->is_questions_answered,
+                    'is_documents_uploaded' => $check_user->is_documents_uploaded,
+                    'is_user_approved' => $check_user->is_user_approved,
+                    'is_bank_details_added' =>  $is_bank_added,
+                    'is_job_already_accepted' => $is_job_already_accepted
+                ];
+                return $this->error('Whoops! Failed to accept job. Existing job not completed. Caregiver can accept only one job at a time.',  $profile_completion_status , 'null', 400);
             }else{
                 $createJob = AcceptedJob::create([
                     'job_by_agencies_id' =>  $request->job_id,
