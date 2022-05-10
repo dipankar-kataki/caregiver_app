@@ -131,7 +131,7 @@ class JobController extends Controller
         }else{
             $check_user = User::with('caregiverBank')->where('id', auth('sanctum')->user()->id)->first();
             $check_bank = CaregiverBankAccount::where('user_id', auth('sanctum')->user()->id)->first();
-            $check_no_of_jobs_accepted = AcceptedJob::where('job_by_agencies_id', $request->job_id)->where('caregiver_id', auth('sanctum')->id)->where('is_activate', 1)->exists();
+            $check_no_of_jobs_accepted = AcceptedJob::where('job_by_agencies_id', $request->job_id)->where('caregiver_id', auth('sanctum')->user()->id)->where('is_activate', 1)->exists();
             $get_agency = JobByAgency::where('id', $request->job_id)->first();
             $get_fcm_token = User::where('id', $get_agency->user_id)->first();
 
