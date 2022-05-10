@@ -16,22 +16,22 @@ class AuthorizedOfficerController extends Controller
     use ApiResponser;
     public function create(Request $request){
         $validator = Validator::make($request->all(),[
-            'firstname' => 'required',
-            'lastname' => 'required',
+            'firstname' => 'required | string',
+            'lastname' => 'required | string',
             'email' => 'required | email | unique:authorized_officers',
-            'phone' => 'required',
+            'phone' => 'required | numeric ',
             'dob' => 'required',
-            'ssn' => 'required',
+            'ssn' => 'required | numeric',
             'citizenship_of_country' => 'required',
             'percentage_of_ownership' => 'required',
             'street' => 'required',
-            'city' => 'required',
-            'state' => 'required',
-            'zip_code' => 'required'
+            'city' => 'required | string',
+            'state' => 'required | string',
+            'zip_code' => 'required | numeric'
         ]);
 
         if($validator->fails()){
-            return $this->error('Whoops! Registration failed.', $validator->errors(), 'null', 400);
+            return $this->error('Whoops! Registration failed. '.$validator->errors()->first(), null, 'null', 400);
         }else{
             $check_phone_no_exist = AuthorizedOfficer::where('phone', $request->phone)->exists();
             $check_ssn_exist = AuthorizedOfficer::where('ssn', $request->ssn)->exists();
@@ -74,22 +74,22 @@ class AuthorizedOfficerController extends Controller
 
     public function editAuthorizedOfficer(Request $request){
         $validator = Validator::make($request->all(),[
-            'firstname' => 'required',
-            'lastname' => 'required',
+            'firstname' => 'required | string',
+            'lastname' => 'required | string',
             'email' => 'required | email ',
-            'phone' => 'required',
+            'phone' => 'required | numeric',
             'dob' => 'required',
-            'ssn' => 'required',
+            'ssn' => 'required | numeric',
             'citizenship_of_country' => 'required',
             'percentage_of_ownership' => 'required',
             'street' => 'required',
-            'city' => 'required',
-            'state' => 'required',
-            'zip_code' => 'required'
+            'city' => 'required | string',
+            'state' => 'required | string',
+            'zip_code' => 'required | numeric'
         ]);
 
         if($validator->fails()){
-            return $this->error('Whoops! Failed to update authorized officer.', $validator->errors(), 'null', 400);
+            return $this->error('Whoops! Failed to update authorized officer. '.$validator->errors()->first(), null, 'null', 400);
         }else{
             $update = AuthorizedOfficer::where('id',$request->authorized_officer_id)->where('user_id', auth('sanctum')->user()->id)->update([
                 'firstname' => $request->firstname,

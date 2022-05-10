@@ -25,8 +25,8 @@ class BusinessInformationController extends Controller
             'country_of_business' => 'required',
             'annual_business_revenue' => 'required | numeric',
             'street' => 'required',
-            'city' => 'required',
-            'state' => 'required',
+            'city' => 'required | string',
+            'state' => 'required | string',
             'zip_code' => 'required | numeric'
         ]);
 
