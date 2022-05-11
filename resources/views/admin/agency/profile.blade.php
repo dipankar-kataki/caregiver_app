@@ -26,7 +26,7 @@
                         <div class="member-card">
                             <div class="avatar-xl member-thumb mb-3 mx-auto d-block">
                                 @if ($user_details->business_information != null)
-                                    <img src="{{asset($user_details->business_information->business_number)}}" class="rounded-circle img-thumbnail" alt="profile-image">                                    
+                                    <img src="{{asset($user_details->business_information->profile_image)}}" class="rounded-circle img-thumbnail" alt="profile-image">                                    
                                     <i class="mdi mdi-star-circle member-star text-success"></i>
                                 @else
                                     <img src="{{asset('admin/assets/images/agency-image.png')}}" class="rounded-circle img-thumbnail" alt="profile-image">                                    
