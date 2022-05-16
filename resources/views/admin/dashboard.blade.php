@@ -16,7 +16,7 @@
         <div class="col-xl-3 col-md-6">
             <div class="card widget-box-one border border-primary bg-soft-primary">
                 <div class="card-body">
-                    <div class="float-right avatar-lg rounded-circle mt-3">
+                    <div class="float-right avatar-md rounded-circle mt-3">
                         <i class="mdi mdi-hospital font-30 widget-icon rounded-circle avatar-title text-primary"></i>
                     </div>
                     <div class="wigdet-one-content">
@@ -31,7 +31,7 @@
         <div class="col-xl-3 col-md-6">
             <div class="card widget-box-one border border-warning bg-soft-warning">
                 <div class="card-body">
-                    <div class="float-right avatar-lg rounded-circle mt-3">
+                    <div class="float-right avatar-md rounded-circle mt-3">
                         <i class="mdi mdi-hospital-building font-30 widget-icon rounded-circle avatar-title text-warning"></i>
                     </div>
                     <div class="wigdet-one-content">
@@ -46,7 +46,7 @@
         <div class="col-xl-3 col-md-6">
             <div class="card widget-box-one border border-danger bg-soft-danger">
                 <div class="card-body">
-                    <div class="float-right avatar-lg rounded-circle mt-3">
+                    <div class="float-right avatar-md rounded-circle mt-3">
                         <i class="mdi mdi-briefcase font-30 widget-icon rounded-circle avatar-title text-danger"></i>
                     </div>
                     <div class="wigdet-one-content">
@@ -61,7 +61,7 @@
         <div class="col-xl-3 col-md-6">
             <div class="card widget-box-one border border-success bg-soft-success">
                 <div class="card-body">
-                    <div class="float-right avatar-lg rounded-circle mt-3">
+                    <div class="float-right avatar-md rounded-circle mt-3">
                         <i class="mdi mdi-currency-usd font-30 widget-icon rounded-circle avatar-title text-success"></i>
                     </div>
                     <div class="wigdet-one-content">
@@ -137,7 +137,7 @@
                             @foreach ($recently_joined_caregiver as $key => $item)
                                 <tr>
                                     <th>
-                                        <img src="{{asset($item->profile->profile_image)}}" alt="user" class="avatar-sm rounded-circle" />
+                                        <img src="{{asset($item->profile->profile_image)}}" alt="user" class="avatar-md rounded-circle" />
                                     </th>
                                     <td>
                                         <h5 class="m-0 font-15">{{$item->firstname}} {{$item->lastname}}</h5>
@@ -176,7 +176,7 @@
                             @foreach ($recently_joined_agency as $key =>  $item)
                                 <tr>
                                     <th>
-                                        <span class="avatar-sm-box bg-success" style="text-transform: uppercase;">{{substr($item->business_name, 0, 1)}}</span>
+                                        <span class="avatar-md-box bg-success" style="text-transform: uppercase;">{{substr($item->business_name, 0, 1)}}</span>
                                     </th>
                                     <td>
                                         <h5 class="m-0 font-15">{{$item->business_name}}</h5>
