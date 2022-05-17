@@ -25,11 +25,11 @@
                     <div class="text-center card-box shadow-none border border-secoundary">
                         <div class="member-card">
                             <div class="avatar-xl member-thumb mb-3 mx-auto d-block">
-                                @if ($user_details->business_information != null)
+                                @if ($user_details->business_information->profile_image != null)
                                     <img src="{{asset($user_details->business_information->profile_image)}}" class="rounded-circle img-thumbnail" alt="profile-image" style="height:100px; width:100px;object-fit: cover;object-position: top;">                                    
                                     <i class="mdi mdi-star-circle member-star text-success"></i>
                                 @else
-                                    <img src="{{asset('/admin/assets/images/agency-image.png')}}" class="rounded-circle img-thumbnail" alt="profile-image">                                    
+                                    <img src="{{asset('admin/assets/images/agency-image.png')}}" class="rounded-circle img-thumbnail" alt="profile-image">                                    
                                     <i class="mdi mdi-star-circle member-star text-success"></i>
                                 @endif
                                 

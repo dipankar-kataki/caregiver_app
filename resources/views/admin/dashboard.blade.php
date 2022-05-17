@@ -180,7 +180,7 @@
                             @foreach ($recently_joined_agency as $key =>  $item)
                                 <tr>
                                     <th>
-                                        <div class="notify-icon bg-success text-center p-2 rounded-circle text-white">
+                                        <div class="notify-icon bg-success text-center p-2 rounded-circle text-white" style="height: 40px;width: 40px;">
                                             {{substr($item->business_name, 0, 1)}}
                                         </div>
                                     </th>
