@@ -75,7 +75,7 @@
     </div>
     <!-- end row -->
 
-    <div class="row">
+    {{-- <div class="row">
         <div class="col-xl-4">
             <div class="card-box">
 
@@ -114,7 +114,7 @@
         </div>
         <!-- end col -->
 
-    </div>
+    </div> --}}
     <!-- end row -->
 
     <div class="row">
@@ -137,11 +137,15 @@
                             @foreach ($recently_joined_caregiver as $key => $item)
                                 <tr>
                                     <th>
-                                        <img src="{{asset($item->profile->profile_image)}}" alt="user" class="avatar-md rounded-circle" />
+                                        <img src="{{asset($item->profile->profile_image)}}" alt="user" class="avatar-sm rounded-circle" />
                                     </th>
                                     <td>
                                         <h5 class="m-0 font-15">{{$item->firstname}} {{$item->lastname}}</h5>
-                                        <p class="m-0 text-muted"><small>{{$item->profile->work_type}}</small></p>
+                                        @if ($item->profile->work_type != null)
+                                            <p class="m-0 text-muted"><small>Work Type: {{$item->profile->work_type}}</small></p>
+                                        @else
+                                            <p class="m-0 text-muted"><small>Work Type: Not Provided</small></p>
+                                        @endif
                                     </td>
                                     <td>{{$item->profile->phone}}</td>
                                     <td>{{$item->address->city}}</td>
@@ -176,14 +180,16 @@
                             @foreach ($recently_joined_agency as $key =>  $item)
                                 <tr>
                                     <th>
-                                        <span class="avatar-md-box bg-success" style="text-transform: uppercase;">{{substr($item->business_name, 0, 1)}}</span>
+                                        <div class="notify-icon bg-success text-center p-2 rounded-circle text-white">
+                                            {{substr($item->business_name, 0, 1)}}
+                                        </div>
                                     </th>
                                     <td>
                                         <h5 class="m-0 font-15">{{$item->business_name}}</h5>
                                         @if ($item->business_information != null)
                                             <p class="m-0 text-muted"><small>Organization: {{$item->business_information->organization_type}}</small></p>
                                         @else
-                                            <p class="m-0 text-muted"><small>Organization: NULL</small></p>
+                                            <p class="m-0 text-muted"><small>Organization: Not Provided</small></p>
                                         @endif
                                     </td>
                                     <td>
