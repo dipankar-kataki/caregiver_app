@@ -2,7 +2,7 @@
 <div class="navbar-custom">
   <ul class="list-unstyled topnav-menu float-right mb-0">
 
-      <li class="dropdown notification-list">
+      {{-- <li class="dropdown notification-list">
           <a class="nav-link dropdown-toggle  waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
               <i class="mdi mdi-bell noti-icon"></i>
               <span class="badge badge-success rounded-circle noti-icon-badge">4</span>
@@ -81,7 +81,7 @@
               </a>
 
           </div>
-      </li>
+      </li> --}}
 
       {{-- <li class="dropdown notification-list">
           <a class="nav-link dropdown-toggle  waves-effect" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
@@ -210,7 +210,7 @@
           </button>
       </li>
 
-      <li class="d-none d-sm-block">
+      {{-- <li class="d-none d-sm-block">
           <form class="app-search">
               <div class="app-search-box">
                   <div class="input-group" >
@@ -223,6 +223,6 @@
                   </div>
               </div>
           </form>
-      </li>
+      </li> --}}
   </ul>
 </div>
