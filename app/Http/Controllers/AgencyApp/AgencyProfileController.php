@@ -106,7 +106,8 @@ class AgencyProfileController extends Controller
                 'annual_business_revenue' => '$ '.$profile_details->business_information->annual_business_revenue,
                 'bio' => $profile_details->business_information->bio,
                 'our_beneficiaries' => $beneficiary,
-                'homecare_services' => $homecare_service
+                'homecare_services' => $homecare_service,
+                'rating' => $profile_details->business_information->rating
             ];
             return $this->success('Profile details fetched successfully.',  $details, 'null', 200);
         }else{
