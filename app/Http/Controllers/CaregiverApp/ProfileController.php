@@ -436,9 +436,18 @@ class ProfileController extends Controller
     }
 
     public function deleteEducation(Request $request){
-        $id = $request->id;
-        Education::where('id', $id)->delete();
-        return $this->success('Education removed successfully.', null, 'null', 200);
+        $validator = Validator::make($request->all(),[
+            'id' => 'required'
+        ]);
+
+        if($validator->fails()){
+            return $this->success('Failed to remove education removed.', $validator->errors()->first(), 'null', 400);
+        }else{
+            $id = $request->id;
+            Education::where('id', $id)->delete();
+            return $this->success('Education removed successfully.', null, 'null', 200);
+        }
+        
     }
 
     public function profileCompletionStatus(){
