@@ -177,36 +177,53 @@ class DocumentController extends Controller
 
 
     public function deleteDocument(Request $request){
-       $documentCategory = $request->documentCategory;
-       $id = $request->id;
-        
 
-       if($documentCategory == 'covid'){
-            Covid::where('id', $id)->delete();
-            return $this->success('Document removed successfully.',  null, 'null', 200);
-        }else if($documentCategory == 'childAbuse'){
-            ChildAbuse::where('id', $id)->delete();
-            return $this->success('Document removed successfully.',  null, 'null', 200);
-        }else if($documentCategory == 'criminal'){
-            Criminal::where('id', $id)->delete();
-            return $this->success('Document removed successfully.',  null, 'null', 200);
-        }else if($documentCategory == 'driving'){
-            Driving::where('id', $id)->delete();
-            return $this->success('Document removed successfully.',  null, 'null', 200);
-        }else if($documentCategory == 'employment'){
-            EmploymentEligibility::where('id', $id)->delete();
-            return $this->success('Document removed successfully.',  null, 'null', 200);
-        }else if($documentCategory == 'identification'){
-            Identification::where('id', $id)->delete();
-            return $this->success('Document removed successfully.',  null, 'null', 200);
-        }else if($documentCategory == 'tuberculosis'){
-            Tuberculosis::where('id', $id)->delete();
-            return $this->success('Document removed successfully.',  null, 'null', 200);
-        }else if($documentCategory == 'w_4_form'){
-            w_4_form::where('id', $id)->delete();
-            return $this->success('Document removed successfully.',  null, 'null', 200);
-        }else {
-            return $this->error('Whoops!, Failed to remove document', null, 'null', 400);
+        $validator = Validator::make($request->all(),[
+            'documentCategory' => 'required',
+            'id' => 'required'
+        ]);
+        if($validator->fails()){
+            return $this->error('Whoops!, Failed to remove document', $validator->errors()->first(), 'null', 400);
+        }else{
+            $documentCategory = $request->documentCategory;
+            $id = $request->id;
+             
+            
+            if($documentCategory == 'covid'){
+                Covid::where('id', $id)->delete();
+                return $this->success('Document removed successfully.',  null, 'null', 200);
+            }else if($documentCategory == 'childAbuse'){
+                ChildAbuse::where('id', $id)->delete();
+                return $this->success('Document removed successfully.',  null, 'null', 200);
+            }else if($documentCategory == 'criminal'){
+                Criminal::where('id', $id)->delete();
+                return $this->success('Document removed successfully.',  null, 'null', 200);
+            }else if($documentCategory == 'driving'){
+                Driving::where('id', $id)->delete();
+                return $this->success('Document removed successfully.',  null, 'null', 200);
+            }else if($documentCategory == 'employment'){
+                EmploymentEligibility::where('id', $id)->delete();
+                return $this->success('Document removed successfully.',  null, 'null', 200);
+            }else if($documentCategory == 'identification'){
+                Identification::where('id', $id)->delete();
+                return $this->success('Document removed successfully.',  null, 'null', 200);
+            }else if($documentCategory == 'tuberculosis'){
+                Tuberculosis::where('id', $id)->delete();
+                return $this->success('Document removed successfully.',  null, 'null', 200);
+            }else if($documentCategory == 'w_4_form'){
+                w_4_form::where('id', $id)->delete();
+                return $this->success('Document removed successfully.',  null, 'null', 200);
+            }else {
+                return $this->error('Whoops!, Failed to remove document', null, 'null', 400);
+            }
+
+            $doc_count = User::where('id', auth('sanctum')->user()->id)->with('covid','childAbuse','criminal','driving','employment','identification','tuberculosis','w_4_form')->first();
+            if( ($doc_count->covid->count() == 0) && ($doc_count->childAbuse->count() == 0) && ($doc_count->criminal->count() == 0) && ($doc_count->driving->count() == 0) && ($doc_count->employment->count() == 0) && ($doc_count->identification->count() == 0) && ($doc_count->tuberculosis->count() == 0) && ($doc_count->w_4_form->count() == 0) ){
+                User::where('id', auth('sanctum')->user()->id)->update([
+                    'is_documents_uploaded' => 0
+                ]);
+            }
         }
+      
     }
 }

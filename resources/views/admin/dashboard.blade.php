@@ -180,9 +180,14 @@
                             @foreach ($recently_joined_agency as $key =>  $item)
                                 <tr>
                                     <th>
-                                        <div class="notify-icon bg-success text-center p-2 rounded-circle text-white" style="height: 40px;width: 40px;">
-                                            {{substr($item->business_name, 0, 1)}}
-                                        </div>
+                                        @if ($item->business_information->profile_image != null)
+                                            <img src="{{asset($item->business_information->profile_image)}}" alt="user" class="avatar-sm rounded-circle" />
+                                        @else
+                                            <div class="notify-icon bg-success text-center p-2 rounded-circle text-white" style="height: 40px;width: 40px;">
+                                                {{substr($item->business_name, 0, 1)}}
+                                            </div>
+                                        @endif
+                                        
                                     </th>
                                     <td>
                                         <h5 class="m-0 font-15">{{$item->business_name}}</h5>

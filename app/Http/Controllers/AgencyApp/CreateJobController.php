@@ -15,6 +15,7 @@ use App\Models\Review;
 use App\Models\User;
 use DateTime;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class CreateJobController extends Controller
 {
@@ -48,6 +49,7 @@ class CreateJobController extends Controller
                 }
     
                 $create = JobByAgency::create([
+                    'job_order_id' => '#'.Str::uuid()->toString(),
                     'job_title' => $request->job_title,
                     'care_type' => $request->care_type,
                     'patient_age' => $request->patient_age,
@@ -70,9 +72,9 @@ class CreateJobController extends Controller
                 ]);
                 if($create){
                     $job_id = JobByAgency::where('user_id', auth('sanctum')->user()->id)->latest()->first();
-                    return $this->success('Job posted successfully.',  $job_id->id, 'null', 201);
+                    return $this->success('Job created successfully.',  $job_id->id, 'null', 201);
                 }else{
-                    return $this->error('Whoops! Something went wrong. Failed to post job.',  null, 'null', 500);
+                    return $this->error('Whoops! Something went wrong. Failed to create job.',  null, 'null', 500);
                 }
             }
             

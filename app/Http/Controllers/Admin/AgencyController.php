@@ -61,7 +61,8 @@ class AgencyController extends Controller
             foreach($item->payment_status as $key2 => $item2){
                 $details = [
                     'agency' => $item->user->business_name,
-                    'job' => $item->job_title,
+                    'job_title' => $item->job_title,
+                    'order_id' => $item->job_order_id,
                     'job_id' => $item2->job_id,
                     'user_id' => $item->user_id,
                     'amount_per_hour' => $item->amount_per_hour,

@@ -441,7 +441,7 @@ class ProfileController extends Controller
         ]);
 
         if($validator->fails()){
-            return $this->success('Failed to remove education removed.', $validator->errors()->first(), 'null', 400);
+            return $this->success('Failed to remove education.', $validator->errors()->first(), 'null', 400);
         }else{
             $id = $request->id;
             Education::where('id', $id)->delete();

@@ -15,8 +15,8 @@
                 <thead>
                     <tr>
                         <th>SL No</th>
+                        <th>Job Order Id</th>
                         <th>Agency</th>
-                        <th>Job Title</th>
                         <th>Amount/hr</th>
                         <th>Amount Paid</th>
                         <th>Posted On</th>
@@ -31,8 +31,8 @@
                     @foreach ($job_details as $key => $item)
                         <tr>
                             <td>{{$key + 1}}</td>
+                            <td>{{$item['order_id']}}</td>
                             <td>{{$item['agency']}}</td>
-                            <td title="{{$item['job']}}">{{Str::of($item['job'])->limit(15)}}</td>
                             <td>{{$item['amount_per_hour']}}</td>
                             <td>{{$item['amount_paid']}}</td>
                             <td>{{$item['posted_on']}}</td>

@@ -20,7 +20,7 @@
                         <th>Email</th>
                         <th>Date Of Birth</th>
                         <th>Phone Number</th>
-                        <th>Gender</th>
+                        <th>Experience</th>
                         <th>View</th>
                         <th>Status</th>
                     </tr>
@@ -34,7 +34,11 @@
                             <td>{{$item->email}}</td>
                             <td>{{Carbon\Carbon::parse($item->profile->dob)->format('m-d-Y')}}</td>
                             <td>{{$item->profile->phone}}</td>
-                            <td>{{$item->profile->gender}}</td>
+                            @if ($item->profile->experience == null)
+                                <td>0</td>
+                            @else
+                                <td>{{$item->profile->experience}}</td>
+                            @endif
                             <td><a href="{{route('admin.caregiver.view.profile', ['id' => Crypt::encrypt($item->id)])}}" class="btn btn-sm btn-primary waves-effect width-md waves-light">View Profile</a></td>
                             <td><a href="#" class="btn btn-sm btn-success btn-rounded width-md waves-effect waves-light">Approved</a></td>
                         </tr>

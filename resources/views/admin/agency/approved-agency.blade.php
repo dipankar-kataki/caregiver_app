@@ -20,7 +20,7 @@
                         <th>Email</th>
                         <th>Phone Number</th>
                         <th>Organization Type</th>
-                        <th>Years In Business</th>
+                        <th>Legal Structure</th>
                         <th>View</th>
                         <th>Status</th>
                     </tr>
@@ -34,7 +34,7 @@
                             <td>{{$item->email}}</td>
                             <td>{{$item->business_information->business_number}}</td>
                             <td>{{$item->business_information->organization_type}}</td>
-                            <td>{{$item->business_information->years_in_business}}</td>
+                            <td>{{$item->business_information->legal_structure}}</td>
                             <td><a href="{{route('admin.agency.view.profile', ['id' => Crypt::encrypt($item->id)])}}" class="btn btn-sm btn-primary waves-effect width-md waves-light">View Profile</a></td>
                             <td><a href="#" class="btn btn-sm btn-success btn-rounded width-md waves-effect waves-light">Approved</a></td>
                         </tr>

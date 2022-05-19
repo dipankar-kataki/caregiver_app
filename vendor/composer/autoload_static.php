@@ -597,6 +597,7 @@ class ComposerStaticInite87ca7db50b454addc24a196833b4f2c
         'App\\Providers\\EventServiceProvider' => __DIR__ . '/../..' . '/app/Providers/EventServiceProvider.php',
         'App\\Providers\\RouteServiceProvider' => __DIR__ . '/../..' . '/app/Providers/RouteServiceProvider.php',
         'App\\Traits\\ApiResponser' => __DIR__ . '/../..' . '/app/Traits/ApiResponser.php',
+        'App\\Traits\\PushNotification' => __DIR__ . '/../..' . '/app/Traits/PushNotification.php',
         'Asm89\\Stack\\Cors' => __DIR__ . '/..' . '/asm89/stack-cors/src/Cors.php',
         'Asm89\\Stack\\CorsService' => __DIR__ . '/..' . '/asm89/stack-cors/src/CorsService.php',
         'Attribute' => __DIR__ . '/..' . '/symfony/polyfill-php80/Resources/stubs/Attribute.php',
