@@ -188,7 +188,48 @@ class DocumentController extends Controller
             $documentCategory = $request->documentCategory;
             $id = $request->id;
              
+            $doc_count = User::where('id', auth('sanctum')->user()->id)->with('covid','childAbuse','criminal','driving','employment','identification','tuberculosis','w_4_form')->first();
+                if($doc_count->covid->count() == 0 ){
+                    User::where('id', auth('sanctum')->user()->id)->update([
+                        'is_documents_uploaded' => 0
+                    ]);
+                }else if($doc_count->childAbuse->count() == 0){
+                    User::where('id', auth('sanctum')->user()->id)->update([
+                        'is_documents_uploaded' => 0
+                    ]);
+                }else if($doc_count->criminal->count() == 0){
+                    User::where('id', auth('sanctum')->user()->id)->update([
+                        'is_documents_uploaded' => 0
+                    ]);
+                }else if($doc_count->driving->count() == 0){
+                    User::where('id', auth('sanctum')->user()->id)->update([
+                        'is_documents_uploaded' => 0
+                    ]);
+                }else if($doc_count->employment->count() == 0){
+                    User::where('id', auth('sanctum')->user()->id)->update([
+                        'is_documents_uploaded' => 0
+                    ]);
+                }else if($doc_count->identification->count() == 0){
+                    User::where('id', auth('sanctum')->user()->id)->update([
+                        'is_documents_uploaded' => 0
+                    ]);
+                }else if($doc_count->tuberculosis->count() == 0){
+                    User::where('id', auth('sanctum')->user()->id)->update([
+                        'is_documents_uploaded' => 0
+                    ]);
+                }else if($doc_count->w_4_form->count() == 0){
+                    User::where('id', auth('sanctum')->user()->id)->update([
+                        'is_documents_uploaded' => 0
+                    ]);
+                }else {
+                    User::where('id', auth('sanctum')->user()->id)->update([
+                        'is_documents_uploaded' => 1
+                    ]); 
+                }
             
+
+
+
             if($documentCategory == 'covid'){
                 Covid::where('id', $id)->delete();
                 return $this->success('Document removed successfully.',  null, 'null', 200);
@@ -217,12 +258,7 @@ class DocumentController extends Controller
                 return $this->error('Whoops!, Failed to remove document', null, 'null', 400);
             }
 
-            $doc_count = User::where('id', auth('sanctum')->user()->id)->with('covid','childAbuse','criminal','driving','employment','identification','tuberculosis','w_4_form')->first();
-            if( ($doc_count->covid->count() == 0) && ($doc_count->childAbuse->count() == 0) && ($doc_count->criminal->count() == 0) && ($doc_count->driving->count() == 0) && ($doc_count->employment->count() == 0) && ($doc_count->identification->count() == 0) && ($doc_count->tuberculosis->count() == 0) && ($doc_count->w_4_form->count() == 0) ){
-                User::where('id', auth('sanctum')->user()->id)->update([
-                    'is_documents_uploaded' => 0
-                ]);
-            }
+            
         }
       
     }
