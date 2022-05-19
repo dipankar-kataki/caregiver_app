@@ -193,38 +193,41 @@ class DocumentController extends Controller
                     User::where('id', auth('sanctum')->user()->id)->update([
                         'is_documents_uploaded' => 0
                     ]);
-                }else if($doc_count->childAbuse->count() == 0){
+                }
+                if($doc_count->childAbuse->count() == 0){
                     User::where('id', auth('sanctum')->user()->id)->update([
                         'is_documents_uploaded' => 0
                     ]);
-                }else if($doc_count->criminal->count() == 0){
+                }
+                if($doc_count->criminal->count() == 0){
                     User::where('id', auth('sanctum')->user()->id)->update([
                         'is_documents_uploaded' => 0
                     ]);
-                }else if($doc_count->driving->count() == 0){
+                }
+                if($doc_count->driving->count() == 0){
                     User::where('id', auth('sanctum')->user()->id)->update([
                         'is_documents_uploaded' => 0
                     ]);
-                }else if($doc_count->employment->count() == 0){
+                }
+                if($doc_count->employment->count() == 0){
                     User::where('id', auth('sanctum')->user()->id)->update([
                         'is_documents_uploaded' => 0
                     ]);
-                }else if($doc_count->identification->count() == 0){
+                }
+                if($doc_count->identification->count() == 0){
                     User::where('id', auth('sanctum')->user()->id)->update([
                         'is_documents_uploaded' => 0
                     ]);
-                }else if($doc_count->tuberculosis->count() == 0){
+                }
+                if($doc_count->tuberculosis->count() == 0){
                     User::where('id', auth('sanctum')->user()->id)->update([
                         'is_documents_uploaded' => 0
                     ]);
-                }else if($doc_count->w_4_form->count() == 0){
+                }
+                if($doc_count->w_4_form->count() == 0){
                     User::where('id', auth('sanctum')->user()->id)->update([
                         'is_documents_uploaded' => 0
                     ]);
-                }else {
-                    User::where('id', auth('sanctum')->user()->id)->update([
-                        'is_documents_uploaded' => 1
-                    ]); 
                 }
             
 
