@@ -41,7 +41,7 @@ class DocumentController extends Controller
         ]);
 
         if($validator->fails()){
-            return $this->error('Documents upload failed', $validator->errors(), 'null', 400);
+            return $this->error('Documents upload failed '.$validator->errors()->first(), null, 'null', 400);
         }else{
 
             $documentCategory = $request->documentCategory;
@@ -183,79 +183,82 @@ class DocumentController extends Controller
             'id' => 'required'
         ]);
         if($validator->fails()){
-            return $this->error('Whoops!, Failed to remove document', $validator->errors()->first(), 'null', 400);
+            return $this->error('Whoops!, Failed to remove document '.$validator->errors()->first(), null, 'null', 400);
         }else{
             $documentCategory = $request->documentCategory;
             $id = $request->id;
-             
-            $doc_count = User::where('id', auth('sanctum')->user()->id)->with('covid','childAbuse','criminal','driving','employment','identification','tuberculosis','w_4_form')->first();
+
+            if($documentCategory == 'covid'){
+                Covid::where('id', $id)->delete();
+                $doc_count = User::where('id', auth('sanctum')->user()->id)->with('covid')->first();
                 if($doc_count->covid->count() == 0 ){
                     User::where('id', auth('sanctum')->user()->id)->update([
                         'is_documents_uploaded' => 0
                     ]);
                 }
+                return $this->success('Document removed successfully.',  null, 'null', 200);
+            }else if($documentCategory == 'childAbuse'){
+                ChildAbuse::where('id', $id)->delete();
+                $doc_count = User::where('id', auth('sanctum')->user()->id)->with('childAbuse')->first();
                 if($doc_count->childAbuse->count() == 0){
                     User::where('id', auth('sanctum')->user()->id)->update([
                         'is_documents_uploaded' => 0
                     ]);
                 }
+                return $this->success('Document removed successfully.',  null, 'null', 200);
+            }else if($documentCategory == 'criminal'){
+                Criminal::where('id', $id)->delete();
+                $doc_count = User::where('id', auth('sanctum')->user()->id)->with('criminal')->first();
                 if($doc_count->criminal->count() == 0){
                     User::where('id', auth('sanctum')->user()->id)->update([
                         'is_documents_uploaded' => 0
                     ]);
                 }
+                return $this->success('Document removed successfully.',  null, 'null', 200);
+            }else if($documentCategory == 'driving'){
+                Driving::where('id', $id)->delete();
+                $doc_count = User::where('id', auth('sanctum')->user()->id)->with('driving')->first();
                 if($doc_count->driving->count() == 0){
                     User::where('id', auth('sanctum')->user()->id)->update([
                         'is_documents_uploaded' => 0
                     ]);
                 }
+                return $this->success('Document removed successfully.',  null, 'null', 200);
+            }else if($documentCategory == 'employment'){
+                EmploymentEligibility::where('id', $id)->delete();
+                $doc_count = User::where('id', auth('sanctum')->user()->id)->with('employment')->first();
                 if($doc_count->employment->count() == 0){
                     User::where('id', auth('sanctum')->user()->id)->update([
                         'is_documents_uploaded' => 0
                     ]);
                 }
+                return $this->success('Document removed successfully.',  null, 'null', 200);
+            }else if($documentCategory == 'identification'){
+                Identification::where('id', $id)->delete();
+                $doc_count = User::where('id', auth('sanctum')->user()->id)->with('identification')->first();
                 if($doc_count->identification->count() == 0){
                     User::where('id', auth('sanctum')->user()->id)->update([
                         'is_documents_uploaded' => 0
                     ]);
                 }
+                return $this->success('Document removed successfully.',  null, 'null', 200);
+            }else if($documentCategory == 'tuberculosis'){
+                Tuberculosis::where('id', $id)->delete();
+                $doc_count = User::where('id', auth('sanctum')->user()->id)->with('tuberculosis')->first();
                 if($doc_count->tuberculosis->count() == 0){
                     User::where('id', auth('sanctum')->user()->id)->update([
                         'is_documents_uploaded' => 0
                     ]);
                 }
+                return $this->success('Document removed successfully.',  null, 'null', 200);
+            }else if($documentCategory == 'w_4_form'){
+                w_4_form::where('id', $id)->delete();
+                $doc_count = User::where('id', auth('sanctum')->user()->id)->with('w_4_form')->first();
                 if($doc_count->w_4_form->count() == 0){
                     User::where('id', auth('sanctum')->user()->id)->update([
                         'is_documents_uploaded' => 0
                     ]);
                 }
-            
-
-
-
-            if($documentCategory == 'covid'){
-                Covid::where('id', $id)->delete();
-                return $this->success('Document removed successfully.',  null, 'null', 200);
-            }else if($documentCategory == 'childAbuse'){
-                ChildAbuse::where('id', $id)->delete();
-                return $this->success('Document removed successfully.',  null, 'null', 200);
-            }else if($documentCategory == 'criminal'){
-                Criminal::where('id', $id)->delete();
-                return $this->success('Document removed successfully.',  null, 'null', 200);
-            }else if($documentCategory == 'driving'){
-                Driving::where('id', $id)->delete();
-                return $this->success('Document removed successfully.',  null, 'null', 200);
-            }else if($documentCategory == 'employment'){
-                EmploymentEligibility::where('id', $id)->delete();
-                return $this->success('Document removed successfully.',  null, 'null', 200);
-            }else if($documentCategory == 'identification'){
-                Identification::where('id', $id)->delete();
-                return $this->success('Document removed successfully.',  null, 'null', 200);
-            }else if($documentCategory == 'tuberculosis'){
-                Tuberculosis::where('id', $id)->delete();
-                return $this->success('Document removed successfully.',  null, 'null', 200);
-            }else if($documentCategory == 'w_4_form'){
-                w_4_form::where('id', $id)->delete();
                 return $this->success('Document removed successfully.',  null, 'null', 200);
             }else {
                 return $this->error('Whoops!, Failed to remove document', null, 'null', 400);
