@@ -111,9 +111,9 @@
      <script src="{{asset('admin/assets/libs/datatables/jquery.dataTables.min.js')}}"></script>
      <script src="{{asset('admin/assets/libs/datatables/dataTables.bootstrap4.min.js')}}"></script>
  
-     <script src="{{asset('admin/assets/libs/datatables/dataTables.responsive.min.js')}}"></script>
+     {{-- <script src="{{asset('admin/assets/libs/datatables/dataTables.responsive.min.js')}}"></script>
      <script src="{{asset('admin/assets/libs/datatables/responsive.bootstrap4.min.js')}}"></script>
- 
+  --}}
      <script src="{{asset('admin/assets/libs/datatables/dataTables.buttons.min.js')}}"></script>
      <script src="{{asset('admin/assets/libs/datatables/buttons.bootstrap4.min.js')}}"></script>
  
