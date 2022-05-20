@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use App\Mail\SendPasswordConfirmationMail;
+use Illuminate\Support\Facades\Mail;
 
 class AuthController extends Controller
 {
@@ -106,6 +108,7 @@ class AuthController extends Controller
                     ]);
 
                     if($update){
+                        Mail::to(auth('sanctum')->user()->email)->send(new SendPasswordConfirmationMail() );
                         return $this->success('Password changed successfully.', null, 'null', 200);
                     }else{
                         return $this->error('Whoops! Something went wrong. Failed to change password.', null, 'null', 400);
