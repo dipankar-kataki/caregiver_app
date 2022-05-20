@@ -180,7 +180,7 @@ class JobController extends Controller
                     'is_bank_details_added' =>  $is_bank_added,
                     'is_job_already_accepted' => $is_job_already_accepted
                 ];
-                return $this->error('Whoops! This job has already been accepted.', null, 'null', 400);
+                return $this->error('Whoops! This job has already been accepted.', $profile_completion_status, 'null', 400);
             }else if($check_no_of_jobs_accepted){
                 $profile_completion_status = [
                     'is_registration_completed' => $check_user->is_registration_completed,
