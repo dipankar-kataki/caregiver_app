@@ -25,6 +25,7 @@ use App\Http\Controllers\CaregiverApp\SearchController;
 use App\Http\Controllers\CaregiverApp\SortbyController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Models\User;
 
 /*
 |--------------------------------------------------------------------------
@@ -140,6 +141,11 @@ Route::prefix('caregiver')->group(function(){
         /************************************* Logout Api's ********************************************* */
         Route::get('logout',function(){
             auth()->user()->tokens()->delete();
+            User::where('email', auth('sanctum')->user()->email)->update([
+                'is_logged_in' => 0
+            ]);
+
+
             return response()->json([
                 'status' => 'Success',
                 'message' => 'Logout successfull.',

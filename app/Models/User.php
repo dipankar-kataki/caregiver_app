@@ -24,7 +24,8 @@ class User extends Authenticatable
         'email',
         'password',
         'fcm_token',
-        'role'
+        'role',
+        'is_logged_in'
     ];
 
     /**
@@ -36,6 +37,7 @@ class User extends Authenticatable
         'password',
         'fcm_token',
         'remember_token',
+        'is_logged_in'
     ];
 
     /**

@@ -31,6 +31,9 @@ class AuthController extends Controller
             if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])){
                 return redirect()->back()->with('error', 'Invalid Credientials');   
             }else{
+                User::where('email', $request->email)->update([
+                    'is_logged_in' => 1
+                ]);
                 return redirect()->route('admin.dashboard.home');
             }
         }
@@ -39,7 +42,10 @@ class AuthController extends Controller
     public function logout(Request $request){
         Auth::logout(); 
         $request->session()->invalidate();     
-        $request->session()->regenerateToken();     
+        $request->session()->regenerateToken();    
+        User::where('email', $request->email)->update([
+            'is_logged_in' => 0
+        ]); 
         return redirect()->route('auth.login');
     }
 

@@ -15,7 +15,7 @@ class CaregiverBankAccountController extends Controller
     public function addBank(Request $request){
         $validator = Validator::make($request->all(),[
             'bank_name' =>  'required',
-            'routing_number' => 'required',
+            'routing_number' => 'required | min:9, max:9',
             'account_number' => 'required'
         ]);
 

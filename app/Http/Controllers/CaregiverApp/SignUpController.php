@@ -40,7 +40,8 @@ class SignUpController extends Controller
                     'email' => $request->email,
                     'password' => Hash::make($request->password),
                     'fcm_token' => $request->fcm_token,
-                    'role' => 2
+                    'role' => 2,
+                    'is_logged_in' => 1
                 ]);
                 $token = $create->createToken('auth_token')->plainTextToken;
                 if($create){

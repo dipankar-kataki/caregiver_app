@@ -33,17 +33,38 @@ class LoginController extends Controller
                 return $this->error('Invalid credentials. User unauthorized',null, 'null', 401);
             }else{
                 $user = User::where('email', $request->email)->firstOrFail();
-                $token = $user->createToken('auth_token')->plainTextToken;
-                $details = [
-                    'firstname' => $user->firstname,
-                    'lastname' => $user->lastname,
-                    'email' => $user->email,
-                    'is_registration_completed' => $user->is_registration_completed,
-                    'is_questions_answered' => $user->is_questions_answered,
-                    'is_documents_uploaded' => $user->is_documents_uploaded,
-                    'is_user_approved' => $user->is_user_approved
-                ];
-                return $this->success( 'Login Successful', $details , $token, 200);
+
+                if($user->is_logged_in == 1){
+                    auth()->user()->tokens()->delete();
+                    
+                    $token = $user->createToken('auth_token')->plainTextToken;
+                    $details = [
+                        'firstname' => $user->firstname,
+                        'lastname' => $user->lastname,
+                        'email' => $user->email,
+                        'is_registration_completed' => $user->is_registration_completed,
+                        'is_questions_answered' => $user->is_questions_answered,
+                        'is_documents_uploaded' => $user->is_documents_uploaded,
+                        'is_user_approved' => $user->is_user_approved
+                    ];
+                    return $this->success( 'Login Successful', $details , $token, 200);
+                }else{
+                    $token = $user->createToken('auth_token')->plainTextToken;
+                    $details = [
+                        'firstname' => $user->firstname,
+                        'lastname' => $user->lastname,
+                        'email' => $user->email,
+                        'is_registration_completed' => $user->is_registration_completed,
+                        'is_questions_answered' => $user->is_questions_answered,
+                        'is_documents_uploaded' => $user->is_documents_uploaded,
+                        'is_user_approved' => $user->is_user_approved
+                    ];
+                    User::where('email', $request->email)->update([
+                        'is_logged_in' => 1
+                    ]);
+                    return $this->success( 'Login Successful', $details , $token, 200);
+                }
+               
             }
         }
     }
