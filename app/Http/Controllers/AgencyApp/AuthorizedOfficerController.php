@@ -23,7 +23,7 @@ class AuthorizedOfficerController extends Controller
             'dob' => 'required',
             'ssn' => 'required | numeric',
             'citizenship_of_country' => 'required',
-            'percentage_of_ownership' => 'required',
+            'percentage_of_ownership' => 'required | max:3',
             'street' => 'required',
             'city' => 'required | string',
             'state' => 'required | string',

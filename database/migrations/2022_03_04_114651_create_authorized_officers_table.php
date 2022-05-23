@@ -22,7 +22,7 @@ class CreateAuthorizedOfficersTable extends Migration
             $table->date('dob');
             $table->string('ssn');
             $table->string('citizenship_of_country');
-            $table->integer('percentage_of_ownership');
+            $table->decimal('percentage_of_ownership',5,2);
             $table->string('street');
             $table->string('city');
             $table->string('state');
