@@ -68,17 +68,34 @@ class AuthController extends Controller
             {
                 return $this->error('Invalid credentials. User unauthorized',null, 'null', 401);
             }else{
-                $user = User::where('email', $request->email)->firstOrFail();
-                $token = $user->createToken('auth_token')->plainTextToken;
-                $details = [
-                    'business_name' => $user->business_name,
-                    'email' => $user->email,
-                    'is_business_info_added' => $user->is_business_info_added,
-                    'is_authorize_info_added' => $user->is_authorize_info_added,
-                    'is_user_approved' => $user->is_user_approved
-                ];
 
-                return $this->success( 'Login Successful', $details , $token, 200);
+                $user = User::where('email', $request->email)->firstOrFail();
+                if($user->is_logged_in == 1){
+                    auth()->user()->tokens()->delete();
+                    $token = $user->createToken('auth_token')->plainTextToken;
+                    $details = [
+                        'business_name' => $user->business_name,
+                        'email' => $user->email,
+                        'is_business_info_added' => $user->is_business_info_added,
+                        'is_authorize_info_added' => $user->is_authorize_info_added,
+                        'is_user_approved' => $user->is_user_approved
+                    ];
+                    return $this->success( 'Login Successful', $details , $token, 200);
+                }else{
+
+                    $token = $user->createToken('auth_token')->plainTextToken;
+                    $details = [
+                        'business_name' => $user->business_name,
+                        'email' => $user->email,
+                        'is_business_info_added' => $user->is_business_info_added,
+                        'is_authorize_info_added' => $user->is_authorize_info_added,
+                        'is_user_approved' => $user->is_user_approved
+                    ];
+                    User::where('email', $request->email)->update([
+                        'is_logged_in' => 1
+                    ]);
+                    return $this->success( 'Login Successful', $details , $token, 200);
+                }
             }
         }
     }

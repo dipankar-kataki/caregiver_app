@@ -258,6 +258,10 @@ Route::prefix('caregiver')->group(function(){
             /******************************** Agency logout Api's *******************************/
             Route::get('logout',function(){
                 auth()->user()->tokens()->delete();
+                User::where('email', auth('sanctum')->user()->email)->update([
+                    'is_logged_in' => 0
+                ]);
+                
                 return response()->json([
                     'status' => 'Success',
                     'message' => 'Logout successfull.',
