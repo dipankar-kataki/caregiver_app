@@ -213,12 +213,19 @@ class ProfileController extends Controller
             ];
             return $this->success('Profile Details.', $profile, 'null', 200);
         }else{
+            $dob = '';
+            if($details->dob != null){
+                $dob = Carbon::parse($details->profile->dob)->format('m-d-Y');
+            }else{
+                $dob = null;
+            }
+
             $profile = [
                 'bio' => $details->profile->bio,
                 'firstname' => $details->firstname,
                 'lastname' => $details->lastname,
                 'gender' => $details->profile->gender,
-                'dob' => Carbon::parse($details->profile->dob)->format('m-d-Y'),
+                'dob' => $dob,
                 'phone' => $details->profile->phone,
                 'ssn' => $details->profile->ssn,
                 'experience' => $details->profile->experience,
