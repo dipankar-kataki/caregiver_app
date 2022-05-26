@@ -125,7 +125,7 @@
                 
 
                 <div class="table-responsive">
-                    <table class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <table id="datatable-caregiver" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                             <tr>
                                 <th>Sl No</th>
@@ -171,7 +171,7 @@
                 <h4 class="header-title mb-4">Agency Pending For Approval <a title="Go to agency pending for approval page" href="{{route('admin.agency.request.for.approval')}}" class="mdi mdi-open-in-new" style="float:right;"></a></h4>
 
                 <div class="table-responsive">
-                    <table class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                    <table id="datatable-agency" class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
                         <thead>
                             <tr>
                                 <th>Sl No</th>
@@ -322,6 +322,15 @@
 
 @section('customJs')
 <script>
+    $('#datatable-caregiver').DataTable( {
+        responsive: true,
+    } );
+
+    $('#datatable-agency').DataTable( {
+        responsive: true,
+    } );
+
+    
 
     //For Caregiver
     $('.approveUserCaregiver').on('click', function(){
