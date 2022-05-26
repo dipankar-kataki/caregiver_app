@@ -57,24 +57,28 @@ class RegistrationController extends Controller
             }else if($check_ssn_exist == true){
                 return $this->error('Social Security Number already exists.', null, 'null', 403);
             }else{
-                $createReg = Registration::where('user_id', auth('sanctum')->user()->id)->update([
-                    'phone' => $phone,
-                    'dob' => DateTime::createFromFormat('m-d-Y',$dob),
-                    'ssn' => $ssn,
-                    'gender' => $gender,
-                    // 'user_id' => auth('sanctum')->user()->id
-                ]);
 
-                $createAdd = Address::create([
-                    'street' => $request->street,
-                    'city' => $request->city,
-                    'state' => $request->state,
-                    'zip_code' => $request->zip_code,
-                    'user_id' => auth('sanctum')->user()->id
-                ]);
-
-
+                $check_if_profile_uploaded = Registration::where('user_id',auth('sanctum')->user()->id)->exists();
+                if($check_if_profile_uploaded){
+                    $createReg = Registration::where('user_id', auth('sanctum')->user()->id)->update([
+                        'phone' => $phone,
+                        'dob' => DateTime::createFromFormat('m-d-Y',$dob),
+                        'ssn' => $ssn,
+                        'gender' => $gender,
+                        // 'user_id' => auth('sanctum')->user()->id
+                    ]);
     
+                    $createAdd = Address::create([
+                        'street' => $request->street,
+                        'city' => $request->city,
+                        'state' => $request->state,
+                        'zip_code' => $request->zip_code,
+                        'user_id' => auth('sanctum')->user()->id
+                    ]);
+                }else{
+                    return $this->error('Whoops! Registration unsuccessfull. Profile photo not uploaded', null, 'null', 403);
+                }
+                
                 if(($createReg) && ($createAdd)){
                     User::where('id', auth('sanctum')->user()->id )->update([
                         'is_registration_completed' => 1
