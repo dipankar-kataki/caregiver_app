@@ -324,10 +324,18 @@
 <script>
     $('#datatable-caregiver').DataTable( {
         responsive: true,
+        lengthMenu: [
+            [5, 15, 25, -1],
+            [5, 15, 25, 'All'],
+        ],
     } );
 
     $('#datatable-agency').DataTable( {
         responsive: true,
+        lengthMenu: [
+            [5, 15, 25, -1],
+            [5, 15, 25, 'All'],
+        ],
     } );
 
     
