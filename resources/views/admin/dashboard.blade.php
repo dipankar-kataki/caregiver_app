@@ -19,7 +19,7 @@
                         <i class="mdi mdi-hospital font-30 widget-icon rounded-circle avatar-title text-primary"></i>
                     </div>
                     <div class="wigdet-one-content">
-                        <p class="m-0 text-uppercase font-weight-bold text-muted" title="Total Caregivers">Approved Caregivers</p>
+                        <p class="m-0 text-uppercase font-15 font-weight-bold text-muted" title="Total Caregivers">Approved Caregivers</p>
                         <h2><span data-plugin="counterup">{{$total_caregivers}}</span> <i class="mdi {{$total_caregivers == 0 ? '' : 'mdi-arrow-up'}} text-success font-24"></i></h2>
                     </div>
                 </div>
@@ -34,7 +34,7 @@
                         <i class="mdi mdi-hospital-building font-30 widget-icon rounded-circle avatar-title text-warning"></i>
                     </div>
                     <div class="wigdet-one-content">
-                        <p class="m-0 text-uppercase font-weight-bold text-muted" title="Total Agencies">Approved Agencies</p>
+                        <p class="m-0 text-uppercase font-15 font-weight-bold text-muted" title="Total Agencies">Approved Agencies</p>
                         <h2><span data-plugin="counterup">{{$total_agencies}} </span> <i class="mdi {{$total_agencies == 0 ? '' : 'mdi-arrow-up'}} text-success font-24"></i></h2>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                         <i class="mdi mdi-briefcase font-30 widget-icon rounded-circle avatar-title text-danger"></i>
                     </div>
                     <div class="wigdet-one-content">
-                        <p class="m-0 text-uppercase font-weight-bold text-muted" title="Total Jobs Posted">Jobs Posted</p>
+                        <p class="m-0 text-uppercase font-15 font-weight-bold text-muted" title="Total Jobs Posted">Jobs Posted</p>
                         <h2><span data-plugin="counterup">{{$total_jobs_posted}} </span> <i class="mdi {{$total_jobs_posted == 0 ? '' : 'mdi-arrow-up'}} text-success font-24"></i></h2>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                         <i class="mdi mdi-currency-usd font-30 widget-icon rounded-circle avatar-title text-success"></i>
                     </div>
                     <div class="wigdet-one-content">
-                        <p class="m-0 text-uppercase font-weight-bold text-muted" title="Total Revenue Generated">Total Income</p>
+                        <p class="m-0 text-uppercase font-15 font-weight-bold text-muted" title="Total Revenue Generated">Total Income</p>
                         <h2><span data-plugin="counterup">{{$total_agency_payments}}</span> <i class="mdi {{$total_agency_payments == 0 ? '' : 'mdi-arrow-up'}}  text-success font-24"></i></h2>
                     </div>
                 </div>
