@@ -135,7 +135,6 @@
                                 <th>Phone Number</th>
                                 <th>Experience</th>
                                 <th>View</th>
-                                <th>Action</th>
                             </tr>
                         </thead>
         
@@ -153,7 +152,6 @@
                                         <td>{{$item->profile->experience}}</td>
                                     @endif
                                     <td><a href="{{route('admin.caregiver.view.profile', ['id' => Crypt::encrypt($item->id)])}}" class="btn btn-sm btn-primary waves-effect width-md waves-light">View Profile</a></td>
-                                    <td><button  type="button" class="btn btn-sm btn-purple waves-effect width-md waves-light approveUserCaregiver"  data-id="{{Crypt::encrypt($item->id)}}">Approve User</button></td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -181,7 +179,6 @@
                                 <th>Organization Type</th>
                                 <th>Legal Structure</th>
                                 <th>View</th>
-                                <th>Action</th>
                             </tr>
                         </thead>
         
@@ -195,7 +192,6 @@
                                     <td>{{$item->business_information->organization_type}}</td>
                                     <td>{{$item->business_information->legal_structure}}</td>
                                     <td><a href="{{route('admin.agency.view.profile', ['id' => Crypt::encrypt($item->id)])}}" class="btn btn-sm btn-primary waves-effect width-md waves-light">View Profile</a></td>
-                                    <td><button  type="button" class="btn btn-sm btn-purple waves-effect width-md waves-light approveUserAgency"  data-id="{{Crypt::encrypt($item->id)}}">Approve User</button></td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -337,69 +333,5 @@
             [5, 15, 25, 'All'],
         ],
     } );
-
-    
-
-    //For Caregiver
-    $('.approveUserCaregiver').on('click', function(){
-        let id = $(this).data('id');
-        $(this).text('Please wait...');
-        $(this).attr('disabled', true);
-        $.ajax({
-            url:"{{route('admin.caregiver.update.status')}}",
-            type:"POST",
-            data:{
-                '_token' : "{{csrf_token()}}",
-                'id' : id
-            },
-            success:function(data){
-                if(data.status == 1){
-                    toastr.success(data.message);
-                    location.reload(true);
-                }else{
-                    toastr.error(data.message);
-                    $('.approveUserCaregiver').text('Approve User');
-                    $('.approveUserCaregiver').attr('disabled', false);
-                }
-            },error:function(xhr, status, error){
-                if(xhr.status == 500 || xhr.status == 422){
-                    toastr.error('Whoops! Something went wrong. Failed to approve user.');
-                    $('.approveUserCaregiver').text('Approve User');
-                    $('.approveUserCaregiver').attr('disabled', false);
-                }
-            }
-        });
-    });
-
-    //For Agency
-    $('.approveUserAgency').on('click', function(){
-        let id = $(this).data('id');
-        $(this).text('Please wait...');
-        $(this).attr('disabled', true);
-        $.ajax({
-            url:"{{route('admin.agency.update.status')}}",
-            type:"POST",
-            data:{
-                '_token' : "{{csrf_token()}}",
-                'id' : id
-            },
-            success:function(data){
-                if(data.status == 1){
-                    toastr.success(data.message);
-                    location.reload(true);
-                }else{
-                    toastr.error(data.message);
-                    $('.approveUserAgency').text('Approve User');
-                    $('.approveUserAgency').attr('disabled', false);
-                }
-            },error:function(xhr, status, error){
-                if(xhr.status == 500 || xhr.status == 422){
-                    toastr.error('Whoops! Something went wrong. Failed to approve user.');
-                    $('.approveUserAgency').text('Approve User');
-                    $('.approveUserAgency').attr('disabled', false);
-                }
-            }
-        });
-    });
     </script>
 @endsection
