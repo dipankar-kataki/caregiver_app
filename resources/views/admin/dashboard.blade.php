@@ -1,7 +1,6 @@
 @extends('admin.common.main')
 
 @section('cunstomHeader')
-
 @endsection
 
 
@@ -129,7 +128,7 @@
                         <thead>
                             <tr>
                                 <th>Sl No</th>
-                                <th>Name</th>
+                                <th style="width:100px;">Name</th>
                                 <th>Email</th>
                                 <th>Date Of Birth</th>
                                 <th>Phone Number</th>
@@ -173,7 +172,7 @@
                         <thead>
                             <tr>
                                 <th>Sl No</th>
-                                <th>Business Name</th>
+                                <th style="width:100px;">Business Name</th>
                                 <th>Email</th>
                                 <th>Phone Number</th>
                                 <th>Organization Type</th>
