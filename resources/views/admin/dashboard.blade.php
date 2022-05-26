@@ -1,7 +1,11 @@
 @extends('admin.common.main')
 
 @section('cunstomHeader')
-
+    <style>
+        tbody tr td h5{
+            width:120px;
+        }
+    </style>
 @endsection
 
 
@@ -186,7 +190,9 @@
                             @foreach($agency_pending_for_approval as $key =>  $item)
                                 <tr>
                                     <td>{{$key + 1}}</td>
-                                    <td>{{$item->business_name}}</td>
+                                    <td>
+                                        {{$item->business_name}}
+                                    </td>
                                     <td>{{$item->email}}</td>
                                     <td>{{$item->business_information->business_number}}</td>
                                     <td>{{$item->business_information->organization_type}}</td>
