@@ -1,11 +1,7 @@
 @extends('admin.common.main')
 
 @section('cunstomHeader')
-    <style>
-        tbody tr td h5{
-            width:120px;
-        }
-    </style>
+
 @endsection
 
 
