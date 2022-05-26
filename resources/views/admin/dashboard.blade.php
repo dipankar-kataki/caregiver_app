@@ -118,9 +118,99 @@
     <!-- end row -->
 
     <div class="row">
-        <div class="col-xl-6">
+
+        <div class="col-12">
             <div class="card-box">
-                <h4 class="header-title mb-4">Recently Joined Caregiver</h4>
+                <h4 class="header-title mb-4">Caregiver Pending For Approval <a title="Go to caregiver pending for approval page" href="{{route('admin.caregiver.request.for.approval')}}" class="mdi mdi-open-in-new" style="float:right;"></a></h4>
+                
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>Sl No</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Date Of Birth</th>
+                                <th>Phone Number</th>
+                                <th>Experience</th>
+                                <th>View</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+        
+                        <tbody>
+                            @foreach($caregiver_pending_for_approval as $key =>  $item)
+                                <tr>
+                                    <td>{{$key + 1}}</td>
+                                    <td>{{$item->firstname}} {{$item->lastname}}</td>
+                                    <td>{{$item->email}}</td>
+                                    <td>{{Carbon\Carbon::parse($item->profile->dob)->format('m-d-Y')}}</td>
+                                    <td>{{$item->profile->phone}}</td>
+                                    @if ($item->profile->experience == null)
+                                        <td>0</td>
+                                    @else
+                                        <td>{{$item->profile->experience}}</td>
+                                    @endif
+                                    <td><a href="{{route('admin.caregiver.view.profile', ['id' => Crypt::encrypt($item->id)])}}" class="btn btn-sm btn-primary waves-effect width-md waves-light">View Profile</a></td>
+                                    <td><button  type="button" class="btn btn-sm btn-purple waves-effect width-md waves-light approveUserCaregiver"  data-id="{{Crypt::encrypt($item->id)}}">Approve User</button></td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- table-responsive -->
+            </div>
+            <!-- end card -->
+        </div>
+         <!-- end col -->
+
+        <div class="col-12">
+            <div class="card-box">
+                <h4 class="header-title mb-4">Agency Pending For Approval <a title="Go to agency pending for approval page" href="{{route('admin.agency.request.for.approval')}}" class="mdi mdi-open-in-new" style="float:right;"></a></h4>
+
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                        <thead>
+                            <tr>
+                                <th>Sl No</th>
+                                <th>Business Name</th>
+                                <th>Email</th>
+                                <th>Phone Number</th>
+                                <th>Organization Type</th>
+                                <th>Legal Structure</th>
+                                <th>View</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+        
+                        <tbody>
+                            @foreach($agency_pending_for_approval as $key =>  $item)
+                                <tr>
+                                    <td>{{$key + 1}}</td>
+                                    <td>{{$item->business_name}}</td>
+                                    <td>{{$item->email}}</td>
+                                    <td>{{$item->business_information->business_number}}</td>
+                                    <td>{{$item->business_information->organization_type}}</td>
+                                    <td>{{$item->business_information->legal_structure}}</td>
+                                    <td><a href="{{route('admin.agency.view.profile', ['id' => Crypt::encrypt($item->id)])}}" class="btn btn-sm btn-primary waves-effect width-md waves-light">View Profile</a></td>
+                                    <td><button  type="button" class="btn btn-sm btn-purple waves-effect width-md waves-light approveUserAgency"  data-id="{{Crypt::encrypt($item->id)}}">Approve User</button></td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- table-responsive -->
+            </div>
+            <!-- end card -->
+        </div>
+         <!-- end col -->
+
+        <div class="col-xl-6 col-md-6 col-12">
+            <div class="card-box">
+                <h4 class="header-title mb-4">Recently Joined Caregiver <a title="Go to approved caregiver page" href="{{route('admin.caregiver.list.approved')}}" class="mdi mdi-open-in-new" style="float:right;"></a></h4>
 
                 <div class="table-responsive">
                     <table class="table table-hover table-centered m-0">
@@ -162,9 +252,9 @@
         </div>
         <!-- end col -->
 
-        <div class="col-xl-6">
+        <div class="col-xl-6 col-md-6 col-12">
             <div class="card-box">
-                <h4 class="header-title mb-4">Recently Joined Agency</h4>
+                <h4 class="header-title mb-4">Recently Joined Agency <a title="Go to approved agency page" href="{{route('admin.agency.list.approved')}}" class="mdi mdi-open-in-new" style="float:right;"></a></h4>
                 <div class="table-responsive">
                     <table class="table table-hover table-centered m-0">
                         <thead>
@@ -224,11 +314,75 @@
         </div>
         <!-- end col -->
 
+       
     </div>
     <!-- end row -->
 @endsection
 
 
 @section('customJs')
+<script>
 
+    //For Caregiver
+    $('.approveUserCaregiver').on('click', function(){
+        let id = $(this).data('id');
+        $(this).text('Please wait...');
+        $(this).attr('disabled', true);
+        $.ajax({
+            url:"{{route('admin.caregiver.update.status')}}",
+            type:"POST",
+            data:{
+                '_token' : "{{csrf_token()}}",
+                'id' : id
+            },
+            success:function(data){
+                if(data.status == 1){
+                    toastr.success(data.message);
+                    location.reload(true);
+                }else{
+                    toastr.error(data.message);
+                    $('.approveUserCaregiver').text('Approve User');
+                    $('.approveUserCaregiver').attr('disabled', false);
+                }
+            },error:function(xhr, status, error){
+                if(xhr.status == 500 || xhr.status == 422){
+                    toastr.error('Whoops! Something went wrong. Failed to approve user.');
+                    $('.approveUserCaregiver').text('Approve User');
+                    $('.approveUserCaregiver').attr('disabled', false);
+                }
+            }
+        });
+    });
+
+    //For Agency
+    $('.approveUserAgency').on('click', function(){
+        let id = $(this).data('id');
+        $(this).text('Please wait...');
+        $(this).attr('disabled', true);
+        $.ajax({
+            url:"{{route('admin.agency.update.status')}}",
+            type:"POST",
+            data:{
+                '_token' : "{{csrf_token()}}",
+                'id' : id
+            },
+            success:function(data){
+                if(data.status == 1){
+                    toastr.success(data.message);
+                    location.reload(true);
+                }else{
+                    toastr.error(data.message);
+                    $('.approveUserAgency').text('Approve User');
+                    $('.approveUserAgency').attr('disabled', false);
+                }
+            },error:function(xhr, status, error){
+                if(xhr.status == 500 || xhr.status == 422){
+                    toastr.error('Whoops! Something went wrong. Failed to approve user.');
+                    $('.approveUserAgency').text('Approve User');
+                    $('.approveUserAgency').attr('disabled', false);
+                }
+            }
+        });
+    });
+    </script>
 @endsection

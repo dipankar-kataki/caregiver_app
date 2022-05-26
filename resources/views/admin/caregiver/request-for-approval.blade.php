@@ -75,7 +75,7 @@
                     }
                 },error:function(xhr, status, error){
                     if(xhr.status == 500 || xhr.status == 422){
-                        toastr.error('Whoops! Something went wron. Failed to approve user.');
+                        toastr.error('Whoops! Something went wrong. Failed to approve user.');
                         $('.approveUser').text('Approve User');
                         $('.approveUser').attr('disabled', false);
                     }
