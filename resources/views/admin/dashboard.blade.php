@@ -15,7 +15,7 @@
         <div class="col-xl-3 col-md-6">
             <div class="card widget-box-one border border-primary bg-soft-primary">
                 <div class="card-body">
-                    <div class="float-right avatar-md rounded-circle mt-3">
+                    <div class="float-right avatar-sm rounded-circle mt-3">
                         <i class="mdi mdi-hospital font-30 widget-icon rounded-circle avatar-title text-primary"></i>
                     </div>
                     <div class="wigdet-one-content">
@@ -30,7 +30,7 @@
         <div class="col-xl-3 col-md-6">
             <div class="card widget-box-one border border-warning bg-soft-warning">
                 <div class="card-body">
-                    <div class="float-right avatar-md rounded-circle mt-3">
+                    <div class="float-right avatar-sm rounded-circle mt-3">
                         <i class="mdi mdi-hospital-building font-30 widget-icon rounded-circle avatar-title text-warning"></i>
                     </div>
                     <div class="wigdet-one-content">
@@ -45,7 +45,7 @@
         <div class="col-xl-3 col-md-6">
             <div class="card widget-box-one border border-danger bg-soft-danger">
                 <div class="card-body">
-                    <div class="float-right avatar-md rounded-circle mt-3">
+                    <div class="float-right avatar-sm rounded-circle mt-3">
                         <i class="mdi mdi-briefcase font-30 widget-icon rounded-circle avatar-title text-danger"></i>
                     </div>
                     <div class="wigdet-one-content">
@@ -60,7 +60,7 @@
         <div class="col-xl-3 col-md-6">
             <div class="card widget-box-one border border-success bg-soft-success">
                 <div class="card-body">
-                    <div class="float-right avatar-md rounded-circle mt-3">
+                    <div class="float-right avatar-sm rounded-circle mt-3">
                         <i class="mdi mdi-currency-usd font-30 widget-icon rounded-circle avatar-title text-success"></i>
                     </div>
                     <div class="wigdet-one-content">
