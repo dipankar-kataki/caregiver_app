@@ -233,7 +233,6 @@
                                             <p class="m-0 text-muted"><small>Work Type: Not Provided</small></p>
                                         @endif
                                     </td>
-                                    <td>{{$item->profile->phone}}</td>
                                     <td>{{$item->address->city}}</td>
                                     <td>{{$item->created_at->diffForHumans()}}</td>
                                 </tr>
@@ -282,13 +281,6 @@
                                             <p class="m-0 text-muted"><small>Organization: Not Provided</small></p>
                                         @endif
                                     </td>
-                                    <td>
-                                        @if ($item->business_information != null)
-                                            {{$item->business_information->business_number}}
-                                        @else
-                                            NULL
-                                        @endif
-                                        </td>
                                     <td>
                                         @if ($item->address != null)
                                             {{$item->address->city}}
