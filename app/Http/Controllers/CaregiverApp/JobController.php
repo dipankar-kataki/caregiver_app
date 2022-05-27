@@ -129,94 +129,99 @@ class JobController extends Controller
         if($validator->fails()){
             return $this->error('Whoops! Something went wrong. Failed to accept job.', $validator->errors(), 'null', 400);
         }else{
-            $check_if_job_is_already_accepted = AcceptedJob::where('job_by_agencies_id', $request->job_id)->exists();
 
-            $check_user = User::with('caregiverBank')->where('id', auth('sanctum')->user()->id)->first();
-            $check_bank = CaregiverBankAccount::where('user_id', auth('sanctum')->user()->id)->first();
-            $check_no_of_jobs_accepted = AcceptedJob::where('caregiver_id', auth('sanctum')->user()->id)->where('is_activate', 1)->exists();
-            $get_agency = JobByAgency::where('id', $request->job_id)->first();
-            $get_fcm_token = User::where('id', $get_agency->user_id)->first();
-    
-            $is_bank_added = 0;
-            if($check_bank != null){
-                $is_bank_added = 1;
+            $check_if_job_is_deleted = JobByAgency::where('id', $request->job_id)->first();
+            if($check_if_job_is_deleted->trashed()){
+                return $this->error('Whoops! This job has already been removed.', null, 'null', 400);
             }else{
+                $check_if_job_is_already_accepted = AcceptedJob::where('job_by_agencies_id', $request->job_id)->exists();
+
+                $check_user = User::with('caregiverBank')->where('id', auth('sanctum')->user()->id)->first();
+                $check_bank = CaregiverBankAccount::where('user_id', auth('sanctum')->user()->id)->first();
+                $check_no_of_jobs_accepted = AcceptedJob::where('caregiver_id', auth('sanctum')->user()->id)->where('is_activate', 1)->exists();
+                $get_agency = JobByAgency::where('id', $request->job_id)->first();
+                $get_fcm_token = User::where('id', $get_agency->user_id)->first();
+        
                 $is_bank_added = 0;
-            }
-    
-            $is_job_already_accepted = 0;
-            if($check_no_of_jobs_accepted){
-                $is_job_already_accepted = 1;
-            }else{
-                $is_job_already_accepted = 0;
-            }
-            $profile_completion_status = [];
-            if($check_user->is_user_approved == 0){
-                $profile_completion_status = [
-                    'is_registration_completed' => $check_user->is_registration_completed,
-                    'is_questions_answered' => $check_user->is_questions_answered,
-                    'is_documents_uploaded' => $check_user->is_documents_uploaded,
-                    'is_user_approved' => $check_user->is_user_approved,
-                    'is_bank_details_added' =>  $is_bank_added,
-                    'is_job_already_accepted' => $is_job_already_accepted
-                ];
-                return $this->error('Whoops! Failed to accept job.', $profile_completion_status , 'null', 400);
-            }else if($check_user->is_user_approved == 1 &&  $check_bank == null){
-                $profile_completion_status = [
-                    'is_registration_completed' => $check_user->is_registration_completed,
-                    'is_questions_answered' => $check_user->is_questions_answered,
-                    'is_documents_uploaded' => $check_user->is_documents_uploaded,
-                    'is_user_approved' => $check_user->is_user_approved,
-                    'is_bank_details_added' =>  $is_bank_added,
-                    'is_job_already_accepted' => $is_job_already_accepted
-                ];
-                return $this->error('Whoops! Failed to accept job.', $profile_completion_status , 'null', 400);
-            }else if($check_if_job_is_already_accepted){
-                $profile_completion_status = [
-                    'is_registration_completed' => $check_user->is_registration_completed,
-                    'is_questions_answered' => $check_user->is_questions_answered,
-                    'is_documents_uploaded' => $check_user->is_documents_uploaded,
-                    'is_user_approved' => $check_user->is_user_approved,
-                    'is_bank_details_added' =>  $is_bank_added,
-                    'is_job_already_accepted' => $is_job_already_accepted
-                ];
-                return $this->error('Whoops! This job has already been accepted.', $profile_completion_status, 'null', 400);
-            }else if($check_no_of_jobs_accepted){
-                $profile_completion_status = [
-                    'is_registration_completed' => $check_user->is_registration_completed,
-                    'is_questions_answered' => $check_user->is_questions_answered,
-                    'is_documents_uploaded' => $check_user->is_documents_uploaded,
-                    'is_user_approved' => $check_user->is_user_approved,
-                    'is_bank_details_added' =>  $is_bank_added,
-                    'is_job_already_accepted' => $is_job_already_accepted
-                ];
-                return $this->error('Whoops! Failed to accept job. Existing job not completed. Caregiver can accept only one job at a time.',  $profile_completion_status , 'null', 400);
-            }else{
-                $createJob = AcceptedJob::create([
-                    'job_by_agencies_id' =>  $request->job_id,
-                    'caregiver_id' => auth('sanctum')->user()->id,
-                    'agency_id' => $get_agency->user_id,
-                    'is_activate' => 1
-                ]);
-                if($createJob){
-                    JobByAgency::where('id', $request->job_id)->update([
-                        'job_status' => 1
-                    ]);
-
-                    if($get_fcm_token->fcm_token != null){
-                        $data=[];
-                        $data['message']= "Job Accepted Successfully by ".$check_user->firstname.' '.$check_user->lastname;
-                        $token = [];
-                        $token[] = $get_fcm_token->fcm_token;
-                        $this->sendNotification($token, $data);
-                    }
-                    
-                    return $this->success('Job accepted successfully.',  null, 'null', 200);
+                if($check_bank != null){
+                    $is_bank_added = 1;
                 }else{
-                    return $this->error('Whoops! Something went wrong. Failed to accept job.', null , 'null', 400);
+                    $is_bank_added = 0;
+                }
+        
+                $is_job_already_accepted = 0;
+                if($check_no_of_jobs_accepted){
+                    $is_job_already_accepted = 1;
+                }else{
+                    $is_job_already_accepted = 0;
+                }
+                $profile_completion_status = [];
+                if($check_user->is_user_approved == 0){
+                    $profile_completion_status = [
+                        'is_registration_completed' => $check_user->is_registration_completed,
+                        'is_questions_answered' => $check_user->is_questions_answered,
+                        'is_documents_uploaded' => $check_user->is_documents_uploaded,
+                        'is_user_approved' => $check_user->is_user_approved,
+                        'is_bank_details_added' =>  $is_bank_added,
+                        'is_job_already_accepted' => $is_job_already_accepted
+                    ];
+                    return $this->error('Whoops! Failed to accept job.', $profile_completion_status , 'null', 400);
+                }else if($check_user->is_user_approved == 1 &&  $check_bank == null){
+                    $profile_completion_status = [
+                        'is_registration_completed' => $check_user->is_registration_completed,
+                        'is_questions_answered' => $check_user->is_questions_answered,
+                        'is_documents_uploaded' => $check_user->is_documents_uploaded,
+                        'is_user_approved' => $check_user->is_user_approved,
+                        'is_bank_details_added' =>  $is_bank_added,
+                        'is_job_already_accepted' => $is_job_already_accepted
+                    ];
+                    return $this->error('Whoops! Failed to accept job.', $profile_completion_status , 'null', 400);
+                }else if($check_if_job_is_already_accepted){
+                    $profile_completion_status = [
+                        'is_registration_completed' => $check_user->is_registration_completed,
+                        'is_questions_answered' => $check_user->is_questions_answered,
+                        'is_documents_uploaded' => $check_user->is_documents_uploaded,
+                        'is_user_approved' => $check_user->is_user_approved,
+                        'is_bank_details_added' =>  $is_bank_added,
+                        'is_job_already_accepted' => $is_job_already_accepted
+                    ];
+                    return $this->error('Whoops! This job has already been accepted.', $profile_completion_status, 'null', 400);
+                }else if($check_no_of_jobs_accepted){
+                    $profile_completion_status = [
+                        'is_registration_completed' => $check_user->is_registration_completed,
+                        'is_questions_answered' => $check_user->is_questions_answered,
+                        'is_documents_uploaded' => $check_user->is_documents_uploaded,
+                        'is_user_approved' => $check_user->is_user_approved,
+                        'is_bank_details_added' =>  $is_bank_added,
+                        'is_job_already_accepted' => $is_job_already_accepted
+                    ];
+                    return $this->error('Whoops! Failed to accept job. Existing job not completed. Caregiver can accept only one job at a time.',  $profile_completion_status , 'null', 400);
+                }else{
+                    $createJob = AcceptedJob::create([
+                        'job_by_agencies_id' =>  $request->job_id,
+                        'caregiver_id' => auth('sanctum')->user()->id,
+                        'agency_id' => $get_agency->user_id,
+                        'is_activate' => 1
+                    ]);
+                    if($createJob){
+                        JobByAgency::where('id', $request->job_id)->update([
+                            'job_status' => 1
+                        ]);
+    
+                        if($get_fcm_token->fcm_token != null){
+                            $data=[];
+                            $data['message']= "Job Accepted Successfully by ".$check_user->firstname.' '.$check_user->lastname;
+                            $token = [];
+                            $token[] = $get_fcm_token->fcm_token;
+                            $this->sendNotification($token, $data);
+                        }
+                        
+                        return $this->success('Job accepted successfully.',  null, 'null', 200);
+                    }else{
+                        return $this->error('Whoops! Something went wrong. Failed to accept job.', null , 'null', 400);
+                    }
                 }
             }
-            
         }
     }
 
