@@ -214,7 +214,7 @@ class ProfileController extends Controller
             return $this->success('Profile Details.', $profile, 'null', 200);
         }else{
             $dob = '';
-            if($details->dob != null){
+            if($details->profile->dob != null){
                 $dob = Carbon::parse($details->profile->dob)->format('m-d-Y');
             }else{
                 $dob = null;
