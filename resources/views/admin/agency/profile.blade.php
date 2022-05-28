@@ -242,7 +242,9 @@
                 success:function(data){
                     if(data.status == 1){
                         toastr.success(data.message);
-                        location.reload(true);
+                        setTimeout(function(){
+                            location.reload(true);
+                        }, 4000);
                     }else{
                         toastr.error(data.message);
                         $('.approveUser').text('Approve User');
@@ -272,7 +274,9 @@
                 success:function(data){
                     if(data.status == 1){
                         toastr.success(data.message);
-                        location.reload(true);
+                        setTimeout(function(){
+                            location.reload(true);
+                        }, 4000);
                     }else{
                         toastr.error(data.message);
                         $('.suspendUser').text('Approve User');
