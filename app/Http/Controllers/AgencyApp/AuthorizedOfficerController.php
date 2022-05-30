@@ -4,6 +4,7 @@ namespace App\Http\Controllers\AgencyApp;
 
 use App\Http\Controllers\Controller;
 use App\Models\AuthorizedOfficer;
+use App\Models\Registration;
 use App\Models\User;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
@@ -34,11 +35,13 @@ class AuthorizedOfficerController extends Controller
             return $this->error('Whoops! Registration failed. '.$validator->errors()->first(), null, 'null', 400);
         }else{
             $check_phone_no_exist = AuthorizedOfficer::where('phone', $request->phone)->exists();
-            $check_ssn_exist = AuthorizedOfficer::where('ssn', $request->ssn)->exists();
+
+            $check_ssn_exist_in_caregiver = Registration::where('ssn', $request->ssn)->exists();
+            $check_ssn_exist_in_agency = AuthorizedOfficer::where('ssn', $request->ssn)->exists();
 
             if($check_phone_no_exist == true){
                 return $this->error('Phone number already exists.', null, 'null', 403);
-            }else if($check_ssn_exist == true){
+            }else if($check_ssn_exist_in_caregiver == true && $check_ssn_exist_in_agency == true){
                 return $this->error('Social Security Number already exists.', null, 'null', 403);
             }else{
 
