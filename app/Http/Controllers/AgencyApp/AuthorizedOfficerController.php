@@ -24,7 +24,7 @@ class AuthorizedOfficerController extends Controller
             'dob' => 'required',
             'ssn' => 'required | numeric',
             'citizenship_of_country' => 'required',
-            'percentage_of_ownership' => 'required | numeric | max:4',
+            'percentage_of_ownership' => 'required | numeric',
             'street' => 'required',
             'city' => 'required | string',
             'state' => 'required | string',
@@ -84,7 +84,7 @@ class AuthorizedOfficerController extends Controller
             'dob' => 'required',
             'ssn' => 'required | numeric',
             'citizenship_of_country' => 'required',
-            'percentage_of_ownership' => 'required',
+            'percentage_of_ownership' => 'required | numeric',
             'street' => 'required',
             'city' => 'required | string',
             'state' => 'required | string',
@@ -94,26 +94,38 @@ class AuthorizedOfficerController extends Controller
         if($validator->fails()){
             return $this->error('Whoops! Failed to update authorized officer. '.$validator->errors()->first(), null, 'null', 400);
         }else{
-            $update = AuthorizedOfficer::where('id',$request->authorized_officer_id)->where('user_id', auth('sanctum')->user()->id)->update([
-                'firstname' => $request->firstname,
-                'lastname' => $request->lastname,
-                'email' => $request->email,
-                'phone' => $request->phone,
-                'dob' => DateTime::createFromFormat('m-d-Y',$request->dob),
-                'ssn' => $request->ssn,
-                'citizenship_of_country' => $request->citizenship_of_country,
-                'percentage_of_ownership' => $request->percentage_of_ownership,
-                'street' => $request->street,
-                'city' => $request->city,
-                'state' => $request->state,
-                'zip_code' => $request->zip_code,
-            ]);
-    
-            if($update){
-                return $this->success('Authorized information updated successfully.', null, 'null', 200);
+            $check_phone_no_exist = AuthorizedOfficer::where('phone', $request->phone)->exists();
+
+            $check_ssn_exist_in_caregiver = Registration::where('ssn', $request->ssn)->exists();
+            $check_ssn_exist_in_agency = AuthorizedOfficer::where('ssn', $request->ssn)->exists();
+
+            if($check_phone_no_exist == true){
+                return $this->error('Phone number already exists.', null, 'null', 403);
+            }else if($check_ssn_exist_in_caregiver == true && $check_ssn_exist_in_agency == true){
+                return $this->error('Social Security Number already exists.', null, 'null', 403);
             }else{
-                return $this->error('Whoops! Something went wrong.', null,' null', 500);
+                $update = AuthorizedOfficer::where('id',$request->authorized_officer_id)->where('user_id', auth('sanctum')->user()->id)->update([
+                    'firstname' => $request->firstname,
+                    'lastname' => $request->lastname,
+                    'email' => $request->email,
+                    'phone' => $request->phone,
+                    'dob' => DateTime::createFromFormat('m-d-Y',$request->dob),
+                    'ssn' => $request->ssn,
+                    'citizenship_of_country' => $request->citizenship_of_country,
+                    'percentage_of_ownership' => $request->percentage_of_ownership,
+                    'street' => $request->street,
+                    'city' => $request->city,
+                    'state' => $request->state,
+                    'zip_code' => $request->zip_code,
+                ]);
+        
+                if($update){
+                    return $this->success('Authorized information updated successfully.', null, 'null', 200);
+                }else{
+                    return $this->error('Whoops! Something went wrong.', null,' null', 500);
+                }
             }
+            
         }
     }
 
