@@ -80,7 +80,7 @@ class AuthorizedOfficerController extends Controller
             'firstname' => 'required | string',
             'lastname' => 'required | string',
             'email' => 'required | email ',
-            'phone' => 'required | numeric',
+            'phone' => 'required | numeric | exists:authorized_officers,phone',
             'dob' => 'required',
             'ssn' => 'required | numeric',
             'citizenship_of_country' => 'required',
@@ -94,14 +94,10 @@ class AuthorizedOfficerController extends Controller
         if($validator->fails()){
             return $this->error('Whoops! Failed to update authorized officer. '.$validator->errors()->first(), null, 'null', 400);
         }else{
-            $check_phone_no_exist = AuthorizedOfficer::where('phone', $request->phone)->exists();
-
             $check_ssn_exist_in_caregiver = Registration::where('ssn', $request->ssn)->exists();
             $check_ssn_exist_in_agency = AuthorizedOfficer::where('ssn', $request->ssn)->exists();
 
-            if($check_phone_no_exist == true){
-                return $this->error('Phone number already exists.', null, 'null', 403);
-            }else if($check_ssn_exist_in_caregiver == true && $check_ssn_exist_in_agency == true){
+            if($check_ssn_exist_in_caregiver == true && $check_ssn_exist_in_agency == true){
                 return $this->error('Social Security Number already exists.', null, 'null', 403);
             }else{
                 $update = AuthorizedOfficer::where('id',$request->authorized_officer_id)->where('user_id', auth('sanctum')->user()->id)->update([
