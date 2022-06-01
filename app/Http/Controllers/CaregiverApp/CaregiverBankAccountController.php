@@ -7,6 +7,7 @@ use App\Models\CaregiverBankAccount;
 use App\Models\User;
 use App\Traits\ApiResponser;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class CaregiverBankAccountController extends Controller
@@ -48,5 +49,29 @@ class CaregiverBankAccountController extends Controller
     public function getBankDetails(){
         $bank_details = CaregiverBankAccount::where('user_id', auth('sanctum')->user()->id)->first();
         return $this->success('Bank account added successfully.',  $bank_details, 'null', 200);
+    }
+
+    public function updateBankDetails(Request $request){
+        $validator = Validator::make($request->all(),[
+            'bank_name' =>  'required',
+            'routing_number' => 'required | min:9, max:9',
+            'account_number' => 'required'
+        ]);
+
+        if($validator->fails()){
+            return $this->error('Whoops! Something went wrong. Failed to add bank account.'.$validator->errors()->first(),  $validator->errors()->first(), 'null', 400);
+        }else{
+            $update = CaregiverBankAccount::where('user_id', auth('sanctum')->user()->id)->update([
+                'bank_name' => $request->bank_name,
+                'routing_number' => $request->routing_number,
+                'account_number' => $request->account_number
+            ]);
+
+            if($update){
+                return $this->success('Bank account updated successfully.',  null, 'null', 201);
+            }else{
+                return $this->error('Whoops! Something went wrong. Failed to update bank account.',  null, 'null', 500);
+            }
+        }
     }
 }

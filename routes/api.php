@@ -120,6 +120,7 @@ Route::prefix('caregiver')->group(function(){
         Route::prefix('bank')->group(function(){
             Route::post('add-bank', [CaregiverBankAccountController::class, 'addBank']);
             Route::get('get-bank-details', [CaregiverBankAccountController::class, 'getBankDetails']);
+            Route::post('update-details', [CaregiverBankAccountController::class, 'updateBankDetails']);
         });
 
         /************************************* Earning Api's ********************************************* */
