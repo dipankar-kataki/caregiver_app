@@ -35,7 +35,7 @@ class JobController extends Controller
                 'end_date_of_care' => $jobs[$key]['end_date_of_care'],
                 'start_time' => $jobs[$key]['start_time'],
                 'end_time' => $jobs[$key]['end_time'],
-                'location' => $jobs[$key]['street'].', '. $jobs[$key]['city'].', '. $jobs[$key]['zip_code'].', '. $jobs[$key]['state'],
+                'location' => $jobs[$key]['street'].', '. $jobs[$key]['city'].', '. $jobs[$key]['state'] .', '.  $jobs[$key]['zip_code'],
                 'job_description' =>  $jobs[$key]['job_description'],
                 'medical_history' => $jobs[$key]['medical_history'],
                 'essential_prior_expertise' => $jobs[$key]['essential_prior_expertise'],

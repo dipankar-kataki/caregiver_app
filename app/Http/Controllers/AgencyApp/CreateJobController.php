@@ -295,7 +295,7 @@ class CreateJobController extends Controller
                 'end_date' => $item->jobByAgency->end_date_of_care,
                 'start_time' => $item->jobByAgency->start_time,
                 'end_time' => $item->jobByAgency->end_time,
-                'location' => $item->jobByAgency->street.', '. $item->jobByAgency->city.', '. $item->jobByAgency->zip_code.', '. $item->jobByAgency->state,
+                'location' => $item->jobByAgency->street.', '. $item->jobByAgency->city.', '. $item->jobByAgency->state.', '.  $item->jobByAgency->zip_code,
                 'description' =>  $item->jobByAgency->job_description,
                 'medical_history' => $item->jobByAgency->medical_history,
                 'essential_prior_expertise' => $item->jobByAgency->essential_prior_expertise,
