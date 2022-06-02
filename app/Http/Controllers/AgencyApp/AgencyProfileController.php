@@ -102,7 +102,7 @@ class AgencyProfileController extends Controller
                 'year_started' => $year_started->format('Y').' ('.$profile_details->business_information->years_in_business.' '.'years)',
                 'legal_structure_of_business' => $profile_details->business_information->legal_structure,
                 'no_of_employees' => $profile_details->business_information->no_of_employee,
-                'address' => $profile_details->address->street.', '. $profile_details->address->city.', '. $profile_details->address->zip_code.', '. $profile_details->address->state,
+                'address' => $profile_details->address->street.', '. $profile_details->address->city.', '. $profile_details->address->state.', '. $profile_details->address->zip_code,
                 'annual_business_revenue' => '$ '.$profile_details->business_information->annual_business_revenue,
                 'bio' => $profile_details->business_information->bio,
                 'our_beneficiaries' => $beneficiary,

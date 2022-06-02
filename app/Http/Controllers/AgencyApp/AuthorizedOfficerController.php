@@ -80,7 +80,7 @@ class AuthorizedOfficerController extends Controller
             'firstname' => 'required | string',
             'lastname' => 'required | string',
             'email' => 'required | email ',
-            'phone' => 'required | exists:authorized_officers,phone',
+            'phone' => 'required | numeric',
             'dob' => 'required',
             'ssn' => 'required | numeric',
             'citizenship_of_country' => 'required',
