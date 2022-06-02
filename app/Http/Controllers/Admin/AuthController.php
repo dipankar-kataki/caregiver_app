@@ -27,15 +27,20 @@ class AuthController extends Controller
                 'email.required' => 'Email is required',
                 'password.required' => 'Password is required',
             ]);
-
-            if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])){
-                return redirect()->back()->with('error', 'Invalid Credientials');   
-            }else{
-                User::where('email', $request->email)->update([
-                    'is_logged_in' => 1
-                ]);
-                return redirect()->route('admin.dashboard.home');
+            
+            try{
+                if (!Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+                    return redirect()->back()->with('error', 'Invalid Credientials');   
+                }else{
+                    User::where('email', $request->email)->update([
+                        'is_logged_in' => 1
+                    ]);
+                    return redirect()->route('admin.dashboard.home');
+                }
+            }catch(\Exception $e){
+                return redirect()->back()->with('error', 'Whoops! Not able to connect to database. Please try after sometime.');  
             }
+            
         }
     }
 
