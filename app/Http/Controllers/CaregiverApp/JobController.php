@@ -24,47 +24,29 @@ class JobController extends Controller
         $jobs = JobByAgency::with('user', 'agency_profile')->where('is_activate', 1)->where('job_status', JobStatus::Open)->orderBy('created_at', 'DESC')->paginate(5);
         $new_details = [];
         foreach($jobs as $key => $item){
-
-            $extracted_start_time = explode(' ',$item->start_time);
-
-
-            $dateTimeObject1 = date_create( date('h:i')); 
-            $dateTimeObject2 = date_create($extracted_start_time[0]); 
-            
-            $time_difference = date_diff($dateTimeObject1, $dateTimeObject2); 
-            $minutes_exceed = $time_difference->days * 24 * 60;
-            $minutes_exceed += $time_difference->i;
-
-            if($minutes_exceed > 0){
-                $jobs = JobByAgency::where('is_activate', 1)->where('job_status', JobStatus::Open)->update([
-                    'job_status' => JobStatus::Expired,
-                    'is_activate' => 0
-                ]);
-            }else{
-                $details = [
-                    'id' => $item->id,
-                    'agency_name' => $item->user->business_name,
-                    'profile_image' =>  $item->agency_profile->profile_image,
-                    'job_title' => $item->job_title,
-                    'amount_per_hour' => $item->amount_per_hour,
-                    'care_type' => $item->care_type,
-                    'patient_age' => $item->patient_age,
-                    'start_date_of_care' => $item->start_date_of_care,
-                    'end_date_of_care' => $item->end_date_of_care,
-                    'start_time' => $item->start_time,
-                    'end_time' => $item->end_time,
-                    'location' => $item->street.', '. $item->city.', '. $item->state.', '.  $item->zip_code,
-                    'job_description' =>  $item->job_description,
-                    'medical_history' => $item->medical_history,
-                    'essential_prior_expertise' => $item->essential_prior_expertise,
-                    'other_requirements' => $item->other_requirements,
-                    'created_at' => $item->created_at,
-                    
-                ];
-                array_push($new_details, $details);
-            }
+            $details = [
+                'id' => $item->id,
+                'agency_name' => $item->user->business_name,
+                'profile_image' =>  $item->agency_profile->profile_image,
+                'job_title' => $item->job_title,
+                'amount_per_hour' => $item->amount_per_hour,
+                'care_type' => $item->care_type,
+                'patient_age' => $item->patient_age,
+                'start_date_of_care' => $item->start_date_of_care,
+                'end_date_of_care' => $item->end_date_of_care,
+                'start_time' => $item->start_time,
+                'end_time' => $item->end_time,
+                'location' => $item->street.', '. $item->city.', '. $item->state.', '.  $item->zip_code,
+                'job_description' =>  $item->job_description,
+                'medical_history' => $item->medical_history,
+                'essential_prior_expertise' => $item->essential_prior_expertise,
+                'other_requirements' => $item->other_requirements,
+                'created_at' => $item->created_at,
+                
+            ];
+            array_push($new_details, $details);
         }
-        return $this->success('Recomended jobs fetched successfully.', $new_details, 'null', 200);
+        return $this->success('Recomended jobs fetched successfully.',   $new_details, 'null', 200);
     }
 
     public function recomendedJobsCount(){
