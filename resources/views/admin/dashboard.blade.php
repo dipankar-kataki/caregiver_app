@@ -13,47 +13,102 @@
     <div class="row">
 
         <div class="col-xl-3 col-md-6">
-            <div class="card widget-box-one border border-primary bg-soft-primary">
-                <div class="card-body">
-                    <div class="float-right avatar-sm rounded-circle mt-3">
-                        <i class="mdi mdi-hospital font-20 widget-icon rounded-circle avatar-title text-primary"></i>
-                    </div>
-                    <div class="wigdet-one-content">
-                        <p class="m-0 text-uppercase font-15 font-weight-bold text-muted" title="Total Caregivers">Approved Caregivers</p>
-                        <h2><span data-plugin="counterup">{{$total_caregivers}}</span> <i class="mdi {{$total_caregivers == 0 ? '' : 'mdi-arrow-up'}} text-success font-24"></i></h2>
+            <a href="{{route('admin.caregiver.list.approved')}}">
+                <div class="card widget-box-one border border-primary bg-soft-primary">
+                    <div class="card-body">
+                        <div class="float-right avatar-sm rounded-circle mt-3">
+                            <i class="mdi mdi-hospital font-20 widget-icon rounded-circle avatar-title text-primary"></i>
+                        </div>
+                        <div class="wigdet-one-content">
+                            <p class="m-0 text-uppercase font-15 font-weight-bold text-muted" title="Total Caregivers">Approved Caregivers</p>
+                            <h2><span data-plugin="counterup">{{$total_approved_caregivers}}</span> <i class="mdi {{$total_approved_caregivers == 0 ? '' : 'mdi-arrow-up'}} text-success font-24"></i></h2>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
         <!-- end col -->
 
         <div class="col-xl-3 col-md-6">
-            <div class="card widget-box-one border border-warning bg-soft-warning">
-                <div class="card-body">
-                    <div class="float-right avatar-sm rounded-circle mt-3">
-                        <i class="mdi mdi-hospital-building font-20 widget-icon rounded-circle avatar-title text-warning"></i>
-                    </div>
-                    <div class="wigdet-one-content">
-                        <p class="m-0 text-uppercase font-15 font-weight-bold text-muted" title="Total Agencies">Approved Agencies</p>
-                        <h2><span data-plugin="counterup">{{$total_agencies}} </span> <i class="mdi {{$total_agencies == 0 ? '' : 'mdi-arrow-up'}} text-success font-24"></i></h2>
+            <a href="{{route('admin.caregiver.request.for.approval')}}">
+                <div class="card widget-box-one border border-purple bg-soft-purple">
+                    <div class="card-body">
+                        @if ($total_pending_caregivers == 0)
+                            <div class="float-right avatar-sm rounded-circle mt-3">
+                                <i class="mdi mdi-hospital font-20 widget-icon rounded-circle avatar-title text-primary"></i>
+                            </div>
+                        @else
+                            <div class="float-right avatar-sm rounded-circle mt-2">
+                                <lottie-player src="https://assets3.lottiefiles.com/private_files/lf30_hy2j6oqn.json"  background="transparent"  speed="1"  style="width: 50px; height: 50px;"  loop  autoplay></lottie-player>
+                            </div>
+                        @endif
+                        
+                        <div class="wigdet-one-content">
+                            <p class="m-0 text-uppercase font-15 font-weight-bold text-muted" title="Total Caregivers">Pending Caregivers</p>
+                            <h2><span data-plugin="counterup">{{$total_pending_caregivers}}</span> 
+                                <i class="mdi {{$total_pending_caregivers == 0 ? '' : 'mdi-arrow-up'}} text-success font-24"></i></h2>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
         <!-- end col -->
 
         <div class="col-xl-3 col-md-6">
-            <div class="card widget-box-one border border-danger bg-soft-danger">
-                <div class="card-body">
-                    <div class="float-right avatar-sm rounded-circle mt-3">
-                        <i class="mdi mdi-briefcase font-20 widget-icon rounded-circle avatar-title text-danger"></i>
-                    </div>
-                    <div class="wigdet-one-content">
-                        <p class="m-0 text-uppercase font-15 font-weight-bold text-muted" title="Total Jobs Posted">Jobs Posted</p>
-                        <h2><span data-plugin="counterup">{{$total_jobs_posted}} </span> <i class="mdi {{$total_jobs_posted == 0 ? '' : 'mdi-arrow-up'}} text-success font-24"></i></h2>
+            <a href="{{route('admin.agency.list.approved')}}">
+                <div class="card widget-box-one border border-warning bg-soft-warning">
+                    <div class="card-body">
+                        <div class="float-right avatar-sm rounded-circle mt-3">
+                            <i class="mdi mdi-hospital-building font-20 widget-icon rounded-circle avatar-title text-warning"></i>
+                        </div>
+                        <div class="wigdet-one-content">
+                            <p class="m-0 text-uppercase font-15 font-weight-bold text-muted" title="Total Agencies">Approved Agencies</p>
+                            <h2><span data-plugin="counterup">{{$total_approved_agencies}} </span> <i class="mdi {{$total_approved_agencies == 0 ? '' : 'mdi-arrow-up'}} text-success font-24"></i></h2>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
+        </div>
+        <!-- end col -->
+
+
+        <div class="col-xl-3 col-md-6">
+            <a href="{{route('admin.agency.request.for.approval')}}">
+                <div class="card widget-box-one border border-secondary bg-soft-secondary">
+                    <div class="card-body">
+                        @if ($total_pending_agencies == 0)
+                            <div class="float-right avatar-sm rounded-circle mt-3">
+                                <i class="mdi mdi-hospital font-20 widget-icon rounded-circle avatar-title text-primary"></i>
+                            </div>
+                        @else
+                            <div class="float-right avatar-sm rounded-circle mt-2">
+                                <lottie-player src="https://assets3.lottiefiles.com/private_files/lf30_hy2j6oqn.json"  background="transparent"  speed="1"  style="width: 50px; height: 50px;"  loop  autoplay></lottie-player>
+                            </div>
+                        @endif
+                        <div class="wigdet-one-content">
+                            <p class="m-0 text-uppercase font-15 font-weight-bold text-muted" title="Total Agencies">Pending Agencies</p>
+                            <h2><span data-plugin="counterup">{{$total_pending_agencies}} </span> <i class="mdi {{$total_pending_agencies == 0 ? '' : 'mdi-arrow-up'}} text-success font-24"></i></h2>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <!-- end col -->
+
+        <div class="col-xl-3 col-md-6">
+            <a href="{{route('admin.agency.job.get.job')}}">
+                <div class="card widget-box-one border border-danger bg-soft-danger">
+                    <div class="card-body">
+                        <div class="float-right avatar-sm rounded-circle mt-3">
+                            <i class="mdi mdi-briefcase font-20 widget-icon rounded-circle avatar-title text-danger"></i>
+                        </div>
+                        <div class="wigdet-one-content">
+                            <p class="m-0 text-uppercase font-15 font-weight-bold text-muted" title="Total Jobs Posted">Jobs Posted</p>
+                            <h2><span data-plugin="counterup">{{$total_jobs_posted}} </span> <i class="mdi {{$total_jobs_posted == 0 ? '' : 'mdi-arrow-up'}} text-success font-24"></i></h2>
+                        </div>
+                    </div>
+                </div>
+            </a>
         </div>
         <!-- end col -->
 
@@ -118,7 +173,7 @@
 
     <div class="row">
 
-        <div class="col-12">
+        {{-- <div class="col-12">
             <div class="card-box">
                 <h4 class="header-title mb-4">Caregiver Pending For Approval <a title="Go to caregiver pending for approval page" href="{{route('admin.caregiver.request.for.approval')}}" class="mdi mdi-open-in-new" style="float:right;"></a></h4>
                 
@@ -160,10 +215,10 @@
                 <!-- table-responsive -->
             </div>
             <!-- end card -->
-        </div>
+        </div> --}}
          <!-- end col -->
 
-        <div class="col-12">
+        {{-- <div class="col-12">
             <div class="card-box">
                 <h4 class="header-title mb-4">Agency Pending For Approval <a title="Go to agency pending for approval page" href="{{route('admin.agency.request.for.approval')}}" class="mdi mdi-open-in-new" style="float:right;"></a></h4>
 
@@ -202,7 +257,7 @@
                 <!-- table-responsive -->
             </div>
             <!-- end card -->
-        </div>
+        </div> --}}
          <!-- end col -->
 
         <div class="col-xl-6 col-md-6 col-12">
