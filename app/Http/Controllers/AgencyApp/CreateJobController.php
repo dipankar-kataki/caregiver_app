@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\AgencyApp;
 
+use App\Common\JobStatus;
 use App\Http\Controllers\Controller;
 use App\Models\AcceptedJob;
 use App\Models\Answer;
@@ -68,7 +69,7 @@ class CreateJobController extends Controller
                     'other_requirements' => serialize($request->other_requirements),
                     'user_id' => auth('sanctum')->user()->id,
                     'is_activate' => 0,
-                    'job_status' => 0
+                    'job_status' => JobStatus::Open
                 ]);
                 if($create){
                     $job_id = JobByAgency::where('user_id', auth('sanctum')->user()->id)->latest()->first();
@@ -132,7 +133,7 @@ class CreateJobController extends Controller
     }
 
     public function getActiveJob(){
-        $jobs = JobByAgency::where('user_id', auth('sanctum')->user()->id)->where('is_activate', 1)->where('job_status', 0)->orderBy('created_at', 'DESC')->get();
+        $jobs = JobByAgency::where('user_id', auth('sanctum')->user()->id)->where('is_activate', 1)->where('job_status', JobStatus::Open)->orderBy('created_at', 'DESC')->get();
         return $this->success('Job posted successfully.',  $jobs, 'null', 200);
     }
 

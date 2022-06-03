@@ -13,7 +13,7 @@
     <div class="row">
 
         <div class="col-xl-3 col-md-6">
-            <a href="{{route('admin.caregiver.list.approved')}}">
+            <a href="{{route('admin.caregiver.list.approved')}}" title="click to view">
                 <div class="card widget-box-one border border-primary bg-soft-primary">
                     <div class="card-body">
                         <div class="float-right avatar-sm rounded-circle mt-3">
@@ -30,7 +30,7 @@
         <!-- end col -->
 
         <div class="col-xl-3 col-md-6">
-            <a href="{{route('admin.caregiver.request.for.approval')}}">
+            <a href="{{route('admin.caregiver.request.for.approval')}}" title="click to view">
                 <div class="card widget-box-one border border-purple bg-soft-purple">
                     <div class="card-body">
                         @if ($total_pending_caregivers == 0)
@@ -55,7 +55,7 @@
         <!-- end col -->
 
         <div class="col-xl-3 col-md-6">
-            <a href="{{route('admin.agency.list.approved')}}">
+            <a href="{{route('admin.agency.list.approved')}}" title="click to view">
                 <div class="card widget-box-one border border-warning bg-soft-warning">
                     <div class="card-body">
                         <div class="float-right avatar-sm rounded-circle mt-3">
@@ -73,7 +73,7 @@
 
 
         <div class="col-xl-3 col-md-6">
-            <a href="{{route('admin.agency.request.for.approval')}}">
+            <a href="{{route('admin.agency.request.for.approval')}}" title="click to view">
                 <div class="card widget-box-one border border-secondary bg-soft-secondary">
                     <div class="card-body">
                         @if ($total_pending_agencies == 0)
@@ -96,7 +96,7 @@
         <!-- end col -->
 
         <div class="col-xl-3 col-md-6">
-            <a href="{{route('admin.agency.job.get.job')}}">
+            <a href="{{route('admin.agency.job.get.job')}}" title="click to view">
                 <div class="card widget-box-one border border-danger bg-soft-danger">
                     <div class="card-body">
                         <div class="float-right avatar-sm rounded-circle mt-3">

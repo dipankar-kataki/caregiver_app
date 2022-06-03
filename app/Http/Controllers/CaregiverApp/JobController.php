@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CaregiverApp;
 
+use App\Common\JobStatus;
 use App\Http\Controllers\Controller;
 use App\Models\AcceptedJob;
 use App\Models\CaregiverBankAccount;
@@ -20,36 +21,54 @@ class JobController extends Controller
 {
     use ApiResponser, PushNotification;
     public function recomendedJobs(){
-        $jobs = JobByAgency::with('user', 'agency_profile')->where('is_activate', 1)->where('job_status', 0)->orderBy('created_at', 'DESC')->paginate(5);
+        $jobs = JobByAgency::with('user', 'agency_profile')->where('is_activate', 1)->where('job_status', JobStatus::Open)->orderBy('created_at', 'DESC')->paginate(5);
         $new_details = [];
         foreach($jobs as $key => $item){
-            $details = [
-                'id' => $jobs[$key]['id'],
-                'agency_name' => $jobs[$key]['user']['business_name'],
-                'profile_image' =>  $jobs[$key]['agency_profile']['profile_image'],
-                'job_title' => $jobs[$key]['job_title'],
-                'amount_per_hour' => $jobs[$key]['amount_per_hour'],
-                'care_type' => $jobs[$key]['care_type'],
-                'patient_age' => $jobs[$key]['patient_age'],
-                'start_date_of_care' => $jobs[$key]['start_date_of_care'],
-                'end_date_of_care' => $jobs[$key]['end_date_of_care'],
-                'start_time' => $jobs[$key]['start_time'],
-                'end_time' => $jobs[$key]['end_time'],
-                'location' => $jobs[$key]['street'].', '. $jobs[$key]['city'].', '. $jobs[$key]['state'] .', '.  $jobs[$key]['zip_code'],
-                'job_description' =>  $jobs[$key]['job_description'],
-                'medical_history' => $jobs[$key]['medical_history'],
-                'essential_prior_expertise' => $jobs[$key]['essential_prior_expertise'],
-                'other_requirements' => $jobs[$key]['other_requirements'],
-                'created_at' => $jobs[$key]['created_at'],
-                
-            ];
-            array_push($new_details, $details);
+
+            $extracted_start_time = explode(' ',$item->start_time);
+
+
+            $dateTimeObject1 = date_create( date('h:i')); 
+            $dateTimeObject2 = date_create($extracted_start_time[0]); 
+            
+            $time_difference = date_diff($dateTimeObject1, $dateTimeObject2); 
+            $minutes_exceed = $time_difference->days * 24 * 60;
+            $minutes_exceed += $time_difference->i;
+
+            if($minutes_exceed > 0){
+                $jobs = JobByAgency::where('is_activate', 1)->where('job_status', JobStatus::Open)->update([
+                    'job_status' => JobStatus::Expired,
+                    'is_activate' => 0
+                ]);
+            }else{
+                $details = [
+                    'id' => $item->id,
+                    'agency_name' => $item->user->business_name,
+                    'profile_image' =>  $item->agency_profile->profile_image,
+                    'job_title' => $item->job_title,
+                    'amount_per_hour' => $item->amount_per_hour,
+                    'care_type' => $item->care_type,
+                    'patient_age' => $item->patient_age,
+                    'start_date_of_care' => $item->start_date_of_care,
+                    'end_date_of_care' => $item->end_date_of_care,
+                    'start_time' => $item->start_time,
+                    'end_time' => $item->end_time,
+                    'location' => $item->street.', '. $item->city.', '. $item->state.', '.  $item->zip_code,
+                    'job_description' =>  $item->job_description,
+                    'medical_history' => $item->medical_history,
+                    'essential_prior_expertise' => $item->essential_prior_expertise,
+                    'other_requirements' => $item->other_requirements,
+                    'created_at' => $item->created_at,
+                    
+                ];
+                array_push($new_details, $details);
+            }
         }
-        return $this->success('Recomended jobs fetched successfully.',   $new_details, 'null', 200);
+        return $this->success('Recomended jobs fetched successfully.', $new_details, 'null', 200);
     }
 
     public function recomendedJobsCount(){
-        $jobs = JobByAgency::where('is_activate', 1)->where('job_status', 0)->count();
+        $jobs = JobByAgency::where('is_activate', 1)->where('job_status', JobStatus::Open)->count();
         return $this->success('Total recomended jobs.',  $jobs, 'null', 200);
     }
 
@@ -205,7 +224,7 @@ class JobController extends Controller
                     ]);
                     if($createJob){
                         JobByAgency::where('id', $request->job_id)->update([
-                            'job_status' => 1
+                            'job_status' => JobStatus::Accept
                         ]);
     
                         if($get_fcm_token->fcm_token != null){
@@ -268,7 +287,7 @@ class JobController extends Controller
             $details = AcceptedJob::where('job_by_agencies_id', $request->job_id)->first();
             $updateJobByAgencyTable = JobByAgency::where('id', $details->job_by_agencies_id)->update([
                 'is_activate' => 0,
-                'job_status' => 2
+                'job_status' => JobStatus::Closed
             ]);
             $updateJobAcceptedTable = AcceptedJob::where('job_by_agencies_id', $request->job_id)->update([
                 'is_activate' => 0
