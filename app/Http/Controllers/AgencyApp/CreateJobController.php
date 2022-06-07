@@ -137,9 +137,9 @@ class CreateJobController extends Controller
         if(isset($_GET['current_date_time']) == null){
             return $this->success('Failed to fetch recomended jobs. Current date time not provided', null, 'null', 200);
         }else{
-            $jobs = JobByAgency::where('user_id', auth('sanctum')->user()->id)->where('is_activate', 1)->where('job_status', JobStatus::Open)->orderBy('created_at', 'DESC')->get();
-            $new_details = [];
-            foreach($jobs as $key => $item){
+            $jobs_details = JobByAgency::where('user_id', auth('sanctum')->user()->id)->where('is_activate', 1)->where('job_status', JobStatus::Open)->orderBy('created_at', 'DESC')->get();
+            $jobs = [];
+            foreach($jobs_details as $key => $item){
 
                 $converted_start_time = $item->start_date_of_care.' '.date_create($item->start_time)->format('H:i');
               
@@ -173,10 +173,10 @@ class CreateJobController extends Controller
                         'created_at' => $item->created_at
                     ];
         
-                    array_push($new_details, $details);
+                    array_push($jobs, $details);
                 }
             }
-            return $this->success('Job fetched successfully.',  $new_details, 'null', 200);
+            return $this->success('Job fetched successfully.',  $jobs, 'null', 200);
         }
     }
 
