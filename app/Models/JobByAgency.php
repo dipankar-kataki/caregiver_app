@@ -23,9 +23,9 @@ class JobByAgency extends Model
         return unserialize($value);
     }
 
-    public function getStartDateOfCareAttribute($value){
-        return Carbon::parse($value)->format('m-d-Y');
-    }
+    // public function getStartDateOfCareAttribute($value){
+    //     return Carbon::parse($value)->format('m-d-Y');
+    // }
     public function getEndDateOfCareAttribute($value){
         return Carbon::parse($value)->format('m-d-Y');
     }

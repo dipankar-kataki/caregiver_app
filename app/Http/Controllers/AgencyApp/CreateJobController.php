@@ -133,8 +133,51 @@ class CreateJobController extends Controller
     }
 
     public function getActiveJob(){
-        $jobs = JobByAgency::where('user_id', auth('sanctum')->user()->id)->where('is_activate', 1)->where('job_status', JobStatus::Open)->orderBy('created_at', 'DESC')->get();
-        return $this->success('Job posted successfully.',  $jobs, 'null', 200);
+
+        if(isset($_GET['current_date_time']) == null){
+            return $this->success('Failed to fetch recomended jobs. Current date time not provided', null, 'null', 200);
+        }else{
+            $jobs = JobByAgency::where('user_id', auth('sanctum')->user()->id)->where('is_activate', 1)->where('job_status', JobStatus::Open)->orderBy('created_at', 'DESC')->get();
+            $new_details = [];
+            foreach($jobs as $key => $item){
+
+                $converted_start_time = $item->start_date_of_care.' '.date_create($item->start_time)->format('H:i');
+              
+                // Declare and define two dates
+                $current_time = strtotime($_GET['current_date_time']);
+                $start_time = strtotime($converted_start_time);
+                
+
+                if($start_time >= $current_time){
+                    $details = [
+                        'id' => $item->id,
+                        'job_order_id' => $item->job_order_id,
+                        'job_title' => $item->job_title,
+                        'care_type' => $item->care_type,
+                        'patient_age' => $item->patient_age,
+                        'amount_per_hour' => $item->amount_per_hour,
+                        'start_date_of_care' => Carbon::parse($item->start_date_of_care)->format('m-d-Y'),
+                        'end_date_of_care' => $item->end_date_of_care,
+                        'start_time' => $item->start_time,
+                        'end_time' => $item->end_time,
+                        'street' => $item->street,
+                        'city' => $item->city,
+                        'state' => $item->state,
+                        'zip_code' => $item->zip_code,
+                        'job_description' => $item->job_description,
+                        'medical_history' => $item->medical_history,
+                        'essential_prior_expertise' => $item->essential_prior_expertise,
+                        'other_requirements' => $item->other_requirements,
+                        'job_status' => $item->job_status,
+                        'is_activate' => $item->is_activate,
+                        'created_at' => $item->created_at
+                    ];
+        
+                    array_push($new_details, $details);
+                }
+            }
+            return $this->success('Job fetched successfully.',  $new_details, 'null', 200);
+        }
     }
 
     public function getOngoingJob(){
@@ -156,7 +199,7 @@ class CreateJobController extends Controller
                 'care_type' => $item->jobByAgency->care_type,
                 'job_accepted_on' =>  Carbon::parse($item->jobByAgency->created_at)->diffForHumans(),
                 'patient_age' => $item->jobByAgency->patient_age,
-                'start_date' => $item->jobByAgency->start_date_of_care,
+                'start_date' => Carbon::parse($item->jobByAgency->start_date_of_care)->format('m-d-Y'),
                 'end_date' => $item->jobByAgency->end_date_of_care,
                 'start_time' => $item->jobByAgency->start_time,
                 'end_time' => $item->jobByAgency->end_time,
@@ -292,7 +335,7 @@ class CreateJobController extends Controller
                 'care_type' => $item->jobByAgency->care_type,
                 'patient_age' => $item->jobByAgency->patient_age,
                 'job_accepted_on' =>  Carbon::parse($item->jobByAgency->updated_at)->diffForHumans(), // variable name asked by android developer.
-                'start_date' => $item->jobByAgency->start_date_of_care,
+                'start_date' => Carbon::parse($item->jobByAgency->start_date_of_care)->format('m-d-Y'),
                 'end_date' => $item->jobByAgency->end_date_of_care,
                 'start_time' => $item->jobByAgency->start_time,
                 'end_time' => $item->jobByAgency->end_time,
@@ -310,8 +353,6 @@ class CreateJobController extends Controller
         }
 
         return $this->success('Past job fetched successfully.',   $new_details, 'null', 200);
-        $details = JobByAgency::where('is_activate', 0)->where('user_id', auth('sanctum')->user()->id)->get();
-        return $this->success('Closed job fetched successfully.',  $details, 'null', 200);
     }
 
 }

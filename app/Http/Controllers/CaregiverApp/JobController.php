@@ -21,32 +21,50 @@ class JobController extends Controller
 {
     use ApiResponser, PushNotification;
     public function recomendedJobs(){
-        $jobs = JobByAgency::with('user', 'agency_profile')->where('is_activate', 1)->where('job_status', JobStatus::Open)->orderBy('created_at', 'DESC')->paginate(5);
-        $new_details = [];
-        foreach($jobs as $key => $item){
-            $details = [
-                'id' => $item->id,
-                'agency_name' => $item->user->business_name,
-                'profile_image' =>  $item->agency_profile->profile_image,
-                'job_title' => $item->job_title,
-                'amount_per_hour' => $item->amount_per_hour,
-                'care_type' => $item->care_type,
-                'patient_age' => $item->patient_age,
-                'start_date_of_care' => $item->start_date_of_care,
-                'end_date_of_care' => $item->end_date_of_care,
-                'start_time' => $item->start_time,
-                'end_time' => $item->end_time,
-                'location' => $item->street.', '. $item->city.', '. $item->state.', '.  $item->zip_code,
-                'job_description' =>  $item->job_description,
-                'medical_history' => $item->medical_history,
-                'essential_prior_expertise' => $item->essential_prior_expertise,
-                'other_requirements' => $item->other_requirements,
-                'created_at' => $item->created_at,
+        if(isset($_GET['current_date_time']) == null){
+            return $this->success('Failed to fetch recomended jobs. Current time not provided', null, 'null', 200);
+        }else{
+            $jobs = JobByAgency::with('user', 'agency_profile')->where('is_activate', 1)->where('job_status', JobStatus::Open)->orderBy('created_at', 'DESC')->paginate(5);
+            $new_details = [];    
+            
+              
+
+            foreach($jobs as $key => $item){
+
+                $converted_start_time = $item->start_date_of_care.' '.date_create($item->start_time)->format('H:i');
+              
+                // Declare and define two dates
+                $current_time = strtotime($_GET['current_date_time']);
+                $start_time = strtotime($converted_start_time);
                 
-            ];
-            array_push($new_details, $details);
+
+                if($start_time >= $current_time){
+                    $details = [
+                        'id' => $item->id,
+                        'agency_name' => $item->user->business_name,
+                        'profile_image' =>  $item->agency_profile->profile_image,
+                        'job_title' => $item->job_title,
+                        'amount_per_hour' => $item->amount_per_hour,
+                        'care_type' => $item->care_type,
+                        'patient_age' => $item->patient_age,
+                        'start_date_of_care' => Carbon::parse($item->start_date_of_care)->format('m-d-Y'),
+                        'end_date_of_care' => $item->end_date_of_care,
+                        'start_time' => $item->start_time,
+                        'end_time' => $item->end_time,
+                        'location' => $item->street.', '. $item->city.', '. $item->state.', '.  $item->zip_code,
+                        'job_description' =>  $item->job_description,
+                        'medical_history' => $item->medical_history,
+                        'essential_prior_expertise' => $item->essential_prior_expertise,
+                        'other_requirements' => $item->other_requirements,
+                        'created_at' => $item->created_at,
+                        
+                    ];
+                    array_push($new_details, $details);
+                }
+                
+            }
+            return $this->success('Recomended jobs fetched successfully.',   $new_details, 'null', 200);
         }
-        return $this->success('Recomended jobs fetched successfully.',   $new_details, 'null', 200);
     }
 
     public function recomendedJobsCount(){
@@ -240,7 +258,7 @@ class JobController extends Controller
                 'amount_per_hour' => $item->jobByAgency->amount_per_hour,
                 'care_type' => $item->jobByAgency->care_type,
                 'patient_age' => $item->jobByAgency->patient_age,
-                'start_date_of_care' => $item->jobByAgency->start_date_of_care,
+                'start_date_of_care' => Carbon::parse($item->jobByAgency->start_date_of_care)->format('m-d-Y'),
                 'end_date_of_care' => $item->jobByAgency->end_date_of_care,
                 'start_time' => $item->jobByAgency->start_time,
                 'end_time' => $item->jobByAgency->end_time,
@@ -312,7 +330,7 @@ class JobController extends Controller
                 'amount_per_hour' => $item->jobByAgency->amount_per_hour,
                 'care_type' => $item->jobByAgency->care_type,
                 'patient_age' => $item->jobByAgency->patient_age,
-                'start_date_of_care' => $item->jobByAgency->start_date_of_care,
+                'start_date_of_care' => Carbon::parse($item->jobByAgency->start_date_of_care)->format('m-d-Y'),
                 'end_date_of_care' => $item->jobByAgency->end_date_of_care,
                 'start_time' => $item->jobByAgency->start_time,
                 'end_time' => $item->jobByAgency->end_time,
