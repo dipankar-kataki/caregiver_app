@@ -89,10 +89,6 @@ class JobController extends Controller
                 }
                 return $this->success('Total recomended jobs.',  count($new_details), 'null', 200);
             }
-            
-
-            $jobs = JobByAgency::where('is_activate', 1)->where('job_status', JobStatus::Open)->count();
-            return $this->success('Total recomended jobs.',  $jobs, 'null', 200);
         }
         
     }
