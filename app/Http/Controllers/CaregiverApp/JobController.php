@@ -22,7 +22,7 @@ class JobController extends Controller
     use ApiResponser, PushNotification;
     public function recomendedJobs(){
         if(isset($_GET['current_date_time']) == null){
-            return $this->success('Failed to fetch recomended jobs. Current time not provided', null, 'null', 200);
+            return $this->success('Failed to fetch recomended jobs. Current date time not provided', null, 'null', 200);
         }else{
             $jobs = JobByAgency::with('user', 'agency_profile')->where('is_activate', 1)->where('job_status', JobStatus::Open)->orderBy('created_at', 'DESC')->paginate(5);
             $new_details = [];    
@@ -68,8 +68,33 @@ class JobController extends Controller
     }
 
     public function recomendedJobsCount(){
-        $jobs = JobByAgency::where('is_activate', 1)->where('job_status', JobStatus::Open)->count();
-        return $this->success('Total recomended jobs.',  $jobs, 'null', 200);
+        if(isset($_GET['current_date_time']) == null){
+            return $this->success('Failed to fetch recomended jobs count. Current date time not provided', null, 'null', 200);
+        }else{
+
+            $extract_start_time = JobByAgency::where('is_activate', 1)->where('job_status', JobStatus::Open)->get();
+            $new_details = [];  
+
+            foreach($extract_start_time as $key => $item){
+
+                $converted_start_time = $item->start_date_of_care.' '.date_create($item->start_time)->format('H:i');
+              
+                // Declare and define two dates
+                $current_time = strtotime($_GET['current_date_time']);
+                $start_time = strtotime($converted_start_time);
+
+                $count = 0;
+                if($start_time >= $current_time){
+                    array_push($new_details, $item);
+                }
+                return $this->success('Total recomended jobs.',  count($new_details), 'null', 200);
+            }
+            
+
+            $jobs = JobByAgency::where('is_activate', 1)->where('job_status', JobStatus::Open)->count();
+            return $this->success('Total recomended jobs.',  $jobs, 'null', 200);
+        }
+        
     }
 
     public function jobOwnerProfile(Request $request){
