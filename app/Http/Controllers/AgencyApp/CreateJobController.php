@@ -170,7 +170,8 @@ class CreateJobController extends Controller
                         'other_requirements' => $item->other_requirements,
                         'job_status' => $item->job_status,
                         'is_activate' => $item->is_activate,
-                        'created_at' => $item->created_at
+                        'created_at' => $item->created_at,
+                        'updated_at' => $item->updated_at
                     ];
         
                     array_push($jobs, $details);
