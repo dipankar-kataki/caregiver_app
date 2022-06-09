@@ -87,8 +87,8 @@ class JobController extends Controller
                 if($start_time >= $current_time){
                     array_push($new_details, $item);
                 }
-                return $this->success('Total recomended jobs.',  count($new_details), 'null', 200);
             }
+            return $this->success('Total recomended jobs.',  count($new_details), 'null', 200);
         }
         
     }
