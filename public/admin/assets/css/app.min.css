@@ -41,7 +41,7 @@ body {
     position: relative;
     -webkit-transition: all 0.4s;
     transition: all 0.4s;
-    font-size: 15px;
+    font-size: 13px;
 }
 .nav-second-level li a:focus,
 .nav-second-level li a:hover,

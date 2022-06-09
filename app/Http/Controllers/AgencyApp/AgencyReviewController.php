@@ -59,7 +59,7 @@ class AgencyReviewController extends Controller
             $details = [
                 'rating' => $item->rating,
                 'content' => $item->content,
-                'posted_by' => $user->firstname.''.$user->lastname,
+                'posted_by' => $user->firstname.' '.$user->lastname,
                 'photo' => $user->profile->profile_image,
                 'created_at' => $item->created_at->diffForHumans()
             ];
