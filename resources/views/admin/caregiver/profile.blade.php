@@ -223,6 +223,21 @@
                             <hr/>
 
                             <div class="pt-2">
+                                <h5 class="font-16 mb-3">Questions Answered By Caregiver</h5>
+                                <div class="row">
+                                    @forelse ($documents as $key => $item)
+
+                                    @empty
+                                        <div class="text-center">
+                                            <h6>No Answers To Show</h6>
+                                        </div>
+                                    @endforelse
+                                    
+                                </div>
+                            </div>
+
+                            <hr/>
+                            <div class="pt-2">
                                 <h5 class="font-16 mb-3">Uploaded Documents</h5>
                                 <div class="row">
                                     @forelse ($documents as $key => $item)

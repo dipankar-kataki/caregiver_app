@@ -30,7 +30,7 @@
     <style>
       *{
         font-family: 'Montserrat', sans-serif;
-        font-size: 15px;
+        font-size: 14px;
       }
     </style>
     @yield('cunstomHeader')
