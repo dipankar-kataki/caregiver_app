@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\CaregiverApp;
 
+use App\Common\JobStatus;
 use App\Http\Controllers\Controller;
 use App\Models\JobByAgency;
 use App\Traits\ApiResponser;
@@ -12,36 +13,50 @@ class SortbyController extends Controller
     use ApiResponser;
     public function price(){
 
-        if(! (isset($_GET['startprice']) && isset($_GET['endprice'])) ){
-            return $this->error('Whoops! Invalid price filter variables passed.', null , 'null', 200);
+        if(isset($_GET['current_date_time']) == null){
+            return $this->error('Whoops! Failed to fetch jobs. Current date time not provided', null , 'null', 200);
         }else{
-            $start_price = $_GET['startprice'];
-            $end_price = $_GET['endprice'];
-            $jobsByPrice = JobByAgency::whereBetween('amount_per_hour', [$start_price, $end_price])->where('job_status', 0)->where('is_activate', 1)->latest()->paginate(5);
-            $new_details = [];
-            foreach($jobsByPrice as $key => $item){
-                $details = [
-                    'id' => $jobsByPrice[$key]['id'],
-                    'agency_name' => $jobsByPrice[$key]['user']['business_name'],
-                    'job_title' => $jobsByPrice[$key]['job_title'],
-                    'amount_per_hour' => $jobsByPrice[$key]['amount_per_hour'],
-                    'care_type' => $jobsByPrice[$key]['care_type'],
-                    'patient_age' => $jobsByPrice[$key]['patient_age'],
-                    'start_date_of_care' => $jobsByPrice[$key]['start_date_of_care'],
-                    'end_date_of_care' => $jobsByPrice[$key]['end_date_of_care'],
-                    'start_time' => $jobsByPrice[$key]['start_time'],
-                    'end_time' => $jobsByPrice[$key]['end_time'],
-                    'location' => $jobsByPrice[$key]['street'].', '. $jobsByPrice[$key]['city'].', '. $jobsByPrice[$key]['zip_code'].', '. $jobsByPrice[$key]['state'],
-                    'job_description' =>  $jobsByPrice[$key]['job_description'],
-                    'medical_history' => $jobsByPrice[$key]['medical_history'],
-                    'essential_prior_expertise' => $jobsByPrice[$key]['essential_prior_expertise'],
-                    'other_requirements' => $jobsByPrice[$key]['other_requirements'],
-                    'created_at' => $jobsByPrice[$key]['created_at'],
+            if(! (isset($_GET['startprice']) && isset($_GET['endprice'])) ){
+                return $this->error('Whoops! Invalid price filter variables passed.', null , 'null', 200);
+            }else{
+                $start_price = $_GET['startprice'];
+                $end_price = $_GET['endprice'];
+                $jobsByPrice = JobByAgency::whereBetween('amount_per_hour', [$start_price, $end_price])->where('is_activate', 1)->where('job_status', JobStatus::Open)->latest()->paginate(5);
+                $new_details = [];
+                foreach($jobsByPrice as $key => $item){
+
+                    $converted_start_time = $item->start_date_of_care.' '.date_create($item->start_time)->format('H:i');
+              
+                    // Declare and define two dates
+                    $current_time = strtotime($_GET['current_date_time']);
+                    $start_time = strtotime($converted_start_time);
                     
-                ];
-                array_push($new_details, $details);
+                    if($start_time >= $current_time){
+                        $details = [
+                            'id' => $jobsByPrice[$key]['id'],
+                            'agency_name' => $jobsByPrice[$key]['user']['business_name'],
+                            'job_title' => $jobsByPrice[$key]['job_title'],
+                            'amount_per_hour' => $jobsByPrice[$key]['amount_per_hour'],
+                            'care_type' => $jobsByPrice[$key]['care_type'],
+                            'patient_age' => $jobsByPrice[$key]['patient_age'],
+                            'start_date_of_care' => $jobsByPrice[$key]['start_date_of_care'],
+                            'end_date_of_care' => $jobsByPrice[$key]['end_date_of_care'],
+                            'start_time' => $jobsByPrice[$key]['start_time'],
+                            'end_time' => $jobsByPrice[$key]['end_time'],
+                            'location' => $jobsByPrice[$key]['street'].', '. $jobsByPrice[$key]['city'].', '. $jobsByPrice[$key]['zip_code'].', '. $jobsByPrice[$key]['state'],
+                            'job_description' =>  $jobsByPrice[$key]['job_description'],
+                            'medical_history' => $jobsByPrice[$key]['medical_history'],
+                            'essential_prior_expertise' => $jobsByPrice[$key]['essential_prior_expertise'],
+                            'other_requirements' => $jobsByPrice[$key]['other_requirements'],
+                            'created_at' => $jobsByPrice[$key]['created_at'],
+                            
+                        ];
+                        array_push($new_details, $details);
+                    }
+                }
+                return $this->success('Jobs fetched successfully', $new_details , 'null', 200);
             }
-            return $this->success('Jobs fetched successfully', $new_details , 'null', 200);
         }
+        
     }
 }
