@@ -15,8 +15,8 @@ class DashboardController extends Controller
         $total_approved_caregivers = User::where('role', 2)->where('is_user_approved', 1)->count();
         $total_approved_agencies = User::where('role', 3)->where('is_user_approved', 1)->count();
 
-        $total_pending_caregivers = User::where('role', 2)->where('is_user_approved', 0)->count();
-        $total_pending_agencies = User::where('role', 3)->where('is_user_approved', 0)->count();
+        $total_pending_caregivers = User::where('role', 2)->where('is_registration_completed', 1)->where('is_questions_answered', 1)->where('is_documents_uploaded', 1)->where('is_user_approved', 0)->count();
+        $total_pending_agencies = User::where('role', 3)->where('is_business_info_added', 1)->where('is_authorize_info_added', 1)->where('is_user_approved', 0)->count();
 
         $total_jobs_posted = AgencyPayments::where('payment_status', 1)->count();
         $total_agency_payments = AgencyPayments::where('payment_status', 1)->sum('peaceworc_charge');
