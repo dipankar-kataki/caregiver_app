@@ -25,7 +25,7 @@ class CaregiverController extends Controller
     }
 
     public function newJoiner(Request $request){
-        $request_for_approval = User::with('profile')->where('is_registration_completed', 1)->where('is_questions_answered', 1)->where('is_documents_uploaded', 1)->where('is_user_approved', 0)->where('role', 2)->orderBy('created_at', 'DESC')->get();   
+        $request_for_approval = User::with('profile')->where('is_registration_completed', 1)->where('is_questions_answered', 1)->where('is_documents_uploaded', 1)->where('is_user_approved', 0)->where('role', 2)->latest()->get();   
         return view('admin.caregiver.request-for-approval')->with(['request_for_approval'=> $request_for_approval]);
     }
     public function updateStatus(Request $request){
