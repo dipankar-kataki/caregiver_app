@@ -166,7 +166,7 @@ class DocumentController extends Controller
             ]);
 
             if($update){
-                return $this->success('Document status updated.',  null, 'null', 201);
+                return $this->success('Documents submitted successfully.',  null, 'null', 201);
             }else{
                 return $this->error('Whoops! Something went wrong. Failed to update document status.',  null, 'null', 500);
             }
