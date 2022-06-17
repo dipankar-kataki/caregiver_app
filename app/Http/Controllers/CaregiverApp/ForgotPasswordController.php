@@ -35,8 +35,13 @@ class ForgotPasswordController extends Controller
                 
                 $otp = rand(100000, 999999);
                 Cache::put('otp', $otp, now()->addMinutes(5));
-                Mail::to($request->email)->send(new SendResetPasswordLink($name, $otp));
-                return $this->success('OTP sent successfully to email.', null, 'null', 200);
+                try{
+                    Mail::to($request->email)->send(new SendResetPasswordLink($name, $otp));
+                    return $this->success('OTP sent successfully to email.', null, 'null', 200);
+                }catch(\Exception $error){
+                    return $this->error('Failed to send OTP to email.', null, 'null', 200);
+                }
+                
             }
            
         }
@@ -80,8 +85,13 @@ class ForgotPasswordController extends Controller
                     'password' => Hash::make($password)
                 ]);
                 if($update){
-                    Mail::to($request->email)->send(new SendPasswordConfirmationMail() );
-                    return $this->success('Password changed successfully.', null, 'null', 200);
+                    try{
+                        Mail::to($request->email)->send(new SendPasswordConfirmationMail() );
+                        return $this->success('Password changed successfully.', null, 'null', 200);
+                    }catch(\Exception $error){
+                        return $this->success('Password changed successfully. But failed to send confirmation mail.', null, 'null', 200);
+                    }
+                   
                 }else{
                     return $this->error('Whoops! Something went wrong. Failed to reset password.', null, 'null', 400);
                 }
