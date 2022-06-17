@@ -94,8 +94,12 @@ class LoginController extends Controller
                     ]);
 
                     if($update){
-                        Mail::to(auth('sanctum')->user()->email)->send(new SendPasswordConfirmationMail() );
-                        return $this->success('Password changed successfully.', null, 'null', 200);
+                        try{
+                            Mail::to(auth('sanctum')->user()->email)->send(new SendPasswordConfirmationMail() );
+                            return $this->success('Password changed successfully.', null, 'null', 200);
+                        }catch(\Exception $error){
+                            return $this->success('Password changed successfully. But failed to send confirmation mail.', null, 'null', 200);
+                        }
                     }else{
                         return $this->error('Whoops! Something went wrong. Failed to change password.', null, 'null', 400);
                     }
