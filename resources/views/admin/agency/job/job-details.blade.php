@@ -42,7 +42,7 @@
                             @endif
                         </span> 
                     )<br>
-                    <span style="color:#282727;">Start Date</span> : {{$job_details->start_date_of_care}} &nbsp;-&nbsp; End Date</span> : {{$job_details->end_date_of_care}} <br>
+                    <span style="color:#282727;">Start Date</span> : {{\Carbon\Carbon::parse($job_details->start_date_of_care)->format('m-d-Y')}} &nbsp;-&nbsp; End Date</span> : {{$job_details->end_date_of_care}} <br>
                     <span style="color:#282727;">Start Time</span> : {{$job_details->start_time}} &nbsp;-&nbsp; End Time</span> : {{$job_details->end_time}} <br>
                     <span style="color:#282727;">Description</span> : {{$job_details->job_description}} <br>
 

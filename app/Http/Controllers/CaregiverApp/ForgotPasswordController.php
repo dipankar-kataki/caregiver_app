@@ -39,7 +39,7 @@ class ForgotPasswordController extends Controller
                     Mail::to($request->email)->send(new SendResetPasswordLink($name, $otp));
                     return $this->success('OTP sent successfully to email.', null, 'null', 200);
                 }catch(\Exception $error){
-                    return $this->error('Failed to send OTP to email.', null, 'null', 200);
+                    return $this->error('Failed to send OTP to email. Try after sometime', null, 'null', 200);
                 }
                 
             }

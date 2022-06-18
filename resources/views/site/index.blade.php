@@ -279,10 +279,11 @@
             <!-- Form -->
             <div class="col-sm-6 rightBlock mt-5 mt-sm-0">
                 <h2 class="fw-light">Please provide the followings:</h2>
+                <h6 class="fw-light">Labels marked with (<span style="color:red;">*</span>) are mandatory.</h6>
                 <form id="contactForm" action="{{ route('site.contact') }}" method="POST">
                     @csrf
                     <div class="mb-3">
-                        <label for="name" class="form-label">Name</label>
+                        <label for="name" class="form-label">Name<sup style="color:red;">*</sup></label>
                         <input type="text" class="form-control @error('name') is-invalid @enderror" id="name" name="name">
                         @error('name')
                             <div class="invalid-feedback">
@@ -291,7 +292,7 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="email" class="form-label">Email address</label>
+                        <label for="email" class="form-label">Email address<sup style="color:red;">*</sup></label>
                         <input type="email" class="form-control @error('email') is-invalid @enderror" id="email"
                             name="email">
                         @error('email')
@@ -301,7 +302,7 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="subject" class="form-label">Subject</label>
+                        <label for="subject" class="form-label">Subject<sup style="color:red;">*</sup></label>
                         <input type="text" class="form-control @error('subject') is-invalid @enderror" id="subject"
                             name="subject">
                         @error('subject')
@@ -311,7 +312,7 @@
                         @enderror
                     </div>
                     <div class="mb-3">
-                        <label for="message" class="form-label">Your message</label>
+                        <label for="message" class="form-label">Your message<sup style="color:red;">*</sup></label>
                         <textarea class="form-control @error('message') is-invalid @enderror" id="message" name="message"
                             rows="3"></textarea>
                         @error('message')
