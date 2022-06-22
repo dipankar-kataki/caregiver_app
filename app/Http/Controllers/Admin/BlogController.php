@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 class BlogController extends Controller
 {
     public function index(){
-        $details = Blog::where('is_activate', 1)->orderBy('created_at', 'DESC')->get();
+        $details = Blog::orderBy('created_at', 'DESC')->get();
         return view('admin.blog.get-blogs')->with(['details' => $details]);
     }
 
@@ -50,5 +50,21 @@ class BlogController extends Controller
         }
 
 
+    }
+
+
+    public function changeActiveStatus(Request $request){
+        $blog_id =  $request->blog_id;
+        $status =  $request->status;
+
+        Blog::where('id', $blog_id)->update([
+            'is_activate' =>  $status
+        ]);
+
+        if($status == 0){
+            return response()->json(['message' => 'Blog status changed from show to hide']);
+        }else{
+            return response()->json(['message' => 'Blog status changed from hide to show']);
+        }
     }
 }

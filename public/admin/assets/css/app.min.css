@@ -5206,6 +5206,13 @@ ul.sitemap-icon ul li a {
 .blog-post .post-title a:hover {
     color: #136eb4;
 }
+.blog-post .card-footer{
+    display:flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+}
 .blog-categories-list li {
     display: block;
     margin-bottom: 10px;

@@ -79,6 +79,7 @@ Route::group([
     Route::prefix('blog')->group(function(){
         Route::get('all-blog', [BlogController::class, 'index'])->name('admin.get.blog');
         Route::post('create-blog', [BlogController::class, 'createBlog'])->name('admin.create.blog');
+        Route::post('change-active-status', [BlogController::class, 'changeActiveStatus'])->name('admin.change.blog.active.status');
     });
 
     Route::prefix('setting')->group(function(){

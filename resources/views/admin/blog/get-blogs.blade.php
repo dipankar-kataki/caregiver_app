@@ -27,9 +27,26 @@
                             <h5><a href="javascript:void(0);">{{Str::of($item->title)->limit(30)}}</a></h5>
                         </div>
                         <p>{{Str::of($item->content)->limit(50)}}</p>
-                        <div class="text-right">
-                            <a href="{{ route('site.blog', ['id' => Crypt::encrypt($item->id)]) }}" target="_blank" class="btn btn-success btn-sm waves-effect waves-light">Read More <i class="mdi mdi-arrow-right ml-1"></i></a>
+                    </div>
+                    <div class="card-footer">
+                        <div class="action-buttons">
+                            @if ($item->is_activate == 1)
+                                <label class="switch">
+                                    <input type="checkbox" id="changeBlogStatus" data-id="{{ $item->id }}" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                            @else
+                                <label class="switch">
+                                    <input type="checkbox" id="changeBlogStatus" data-id="{{ $item->id }}">
+                                    <span class="slider round"></span>
+                                </label>
+                            @endif
+                            {{-- <a href="{{ route('admin.edit.blog',['id'=>\Crypt::encrypt($item->id)]) }}"
+                                class="btn btn-gradient-primary btn-rounded btn-icon anchor_rounded float-right mb-3" data-toggle="tooltip" data-placement="top" title="Edit">
+                                <i class="mdi mdi-pencil-outline"></i>
+                            </a> --}}
                         </div>
+                        <a href="{{ route('site.blog', ['id' => Crypt::encrypt($item->id)]) }}" target="_blank" class="btn btn-success btn-sm waves-effect waves-light">Read More <i class="mdi mdi-arrow-right ml-1"></i></a>
                     </div>
                 </div>
             </div>
@@ -48,7 +65,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h4 class="modal-title mt-0">Create Blog.
-                        <p style="font-size:14px;"><span style="color:red !important;">Note:</span> All fields are mandatory.</p>
+                        <p style="font-size:14px;"><span>Note:</span> Fields marked as (<span style="color:red;">*</span>) are mandatory.</p>
                     </h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
@@ -60,19 +77,20 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label for="title" class="control-label">Add Title</label>
+                                    <label for="title" class="control-label">Add Title <sup class="text-danger">*</sup></label>
                                     <input type="text" class="form-control" name="title" id="titleBlog" placeholder="e.g Exclusive: Get a First Look at the Fall Collection" required>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Add Image</label>
-                                    <input type="file" name="blogImage" id="blogImage" class="form-control" required>
+                                    <label>Image upload <sup class="text-danger">*</sup></label>
+                                    <input type="file" class="filepond" name="blogImage" id="blogImage" data-max-file-size="1MB" data-max-files="1" required>
+                                    <span class="text-danger" id="blogImage"></span>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <label>Add Content</label>
+                                    <label>Add Content <sup class="text-danger">*</sup></label>
                                     <textarea name="blogContent" id="blogContent" class="form-control" cols="30" rows="10" placeholder="Write here" required></textarea>
                                 </div>
                             </div>
@@ -94,6 +112,33 @@
 @section('customJs')
     <script>
 
+        FilePond.registerPlugin(
+
+            FilePondPluginFileEncode,
+
+            FilePondPluginFileValidateSize,
+
+            FilePondPluginImageExifOrientation,
+
+            FilePondPluginImagePreview,
+
+            FilePondPluginFileValidateType
+        );
+
+        // Select the file input and use create() to turn it into a pond
+        pond = FilePond.create(
+            document.getElementById('blogImage'), {
+                allowMultiple: true,
+                maxFiles: 1,
+                instantUpload: false,
+                imagePreviewHeight: 135,
+                acceptedFileTypes: ['image/*'],
+                labelFileTypeNotAllowed:'Not a valid image.',
+                labelIdle: '<div style="width:100%;height:100%;"><p> Drag &amp; Drop your files or <span class="filepond--label-action" tabindex="0">Browse</span><br> Maximum number of image is 1 :</p> </div>',
+            }
+        );
+
+
         $('#blogCloseModalBtn').on('click',function(){
             $('#addBlogModal').modal('hide');
         });
@@ -106,6 +151,13 @@
             $('#blogCloseModalBtn').attr('disabled', true);
 
             let formData = new FormData(this);
+
+            pondFiles = pond.getFiles();
+            for (var i = 0; i < pondFiles.length; i++) {
+                // append the blob file
+                formData.append('blogImage', pondFiles[i].file);
+            }
+
             $.ajax({
                 url:"{{route('admin.create.blog')}}",
                 type:"POST",
@@ -113,8 +165,6 @@
                 processData:false,
                 contentType:false,
                 success:function(data){
-                    console.log(data);
-
                     if(data.error != null){
                         $.each(data.error, function(key, val){
                             toastr.error(val);
@@ -148,6 +198,31 @@
                         $('#blogSubmitModalBtn').attr('disabled', false);
                         $('#blogCloseModalBtn').attr('disabled', false);
                     }
+                }
+            });
+        });
+
+
+        $(document.body).on('change', '#changeBlogStatus', function() {
+            var status = $(this).prop('checked') == true ? 1 : 0;
+            var blog_id = $(this).data('id');
+            // console.log(status);
+            var formData = {
+                blog_id: blog_id,
+                status: status,
+                '_token' : "{{csrf_token()}}"
+            }
+            $.ajax({
+                type: "post",
+                url: "{{ route('admin.change.blog.active.status') }}",
+                data: formData,
+
+                success: function(data) {
+                    toastr.success(data.message);
+                    toastr.success('Updating View..');
+                    setTimeout(() => {
+                        location.reload(true);
+                    }, 2000);
                 }
             });
         });

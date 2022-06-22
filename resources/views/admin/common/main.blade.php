@@ -26,6 +26,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="{{asset('admin/assets/libs/tooltipster/tooltipster.bundle.min.css')}}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,300;0,400;0,500;0,600;1,100;1,200;1,300&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/filepond/dist/filepond.min.css">
+
     <!-- Magnific -->
     <style>
       *{
@@ -148,6 +152,13 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/additional-methods.min.js"></script>
     <script src="{{asset('admin/assets/libs/tooltipster/tooltipster.bundle.min.js')}}"></script>
     <script src="{{asset('admin/assets/js/pages/tooltipster.init.js')}}"></script>
+
+    <script src="https://unpkg.com/filepond-plugin-file-encode/dist/filepond-plugin-file-encode.min.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-size/dist/filepond-plugin-file-validate-size.min.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-exif-orientation/dist/filepond-plugin-image-exif-orientation.min.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.js"></script>
+    <script src="https://unpkg.com/filepond-plugin-file-validate-type/dist/filepond-plugin-file-validate-type.js"></script>
+    <script src="https://unpkg.com/filepond/dist/filepond.min.js"></script>
 
     @yield('customJs')
 
