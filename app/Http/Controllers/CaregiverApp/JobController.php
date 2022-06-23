@@ -296,56 +296,52 @@ class JobController extends Controller
 
     public function completeJob(Request $request){
         $validator = Validator::make($request->all(),[
-            'job_id' => 'required'
+            'job_id' => 'required',
+            'current_date_time' => 'required'
         ]);
         if($validator->fails()){
-            return $this->error('Whoops! Something went wrong. Failed to complete job.', $validator->errors() , 'null', 500);
+            return $this->error('Whoops! Something went wrong. Failed to complete job. '.$validator->errors()->first(), $validator->errors() , 'null', 500);
         }else{
+            
+            $registration = Registration::with('user')->where('user_id', auth('sanctum')->user()->id)->first();
+            $details = AcceptedJob::where('job_by_agencies_id', $request->job_id)->first();
+            $check_if_job_end_time_reached = JobByAgency::where('id', $request->job_id)->first();
 
-            if(isset($_GET['current_date_time']) == null){
-                return $this->error('Failed to fetch recomended jobs. Current date time not provided', null, 'null', 400);
-            }else{
-                $registration = Registration::with('user')->where('user_id', auth('sanctum')->user()->id)->first();
-                $details = AcceptedJob::where('job_by_agencies_id', $request->job_id)->first();
-                $check_if_job_end_time_reached = JobByAgency::where('id', $request->job_id)->first();
-
-                $converted_end_time = $check_if_job_end_time_reached->end_date_of_care.' '.date_create($check_if_job_end_time_reached->end_time)->format('H:i');
+            $converted_end_time = $check_if_job_end_time_reached->end_date_of_care.' '.date_create($check_if_job_end_time_reached->end_time)->format('H:i');
               
                 // Declare and define two dates
-                $current_time = strtotime($_GET['current_date_time']);
-                $end_time = strtotime($converted_end_time);
+            $current_time = strtotime($request->current_date_time);
+            $end_time = strtotime($converted_end_time);
 
-                if($current_time >= $end_time){
-                    $updateJobByAgencyTable = JobByAgency::where('id', $request->job_id)->update([
-                        'is_activate' => 0,
-                        'job_status' => JobStatus::Closed
-                    ]);
-                    $updateJobAcceptedTable = AcceptedJob::where('job_by_agencies_id', $request->job_id)->update([
-                        'is_activate' => 0
-                    ]);
-    
-                    Registration::where('user_id', auth('sanctum')->user()->id)->update([
-                        'total_care_completed' =>  $registration->total_care_completed + 1
-                    ]);
-    
-                    if(($updateJobByAgencyTable) && ($updateJobAcceptedTable)){
-    
-                        $get_fcm_token = User::where('id', $details->agency_id)->first();
-                        if($get_fcm_token->fcm_token != null){
-                            $data=[];
-                            $data['message']= "Job Completed Successfully by ".$registration->user->firstname.' '.$registration->user->lastname;
-                            $token = [];
-                            $token[] = $get_fcm_token->fcm_token;
-                            $this->sendNotification($token, $data);
-                        }
-                        return $this->success('Job completed successfully',  null, 'null', 200);
-                    }else{
-                        return $this->error('Whoops! Something went wrong. Failed to complete job.', null , 'null', 400);
+            if($current_time >= $end_time){
+                $updateJobByAgencyTable = JobByAgency::where('id', $request->job_id)->update([
+                    'is_activate' => 0,
+                    'job_status' => JobStatus::Closed
+                ]);
+                $updateJobAcceptedTable = AcceptedJob::where('job_by_agencies_id', $request->job_id)->update([
+                    'is_activate' => 0
+                ]);
+
+                Registration::where('user_id', auth('sanctum')->user()->id)->update([
+                    'total_care_completed' =>  $registration->total_care_completed + 1
+                ]);
+
+                if(($updateJobByAgencyTable) && ($updateJobAcceptedTable)){
+
+                    $get_fcm_token = User::where('id', $details->agency_id)->first();
+                    if($get_fcm_token->fcm_token != null){
+                        $data=[];
+                        $data['message']= "Job Completed Successfully by ".$registration->user->firstname.' '.$registration->user->lastname;
+                        $token = [];
+                        $token[] = $get_fcm_token->fcm_token;
+                        $this->sendNotification($token, $data);
                     }
+                    return $this->success('Job completed successfully',  null, 'null', 200);
                 }else{
-                    return $this->error('Whoops! Failed to complete the task. The time has not yet come to complete the work.', null , 'null', 400);
+                    return $this->error('Whoops! Something went wrong. Failed to complete job.', null , 'null', 400);
                 }
-                
+            }else{
+                return $this->error('Whoops! Failed to complete the task. The time has not yet come to complete the work.', null , 'null', 400);
             }
         }
         
