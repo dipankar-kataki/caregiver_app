@@ -20,7 +20,13 @@
                             <i class="mdi mdi-hospital font-20 widget-icon rounded-circle avatar-title text-primary"></i>
                         </div>
                         <div class="wigdet-one-content">
-                            <p class="m-0 text-uppercase font-15 font-weight-bold text-muted" title="Total Caregivers">Approved Caregivers</p>
+                            <p class="m-0 text-uppercase font-15 font-weight-bold text-muted" title="Total Caregivers">
+                                @if ($total_approved_caregivers >= 2)
+                                    <spn>Approved Caregivers</spn>
+                                @else
+                                    <spn>Approved Caregiver</spn>
+                                @endif
+                            </p>
                             <h2><span data-plugin="counterup">{{$total_approved_caregivers}}</span> <i class="mdi {{$total_approved_caregivers == 0 ? '' : 'mdi-arrow-up'}} text-success font-24"></i></h2>
                         </div>
                     </div>
@@ -44,7 +50,13 @@
                         @endif
                         
                         <div class="wigdet-one-content">
-                            <p class="m-0 text-uppercase font-15 font-weight-bold text-muted" title="Total Caregivers">Pending Caregivers</p>
+                            <p class="m-0 text-uppercase font-15 font-weight-bold text-muted" title="Total Caregivers">
+                                @if ($total_pending_caregivers >= 2)
+                                    <spn>Pending Caregivers</spn>
+                                @else
+                                    <spn>Pending Caregiver</spn>
+                                @endif
+                            </p>
                             <h2><span data-plugin="counterup">{{$total_pending_caregivers}}</span> 
                                 <i class="mdi {{$total_pending_caregivers == 0 ? '' : 'mdi-arrow-up'}} text-success font-24"></i></h2>
                         </div>
@@ -62,7 +74,13 @@
                             <i class="mdi mdi-hospital-building font-20 widget-icon rounded-circle avatar-title text-warning"></i>
                         </div>
                         <div class="wigdet-one-content">
-                            <p class="m-0 text-uppercase font-15 font-weight-bold text-muted" title="Total Agencies">Approved Agencies</p>
+                            <p class="m-0 text-uppercase font-15 font-weight-bold text-muted" title="Total Agencies">
+                                @if ($total_approved_agencies >= 2)
+                                    <spn>Approved Agencies</spn>
+                                @else
+                                    <spn>Approved Agency</spn>
+                                @endif
+                            </p>
                             <h2><span data-plugin="counterup">{{$total_approved_agencies}} </span> <i class="mdi {{$total_approved_agencies == 0 ? '' : 'mdi-arrow-up'}} text-success font-24"></i></h2>
                         </div>
                     </div>
@@ -86,7 +104,13 @@
                             </div>
                         @endif
                         <div class="wigdet-one-content">
-                            <p class="m-0 text-uppercase font-15 font-weight-bold text-muted" title="Total Agencies">Pending Agencies</p>
+                            <p class="m-0 text-uppercase font-15 font-weight-bold text-muted" title="Total Agencies">
+                                @if ($total_pending_agencies >= 2)
+                                    <spn>Pending Agencies</spn>
+                                @else
+                                    <spn>Pending Agency</spn>
+                                @endif
+                            </p>
                             <h2><span data-plugin="counterup">{{$total_pending_agencies}} </span> <i class="mdi {{$total_pending_agencies == 0 ? '' : 'mdi-arrow-up'}} text-success font-24"></i></h2>
                         </div>
                     </div>
@@ -262,8 +286,13 @@
 
         <div class="col-xl-6 col-md-6 col-12">
             <div class="card-box">
-                <h4 class="header-title mb-4">Recently Joined Caregiver <a title="Go to approved caregiver page" href="{{route('admin.caregiver.list.approved')}}" class="mdi mdi-open-in-new" style="float:right;"></a></h4>
-
+                <h4 class="header-title mb-4">
+                    @if (sizeof($recently_joined_caregiver) >= 2)
+                        <spn>Recently Joined Caregivers</spn>
+                    @else
+                        <spn>Recently Joined Caregiver</spn>
+                    @endif
+                     <a title="Go to approved caregiver page" href="{{route('admin.caregiver.list.approved')}}" class="mdi mdi-open-in-new" style="float:right;"></a></h4>
                 <div class="table-responsive">
                     <table class="table table-hover table-centered m-0">
                         <thead>
@@ -304,7 +333,13 @@
 
         <div class="col-xl-6 col-md-6 col-12">
             <div class="card-box">
-                <h4 class="header-title mb-4">Recently Joined Agency <a title="Go to approved agency page" href="{{route('admin.agency.list.approved')}}" class="mdi mdi-open-in-new" style="float:right;"></a></h4>
+                <h4 class="header-title mb-4">
+                    @if (sizeof($recently_joined_agency) >= 2)
+                        <spn>Recently Joined Agencies</spn>
+                    @else
+                        <spn>Recently Joined Agency</spn>
+                    @endif
+                     <a title="Go to approved agency page" href="{{route('admin.agency.list.approved')}}" class="mdi mdi-open-in-new" style="float:right;"></a></h4>
                 <div class="table-responsive">
                     <table class="table table-hover table-centered m-0">
                         <thead>
