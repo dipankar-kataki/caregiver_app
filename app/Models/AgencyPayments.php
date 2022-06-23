@@ -18,6 +18,6 @@ class AgencyPayments extends Model
     }
 
     public function job(){
-        return $this->belongsTo(JobByAgency::class, 'job_id', 'id');
+        return $this->belongsTo(JobByAgency::class, 'job_id', 'id')->withTrashed();
     }
 }

@@ -22,7 +22,7 @@ class PaymentHistoryController extends Controller
                 ];
                 array_push($new_details, $details);
             }
-            return $this->success('Payment history fetched successfully. Working try', $new_details, 'null', 200);
+            return $this->success('Payment history fetched successfully.', $new_details, 'null', 200);
         }catch(\Exception $e){
             return $this->error('Whoops! Something went wrong. Failed to fetch payment history. Please try after sometime', null, 'null', 500);
         }
