@@ -7,4 +7,5 @@ Class JobStatus{
     const Accept = 1;
     const Closed = 2;
     const Expired = 3;
+    const Deleted = 4;
 }

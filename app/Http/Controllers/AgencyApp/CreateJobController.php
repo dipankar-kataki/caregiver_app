@@ -48,9 +48,9 @@ class CreateJobController extends Controller
                 if($request->end_date_of_care == '' || $request->end_date_of_care == null){
                     $request->end_date_of_care = $request->start_date_of_care;
                 }
-    
+
                 $create = JobByAgency::create([
-                    'job_order_id' => '#'.Str::uuid()->toString(),
+                    'job_order_id' => uniqid(),
                     'job_title' => $request->job_title,
                     'care_type' => $request->care_type,
                     'patient_age' => $request->patient_age,
@@ -157,7 +157,7 @@ class CreateJobController extends Controller
                         'patient_age' => $item->patient_age,
                         'amount_per_hour' => $item->amount_per_hour,
                         'start_date_of_care' => Carbon::parse($item->start_date_of_care)->format('m-d-Y'),
-                        'end_date_of_care' => $item->end_date_of_care,
+                        'end_date_of_care' => Carbon::parse($item->end_date_of_care)->format('m-d-Y'),
                         'start_time' => $item->start_time,
                         'end_time' => $item->end_time,
                         'street' => $item->street,
@@ -201,7 +201,7 @@ class CreateJobController extends Controller
                 'job_accepted_on' =>  Carbon::parse($item->jobByAgency->created_at)->diffForHumans(),
                 'patient_age' => $item->jobByAgency->patient_age,
                 'start_date' => Carbon::parse($item->jobByAgency->start_date_of_care)->format('m-d-Y'),
-                'end_date' => $item->jobByAgency->end_date_of_care,
+                'end_date' =>  Carbon::parse($item->jobByAgency->end_date_of_care)->format('m-d-Y'),
                 'start_time' => $item->jobByAgency->start_time,
                 'end_time' => $item->jobByAgency->end_time,
                 'location' => $item->jobByAgency->street.', '.$item->jobByAgency->city.', '.$item->jobByAgency->state.', '.$item->jobByAgency->zip_code,
@@ -232,6 +232,11 @@ class CreateJobController extends Controller
     }
 
     public function deleteJob(Request $request){
+
+        JobByAgency::where('id', $request->job_id)->where('user_id', auth('sanctum')->user()->id)->update([
+            'job_status' => JobStatus::Deleted,
+            'is_activate' => 0
+        ]);
         $delete = JobByAgency::where('id', $request->job_id)->where('user_id', auth('sanctum')->user()->id)->delete();
         if($delete){
             return $this->success('Job deleted successfully.',  null, 'null', 200);
@@ -337,7 +342,7 @@ class CreateJobController extends Controller
                 'patient_age' => $item->jobByAgency->patient_age,
                 'job_accepted_on' =>  Carbon::parse($item->jobByAgency->updated_at)->diffForHumans(), // variable name asked by android developer.
                 'start_date' => Carbon::parse($item->jobByAgency->start_date_of_care)->format('m-d-Y'),
-                'end_date' => $item->jobByAgency->end_date_of_care,
+                'end_date' => Carbon::parse($item->jobByAgency->end_date_of_care)->format('m-d-Y'),
                 'start_time' => $item->jobByAgency->start_time,
                 'end_time' => $item->jobByAgency->end_time,
                 'location' => $item->jobByAgency->street.', '. $item->jobByAgency->city.', '. $item->jobByAgency->state.', '.  $item->jobByAgency->zip_code,

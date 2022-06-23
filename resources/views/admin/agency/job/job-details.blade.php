@@ -29,6 +29,7 @@
                 <legend>Job Description</legend>
                 <p style="font-size:15px; margin-bottom:0px;">
                     <span style="color:#282727;">Posted By</span> : {{$job_details->user->business_name}}<br>
+                    <span style="color:#282727;">Job Order Id</span> : {{$job_details->job_order_id}}<br>
                     <span style="color:#282727;">Job Title</span> : {{$job_details->job_title}}<br>
                     <span style="color:#282727;">Care Type</span> : {{$job_details->care_type}}<br>
                     <span style="color:#282727;">Patient Age</span> : {{$job_details->patient_age}}<br>

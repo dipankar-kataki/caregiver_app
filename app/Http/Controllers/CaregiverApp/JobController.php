@@ -22,13 +22,10 @@ class JobController extends Controller
     use ApiResponser, PushNotification;
     public function recomendedJobs(){
         if(isset($_GET['current_date_time']) == null){
-            return $this->success('Failed to fetch recomended jobs. Current date time not provided', null, 'null', 200);
+            return $this->error('Failed to fetch recomended jobs. Current date time not provided', null, 'null', 400);
         }else{
             $jobs = JobByAgency::with('user', 'agency_profile')->where('is_activate', 1)->where('job_status', JobStatus::Open)->orderBy('created_at', 'DESC')->paginate(5);
-            $new_details = [];    
-            
-              
-
+            $new_details = [];   
             foreach($jobs as $key => $item){
 
                 $converted_start_time = $item->start_date_of_care.' '.date_create($item->start_time)->format('H:i');
@@ -48,7 +45,7 @@ class JobController extends Controller
                         'care_type' => $item->care_type,
                         'patient_age' => $item->patient_age,
                         'start_date_of_care' => Carbon::parse($item->start_date_of_care)->format('m-d-Y'),
-                        'end_date_of_care' => $item->end_date_of_care,
+                        'end_date_of_care' => Carbon::parse($item->end_date_of_care)->format('m-d-Y'),
                         'start_time' => $item->start_time,
                         'end_time' => $item->end_time,
                         'location' => $item->street.', '. $item->city.', '. $item->state.', '.$item->zip_code,
@@ -69,7 +66,7 @@ class JobController extends Controller
 
     public function recomendedJobsCount(){
         if(isset($_GET['current_date_time']) == null){
-            return $this->success('Failed to fetch recomended jobs count. Current date time not provided', null, 'null', 200);
+            return $this->error('Failed to fetch recomended jobs count. Current date time not provided', null, 'null', 400);
         }else{
 
             $extract_start_time = JobByAgency::where('is_activate', 1)->where('job_status', JobStatus::Open)->get();
@@ -170,8 +167,8 @@ class JobController extends Controller
             return $this->error('Whoops! Something went wrong. Failed to accept job.', $validator->errors(), 'null', 400);
         }else{
 
-            $check_if_job_is_deleted = JobByAgency::where('id', $request->job_id)->first();
-            if($check_if_job_is_deleted->trashed()){
+            $check_if_job_is_deleted = JobByAgency::where('id', $request->job_id)->withTrashed()->first();
+            if($check_if_job_is_deleted->job_status == 4){
                 return $this->error('Whoops! This job has already been removed.', null, 'null', 400);
             }else{
                 $check_if_job_is_already_accepted = AcceptedJob::where('job_by_agencies_id', $request->job_id)->exists();
@@ -280,7 +277,7 @@ class JobController extends Controller
                 'care_type' => $item->jobByAgency->care_type,
                 'patient_age' => $item->jobByAgency->patient_age,
                 'start_date_of_care' => Carbon::parse($item->jobByAgency->start_date_of_care)->format('m-d-Y'),
-                'end_date_of_care' => $item->jobByAgency->end_date_of_care,
+                'end_date_of_care' =>  Carbon::parse($item->jobByAgency->end_date_of_care)->format('m-d-Y'),
                 'start_time' => $item->jobByAgency->start_time,
                 'end_time' => $item->jobByAgency->end_time,
                 'location' => $item->jobByAgency->street.', '. $item->jobByAgency->city.', '.$item->jobByAgency->state.', '.$item->jobByAgency->zip_code,
@@ -304,34 +301,51 @@ class JobController extends Controller
         if($validator->fails()){
             return $this->error('Whoops! Something went wrong. Failed to complete job.', $validator->errors() , 'null', 500);
         }else{
-            $registration = Registration::with('user')->where('user_id', auth('sanctum')->user()->id)->first();
-            $details = AcceptedJob::where('job_by_agencies_id', $request->job_id)->first();
-            $updateJobByAgencyTable = JobByAgency::where('id', $details->job_by_agencies_id)->update([
-                'is_activate' => 0,
-                'job_status' => JobStatus::Closed
-            ]);
-            $updateJobAcceptedTable = AcceptedJob::where('job_by_agencies_id', $request->job_id)->update([
-                'is_activate' => 0
-            ]);
 
-            Registration::where('user_id', auth('sanctum')->user()->id)->update([
-                'total_care_completed' =>  $registration->total_care_completed + 1
-            ]);
-
-            if(($updateJobByAgencyTable) && ($updateJobAcceptedTable)){
-
-                $get_fcm_token = User::where('id', $details->agency_id)->first();
-                if($get_fcm_token->fcm_token != null){
-                    $data=[];
-                    $data['message']= "Job Completed Successfully by ".$registration->user->firstname.' '.$registration->user->lastname;
-                    $token = [];
-                    $token[] = $get_fcm_token->fcm_token;
-                    $this->sendNotification($token, $data);
-                }
-
-                return $this->success('Job completed successfully',  null, 'null', 200);
+            if(isset($_GET['current_date_time']) == null){
+                return $this->error('Failed to fetch recomended jobs. Current date time not provided', null, 'null', 400);
             }else{
-                return $this->error('Whoops! Something went wrong. Failed to complete job.', null , 'null', 400);
+                $registration = Registration::with('user')->where('user_id', auth('sanctum')->user()->id)->first();
+                $details = AcceptedJob::where('job_by_agencies_id', $request->job_id)->first();
+                $check_if_job_end_time_reached = JobByAgency::where('id', $request->job_id)->first();
+
+                $converted_end_time = $check_if_job_end_time_reached->end_date_of_care.' '.date_create($check_if_job_end_time_reached->end_time)->format('H:i');
+              
+                // Declare and define two dates
+                $current_time = strtotime($_GET['current_date_time']);
+                $end_time = strtotime($converted_end_time);
+
+                if($current_time >= $end_time){
+                    $updateJobByAgencyTable = JobByAgency::where('id', $request->job_id)->update([
+                        'is_activate' => 0,
+                        'job_status' => JobStatus::Closed
+                    ]);
+                    $updateJobAcceptedTable = AcceptedJob::where('job_by_agencies_id', $request->job_id)->update([
+                        'is_activate' => 0
+                    ]);
+    
+                    Registration::where('user_id', auth('sanctum')->user()->id)->update([
+                        'total_care_completed' =>  $registration->total_care_completed + 1
+                    ]);
+    
+                    if(($updateJobByAgencyTable) && ($updateJobAcceptedTable)){
+    
+                        $get_fcm_token = User::where('id', $details->agency_id)->first();
+                        if($get_fcm_token->fcm_token != null){
+                            $data=[];
+                            $data['message']= "Job Completed Successfully by ".$registration->user->firstname.' '.$registration->user->lastname;
+                            $token = [];
+                            $token[] = $get_fcm_token->fcm_token;
+                            $this->sendNotification($token, $data);
+                        }
+                        return $this->success('Job completed successfully',  null, 'null', 200);
+                    }else{
+                        return $this->error('Whoops! Something went wrong. Failed to complete job.', null , 'null', 400);
+                    }
+                }else{
+                    return $this->error('Whoops! Failed to complete the task. The time has not yet come to complete the work.', null , 'null', 400);
+                }
+                
             }
         }
         
@@ -352,7 +366,7 @@ class JobController extends Controller
                 'care_type' => $item->jobByAgency->care_type,
                 'patient_age' => $item->jobByAgency->patient_age,
                 'start_date_of_care' => Carbon::parse($item->jobByAgency->start_date_of_care)->format('m-d-Y'),
-                'end_date_of_care' => $item->jobByAgency->end_date_of_care,
+                'end_date_of_care' => Carbon::parse($item->jobByAgency->end_date_of_care)->format('m-d-Y'),
                 'start_time' => $item->jobByAgency->start_time,
                 'end_time' => $item->jobByAgency->end_time,
                 'location' => $item->jobByAgency->street.', '. $item->jobByAgency->city.', '.$item->jobByAgency->state.', '.$item->jobByAgency->zip_code,

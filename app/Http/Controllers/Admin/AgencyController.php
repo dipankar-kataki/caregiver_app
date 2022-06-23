@@ -55,7 +55,7 @@ class AgencyController extends Controller
     }
 
     public function job(){
-        $job_details = JobByAgency::with('user', 'payment_status')->orderBy('created_at', 'DESC')->get();
+        $job_details = JobByAgency::with('user', 'payment_status')->orderBy('created_at', 'DESC')->withTrashed()->get();
         $new_details = [];
         foreach($job_details as $key => $item){
             foreach($item->payment_status as $key2 => $item2){
