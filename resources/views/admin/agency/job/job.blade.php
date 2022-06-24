@@ -40,7 +40,7 @@
                                 @if ($item['job_status'] == 0)
                                     <p class="text-primary">NEW POST</p>
                                 @elseif($item['job_status'] == 1)
-                                    <p class="text-warning">ONGOING</p>
+                                    <p style="color: #8829FF;">ONGOING</p>
                                 @elseif($item['job_status'] == 2)
                                     <p class="text-success">COMPLETED</p>
                                 @elseif($item['job_status'] == 3)
