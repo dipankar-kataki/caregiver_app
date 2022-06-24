@@ -117,7 +117,7 @@ class AgencyController extends Controller
 
     public function jobDetails($id){
         $job_id = Crypt::decrypt($id);
-        $job_details = JobByAgency::with('user','payment_status')->where('id', $job_id)->first();
+        $job_details = JobByAgency::with('user','payment_status')->where('id', $job_id)->withTrashed()->first();
         return view('admin.agency.job.job-details')->with('job_details' , $job_details);
     }
 }
