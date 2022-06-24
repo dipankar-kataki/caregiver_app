@@ -61,12 +61,15 @@ class SiteController extends Controller
         ]);
     }
 
-    public function blogs(Request $request, $id = null)
+    public function blogs(Request $request, $id = null, $viewAs = null)
     {
         if (!$id) {
             $blogs = Blog::where('is_activate', 1)->orderBy('created_at', 'DESC')->get();
             return view('site.blog.index')->with(['blogs' => $blogs]);
-        } else {
+        }elseif($viewAs == 'admin'){
+            $blogs = Blog::orderBy('created_at', 'DESC')->get();
+            return view('site.blog.index')->with(['blogs' => $blogs]);
+        }else {
             $id = Crypt::decrypt($id);
             $blog_details = Blog::where('id', $id)->where('is_activate', 1)->first();
             return view('site.blog.blogDetails')->with(['blog_details' => $blog_details]);

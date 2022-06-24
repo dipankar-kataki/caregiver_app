@@ -21,7 +21,7 @@ use App\Http\Controllers\Site\SiteController;
 */
 
 Route::get('', [SiteController::class, 'index'])->name('site.index');
-Route::get('blog/{id?}', [SiteController::class, 'blogs'])->name('site.blog');
+Route::get('blog/{id?}/{viewAs?}', [SiteController::class, 'blogs'])->name('site.blog');
 Route::post('contact', [SiteController::class, 'contact'])->name('site.contact');
 Route::get('terms-and-conditions', [SiteController::class, 'terms'])->name('site.terms');
 Route::get('privacy-policy', [SiteController::class, 'privacy'])->name('site.privacy');

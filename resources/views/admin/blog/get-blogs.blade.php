@@ -46,7 +46,7 @@
                                 <i class="mdi mdi-pencil-outline"></i>
                             </a> --}}
                         </div>
-                        <a href="{{ route('site.blog', ['id' => Crypt::encrypt($item->id)]) }}" target="_blank" class="btn btn-success btn-sm waves-effect waves-light">Read More <i class="mdi mdi-arrow-right ml-1"></i></a>
+                        <a href="{{ route('site.blog', ['id' => Crypt::encrypt($item->id), 'viewAs' => 'admin']) }}" target="_blank" class="btn btn-success btn-sm waves-effect waves-light">Read More <i class="mdi mdi-arrow-right ml-1"></i></a>
                     </div>
                 </div>
             </div>
@@ -219,7 +219,6 @@
 
                 success: function(data) {
                     toastr.success(data.message);
-                    toastr.success('Updating View..');
                     setTimeout(() => {
                         location.reload(true);
                     }, 2000);
