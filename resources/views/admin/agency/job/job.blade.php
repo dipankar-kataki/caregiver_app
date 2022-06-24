@@ -38,15 +38,15 @@
                             <td>{{$item['posted_on']}}</td>
                             <td>
                                 @if ($item['job_status'] == 0)
-                                    <p class="text-primary">NEW POST</p>
+                                    <p class="text-primary" style="font-weight: 600;">NEW POST</p>
                                 @elseif($item['job_status'] == 1)
-                                    <p style="color: #8829FF;">ONGOING</p>
+                                    <p style="color: #da2ffc;font-weight: 600;">ONGOING</p>
                                 @elseif($item['job_status'] == 2)
-                                    <p class="text-success">COMPLETED</p>
+                                    <p class="text-success" style="font-weight: 600;">COMPLETED</p>
                                 @elseif($item['job_status'] == 3)
-                                    <p class="text-danger">EXPIRED</p>
+                                    <p class="text-danger" style="font-weight: 600;">EXPIRED</p>
                                 @elseif($item['job_status'] == 4)
-                                    <p class="text-danger">DELETED BY USER</p>
+                                    <p class="text-danger" style="font-weight: 600;">DELETED BY USER</p>
                                 @endif
                             </td>
                             <td style="text-transform:uppercase;">
