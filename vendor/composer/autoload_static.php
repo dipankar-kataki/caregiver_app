@@ -521,6 +521,8 @@ class ComposerStaticInite87ca7db50b454addc24a196833b4f2c
     );
 
     public static $classMap = array (
+        'App\\Common\\JobStatus' => __DIR__ . '/../..' . '/app/Common/JobStatus.php',
+        'App\\Console\\Commands\\JobExpiryChecker' => __DIR__ . '/../..' . '/app/Console/Commands/JobExpiryChecker.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Exceptions\\Handler' => __DIR__ . '/../..' . '/app/Exceptions/Handler.php',
         'App\\Http\\Controllers\\Admin\\AdminForgotPasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Admin/AdminForgotPasswordController.php',

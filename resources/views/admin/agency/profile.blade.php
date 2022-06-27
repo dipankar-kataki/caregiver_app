@@ -21,7 +21,7 @@
     <div class="col-sm-12">
         <div class="card-box">
             <div class="row">
-                <div class="col-xl-3 col-md-4">
+                <div class="col-md-4">
                     <div class="text-center card-box shadow-none border border-secoundary">
                         <div class="member-card">
                             <div class="avatar-xl member-thumb mb-3 mx-auto d-block">
@@ -77,7 +77,7 @@
                 </div>
                 <!-- end col -->
 
-                <div class="col-xl-9 col-md-8">
+                <div class="col-md-8">
                     <h5 class="header-title">Expertise</h5>
 
                     <div class="row mt-3">

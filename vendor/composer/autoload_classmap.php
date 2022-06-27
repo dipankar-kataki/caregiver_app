@@ -6,6 +6,8 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Common\\JobStatus' => $baseDir . '/app/Common/JobStatus.php',
+    'App\\Console\\Commands\\JobExpiryChecker' => $baseDir . '/app/Console/Commands/JobExpiryChecker.php',
     'App\\Console\\Kernel' => $baseDir . '/app/Console/Kernel.php',
     'App\\Exceptions\\Handler' => $baseDir . '/app/Exceptions/Handler.php',
     'App\\Http\\Controllers\\Admin\\AdminForgotPasswordController' => $baseDir . '/app/Http/Controllers/Admin/AdminForgotPasswordController.php',

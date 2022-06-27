@@ -43,7 +43,7 @@ class SortbyController extends Controller
                             'end_date_of_care' => $jobsByPrice[$key]['end_date_of_care'],
                             'start_time' => $jobsByPrice[$key]['start_time'],
                             'end_time' => $jobsByPrice[$key]['end_time'],
-                            'location' => $jobsByPrice[$key]['street'].', '. $jobsByPrice[$key]['city'].', '. $jobsByPrice[$key]['zip_code'].', '. $jobsByPrice[$key]['state'],
+                            'location' => $jobsByPrice[$key]['street'].', '. $jobsByPrice[$key]['city'].', '. $jobsByPrice[$key]['state'].', '. $jobsByPrice[$key]['zip_code'],
                             'job_description' =>  $jobsByPrice[$key]['job_description'],
                             'medical_history' => $jobsByPrice[$key]['medical_history'],
                             'essential_prior_expertise' => $jobsByPrice[$key]['essential_prior_expertise'],
