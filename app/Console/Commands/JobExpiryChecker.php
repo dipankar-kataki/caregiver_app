@@ -7,6 +7,7 @@ use App\Models\JobByAgency;
 use DateTime;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class JobExpiryChecker extends Command
 {
@@ -69,6 +70,8 @@ class JobExpiryChecker extends Command
                 DB::table('accepted_jobs')->where('job_by_agencies_id', $item->id)->update([
                     'is_activate' => 0,
                 ]);
+
+                Log::info('Working');
             }
         }
     }
