@@ -60,11 +60,14 @@ class JobExpiryChecker extends Command
             ******************************************/
 
             if($diff_in_minutes > 0){ 
-                
                 DB::table('job_by_agencies')->where('is_activate', 1)->update([
                     'is_activate' => 0,
                     'job_status' => JobStatus::Expired,
                     'is_job_expired' => 1
+                ]);
+
+                DB::table('accepted_jobs')->where('job_by_agencies_id', $item->id)->update([
+                    'is_activate' => 0,
                 ]);
             }
         }
