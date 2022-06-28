@@ -38,15 +38,15 @@
                             <td>{{$item['posted_on']}}</td>
                             <td>
                                 @if ($item['job_status'] == 0)
-                                    <button type="button" class="btn btn-primary btn-rounded width-sm waves-effect waves-light">NEW POST</button>
+                                    <button type="button" class="btn btn-primary btn-rounded width-sm waves-effect waves-light" style="font-size: 10px; font-weight: 600;">NEW POST</button>
                                 @elseif($item['job_status'] == 1)
-                                    <button type="button" class="btn btn-purple btn-rounded width-sm waves-effect waves-light">ONGOING</button>
+                                    <button type="button" class="btn btn-purple btn-rounded width-sm waves-effect waves-light" style="font-size: 10px; font-weight: 600;">ONGOING</button>
                                 @elseif($item['job_status'] == 2)
-                                    <button type="button" class="btn btn-success btn-rounded width-sm waves-effect waves-light">COMPLETED</button>
+                                    <button type="button" class="btn btn-success btn-rounded width-sm waves-effect waves-light" style="font-size: 10px; font-weight: 600;">COMPLETED</button>
                                 @elseif($item['job_status'] == 3)
-                                    <button type="button" class="btn btn-dark btn-rounded width-sm waves-effect waves-light">EXPIRED</button>
+                                    <button type="button" class="btn btn-dark btn-rounded width-sm waves-effect waves-light" style="font-size: 10px; font-weight: 600;">EXPIRED</button>
                                 @elseif($item['job_status'] == 4)
-                                     <button type="button" class="btn btn-danger btn-rounded width-sm waves-effect waves-light">DELETED BY USER</button>
+                                     <button type="button" class="btn btn-danger btn-rounded width-sm waves-effect waves-light" style="font-size: 10px; font-weight: 600;">DELETED BY USER</button>
                                 @endif
                             </td>
                             <td style="text-transform:uppercase;">
