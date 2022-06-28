@@ -44,7 +44,7 @@
                                 @elseif($item['job_status'] == 2)
                                     <p class="text-success" style="font-weight: 600;">COMPLETED</p>
                                 @elseif($item['job_status'] == 3)
-                                    <p class="text-danger" style="font-weight: 600;">EXPIRED</p>
+                                    <p style="color:rgb(172, 172, 5); font-weight: 600;">EXPIRED</p>
                                 @elseif($item['job_status'] == 4)
                                     <p class="text-danger" style="font-weight: 600;">DELETED BY USER</p>
                                 @endif
