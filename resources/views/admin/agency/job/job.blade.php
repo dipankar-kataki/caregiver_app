@@ -38,15 +38,15 @@
                             <td>{{$item['posted_on']}}</td>
                             <td>
                                 @if ($item['job_status'] == 0)
-                                    <p class="text-primary" style="font-weight: 600;">NEW POST</p>
+                                    <button type="button" class="btn btn-primary btn-rounded width-sm waves-effect waves-light">NEW POST</button>
                                 @elseif($item['job_status'] == 1)
-                                    <p style="color: #da2ffc;font-weight: 600;">ONGOING</p>
+                                    <button type="button" class="btn btn-purple btn-rounded width-md waves-effect waves-light">ONGOING</button>
                                 @elseif($item['job_status'] == 2)
-                                    <p class="text-success" style="font-weight: 600;">COMPLETED</p>
+                                    <button type="button" class="btn btn-success btn-rounded width-md waves-effect waves-light">COMPLETED</button>
                                 @elseif($item['job_status'] == 3)
-                                    <p style="color:rgb(172, 172, 5); font-weight: 600;">EXPIRED</p>
+                                    <button type="button" class="btn btn-dark btn-rounded width-md waves-effect waves-light">EXPIRED</button>
                                 @elseif($item['job_status'] == 4)
-                                    <p class="text-danger" style="font-weight: 600;">DELETED BY USER</p>
+                                     <button type="button" class="btn btn-danger btn-rounded width-md waves-effect waves-light">DELETED BY USER</button>
                                 @endif
                             </td>
                             <td style="text-transform:uppercase;">
