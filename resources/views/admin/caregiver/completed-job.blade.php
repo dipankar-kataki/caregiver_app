@@ -20,7 +20,6 @@
                         <th>Job Title</th>
                         <th>Care Type</th>
                         <th>Posted By</th>
-                        <th>Job Status</th>
                         <th>Completiton Date & Time</th>
                         {{-- <th>Action</th> --}}
                     </tr>
@@ -34,19 +33,6 @@
                             <td>{{$item->jobByAgency->job_title}}</td>
                             <td>{{$item->jobByAgency->care_type}}</td>
                             <td>{{$item->agency->business_name}}</td>
-                            <td>
-                                @if ($item->jobByAgency->job_status == 0)
-                                    <button type="button" class="btn btn-primary btn-rounded width-sm waves-effect waves-light" style="font-size: 10px; font-weight: 600;">NEW POST</button>
-                                @elseif($item->jobByAgency->job_status == 1)
-                                    <button type="button" class="btn btn-purple btn-rounded width-sm waves-effect waves-light" style="font-size: 10px; font-weight: 600;">ONGOING</button>
-                                @elseif($item->jobByAgency->job_status == 2)
-                                    <button type="button" class="btn btn-success btn-rounded width-sm waves-effect waves-light" style="font-size: 10px; font-weight: 600;">COMPLETED</button>
-                                @elseif($item->jobByAgency->job_status == 3)
-                                    <button type="button" class="btn btn-dark btn-rounded width-sm waves-effect waves-light" style="font-size: 10px; font-weight: 600;">EXPIRED</button>
-                                @elseif($item->jobByAgency->job_status == 4)
-                                     <button type="button" class="btn btn-danger btn-rounded width-sm waves-effect waves-light" style="font-size: 10px; font-weight: 600;">DELETED BY USER</button>
-                                @endif
-                            </td>
                             <td>{{Carbon\Carbon::parse($item->updated_at)->format('m-d-Y h:i:s')}}</td>
                             {{-- <td>
                                 @if (! ($item->caregiver_payment->isEmpty()) )
