@@ -244,7 +244,7 @@
                         toastr.success(data.message);
                         setTimeout(function(){
                             location.reload(true);
-                        }, 4000);
+                        }, 2000);
                     }else{
                         toastr.error(data.message);
                         $('.approveUser').text('Approve User');
