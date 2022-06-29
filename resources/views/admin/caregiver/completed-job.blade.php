@@ -30,7 +30,7 @@
                         <tr>
                             <td>{{$key + 1}}</td>
                             <td>{{$item->caregiver->firstname}} {{$item->caregiver->lastname}}</td>
-                            {{-- <td>{{$item->jobByAgency->job_title}}</td> --}}
+                            <td>{{$item->jobByAgency->job_title}}</td>
                             <td>{{$item->jobByAgency->care_type}}</td>
                             <td>{{$item->agency->business_name}}</td>
                             <td>{{Carbon\Carbon::parse($item->updated_at)->format('m-d-Y h:i:s')}}</td>
