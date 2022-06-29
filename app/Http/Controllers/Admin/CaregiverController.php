@@ -55,9 +55,9 @@ class CaregiverController extends Controller
             'is_user_approved' => 0
         ]);
         if($update){
-            return response()->json(['message' => 'User suspended successfully', 'status' => 1]);
+            return response()->json(['message' => 'User disapproved successfully', 'status' => 1]);
         }else{
-            return response()->json(['message' => 'Whoops! Something went wrong. Not able to suspend user', 'status' => 2]);
+            return response()->json(['message' => 'Whoops! Something went wrong. Not able to disapprove user', 'status' => 2]);
         }
     }
 
