@@ -1375,8 +1375,8 @@ body[data-layout="horizontal"].enlarged {
     width: 4.5rem;
 }
 .avatar-xl {
-    height: 6rem;
-    width: 6rem;
+    height: 100px;
+    width: 100px;
 }
 .avatar-xxl {
     height: 7.5rem;
