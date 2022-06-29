@@ -39,8 +39,8 @@
                                 @if ($item['accepted_by_caregiver_id'] == null)
                                     {{$item['accepted_by_caregiver']}}  
                                 @else
-                                    <a href="{{route('admin.caregiver.view.profile', ['id' => Crypt::encrypt($item['accepted_by_caregiver_id'])])}}" target="_blank">
-                                        {{$item['accepted_by_caregiver']}}
+                                    <a href="{{route('admin.caregiver.view.profile', ['id' => Crypt::encrypt($item['accepted_by_caregiver_id'])])}}" target="_blank" title="view profile">
+                                        {{$item['accepted_by_caregiver']}} <i class="mdi mdi-open-in-new"></i>
                                     </a>
                                 @endif
                                 
