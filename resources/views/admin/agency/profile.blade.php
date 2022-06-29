@@ -276,7 +276,7 @@
                         toastr.success(data.message);
                         setTimeout(function(){
                             location.reload(true);
-                        }, 4000);
+                        }, 2000);
                     }else{
                         toastr.error(data.message);
                         $('.suspendUser').text('Approve User');
