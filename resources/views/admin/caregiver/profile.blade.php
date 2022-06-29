@@ -47,7 +47,7 @@
                                         @if ($user_details->is_user_approved == 0)
                                             <li><a href="#" class="dropdown-item text-success approveUser"  data-id="{{Crypt::encrypt($user_details->id)}}">Approve user</a></li>
                                         @else
-                                            <li><a href="#" class="dropdown-item text-danger suspendUser"  data-id="{{Crypt::encrypt($user_details->id)}}">Suspend user</a></li>  
+                                            <li><a href="#" class="dropdown-item text-danger suspendUser"  data-id="{{Crypt::encrypt($user_details->id)}}">Disapprove user</a></li>  
                                         @endif
                                     </ul>
                                 </div>
