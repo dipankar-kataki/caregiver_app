@@ -62,8 +62,14 @@ class CaregiverController extends Controller
     }
 
     public function completedJob(){
-        $completed_job = AcceptedJob::with('jobByAgency', 'caregiver', 'agency', 'profile', 'caregiver_payment')->where('is_activate', 0)->latest()->get();
-        return view('admin.caregiver.completed-job')->with(['completed_job' => $completed_job]);
+        try{
+            $completed_job = AcceptedJob::with('jobByAgency', 'caregiver', 'agency', 'profile', 'caregiver_payment')->where('is_activate', 0)->latest()->get();
+            return view('admin.caregiver.completed-job')->with(['completed_job' => $completed_job]);
+        }catch(\Exception $e){
+            $completed_job = [];
+            return view('admin.caregiver.completed-job')->with(['completed_job' => $completed_job]);
+        }
+        
     }
 
     public function makePaymentPage(Request $request, $id){

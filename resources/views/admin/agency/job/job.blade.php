@@ -17,6 +17,7 @@
                         <th>SL No</th>
                         <th>Job Order Id</th>
                         <th>Agency</th>
+                        <th>Accepted By</th>
                         <th>Amount/hr</th>
                         <th>Amount Paid</th>
                         <th>Posted On</th>
@@ -28,11 +29,22 @@
                 </thead>
 
                 <tbody>
+                   
                     @foreach ($job_details as $key => $item)
                         <tr>
                             <td>{{$key + 1}}</td>
                             <td>{{$item['order_id']}}</td>
                             <td>{{$item['agency']}}</td>
+                            <td>
+                                @if ($item['accepted_by_caregiver_id'] == null)
+                                    {{$item['accepted_by_caregiver']}}  
+                                @else
+                                    <a href="{{route('admin.caregiver.view.profile', ['id' => Crypt::encrypt($item['accepted_by_caregiver_id'])])}}" target="_blank">
+                                        {{$item['accepted_by_caregiver']}}
+                                    </a>
+                                @endif
+                                
+                            </td>
                             <td>{{$item['amount_per_hour']}}</td>
                             <td>{{$item['amount_paid']}}</td>
                             <td>{{$item['posted_on']}}</td>

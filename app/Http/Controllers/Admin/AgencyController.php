@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\AcceptedJob;
 use App\Models\AgencyPayments;
 use App\Models\JobByAgency;
 use App\Models\User;
@@ -55,24 +56,51 @@ class AgencyController extends Controller
     }
 
     public function job(){
-        $job_details = JobByAgency::with('user', 'payment_status')->orderBy('created_at', 'DESC')->withTrashed()->get();
+        $job_details = JobByAgency::with('user','payment_status')->orderBy('created_at', 'DESC')->withTrashed()->get();
         $new_details = [];
         foreach($job_details as $key => $item){
             foreach($item->payment_status as $key2 => $item2){
-                $details = [
-                    'agency' => $item->user->business_name,
-                    'job_title' => $item->job_title,
-                    'order_id' => $item->job_order_id,
-                    'job_id' => $item2->job_id,
-                    'user_id' => $item->user_id,
-                    'amount_per_hour' => $item->amount_per_hour,
-                    'amount_paid' => $item2->amount,
-                    'posted_on' => $item->created_at,
-                    'job_status' => $item->job_status,
-                    'payment_status' =>  $item2->payment_status
-                ];
+                $accepted_by = AcceptedJob::with('caregiver')->where('job_by_agencies_id', $item2->job_id)->get();
+                if($accepted_by->isEmpty()){
+                    $details = [
+                        'agency' => $item->user->business_name,
+                        'job_title' => $item->job_title,
+                        'order_id' => $item->job_order_id,
+                        'job_id' => $item2->job_id,
+                        'user_id' => $item->user_id,
+                        'accepted_by_caregiver' => 'Job Not Accepted',
+                        'accepted_by_caregiver_id' => null,
+                        'amount_per_hour' => $item->amount_per_hour,
+                        'amount_paid' => $item2->amount,
+                        'posted_on' => $item->created_at,
+                        'job_status' => $item->job_status,
+                        'payment_status' =>  $item2->payment_status
+                    ];
 
-                array_push($new_details, $details);
+                    array_push($new_details, $details);
+                }else{
+                    foreach($accepted_by as $key3 => $item3){
+                        $details = [
+                            'agency' => $item->user->business_name,
+                            'job_title' => $item->job_title,
+                            'order_id' => $item->job_order_id,
+                            'job_id' => $item2->job_id,
+                            'user_id' => $item->user_id,
+                            'accepted_by_caregiver' => $accepted_by[$key3]['caregiver']['firstname'].' '.$accepted_by[$key3]['caregiver']['lastname'],
+                            'accepted_by_caregiver_id' => $accepted_by[$key3]['caregiver']['id'],
+                            'amount_per_hour' => $item->amount_per_hour,
+                            'amount_paid' => $item2->amount,
+                            'posted_on' => $item->created_at,
+                            'job_status' => $item->job_status,
+                            'payment_status' =>  $item2->payment_status
+                        ];
+    
+                        array_push($new_details, $details);
+                   }
+                }
+               
+               
+
             }
             
         }
