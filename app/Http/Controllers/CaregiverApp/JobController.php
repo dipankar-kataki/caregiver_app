@@ -45,7 +45,6 @@ class JobController extends Controller
                     $longitude2 = $item->longitude;
                     
                     $get_distance = get_distance_between_two_location($latitude1, $longitude1, $latitude2, $longitude2);
-                    $max_dist = 0;
                     if($get_distance <= 10){
                         if($start_time >= $current_time){
                             $details = [
@@ -82,23 +81,35 @@ class JobController extends Controller
         if(isset($_GET['current_date_time']) == null){
             return $this->error('Failed to fetch recomended jobs count. Current date time not provided', null, 'null', 400);
         }else{
-
-            $extract_start_time = JobByAgency::where('is_activate', 1)->where('job_status', JobStatus::Open)->get();
-            $new_details = [];  
-
-            foreach($extract_start_time as $key => $item){
-
-                $converted_start_time = $item->start_date_of_care.' '.date_create($item->start_time)->format('H:i');
-              
-                // Declare and define two dates
-                $current_time = strtotime($_GET['current_date_time']);
-                $start_time = strtotime($converted_start_time);
-
-                $count = 0;
-                if($start_time >= $current_time){
-                    array_push($new_details, $item);
+            if( isset($_GET['latitude']) == null || isset($_GET['longitude']) == null ){
+                return $this->error('Failed to fetch recomended jobs. Current location not found', null, 'null', 400);
+            }else{
+                $extract_start_time = JobByAgency::where('is_activate', 1)->where('job_status', JobStatus::Open)->get();
+                $new_details = [];  
+    
+                foreach($extract_start_time as $key => $item){
+                    $latitude1 = $_GET['latitude']; //26.1441154 ;
+                    $longitude1 = $_GET['longitude']; //91.7843398;
+                    $latitude2 = $item->latitude;
+                    $longitude2 = $item->longitude;
+                    
+                    $get_distance = get_distance_between_two_location($latitude1, $longitude1, $latitude2, $longitude2);
+                    if($get_distance <= 10){
+                        $converted_start_time = $item->start_date_of_care.' '.date_create($item->start_time)->format('H:i');
+                  
+                        // Declare and define two dates
+                        $current_time = strtotime($_GET['current_date_time']);
+                        $start_time = strtotime($converted_start_time);
+                        
+                        $count = 0;
+                        if($start_time >= $current_time){
+                            array_push($new_details, $item);
+                        }
+                    }
+                   
                 }
             }
+            
             return $this->success('Total recomended jobs.',  count($new_details), 'null', 200);
         }
         
