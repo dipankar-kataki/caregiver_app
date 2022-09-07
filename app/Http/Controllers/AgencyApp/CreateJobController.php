@@ -36,6 +36,8 @@ class CreateJobController extends Controller
             'city' => 'required',
             'state' => 'required',
             'zip_code' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required',
             'job_description' => 'required',
         ]);
         if($validator->fails()){
@@ -63,6 +65,8 @@ class CreateJobController extends Controller
                     'city' => $request->city,
                     'state' => $request->state,
                     'zip_code' => $request->zip_code,
+                    'latitude' => $request->latitude,
+                    'longitude' => $request->longitude,
                     'job_description' => $request->job_description,
                     'medical_history' => serialize($request->medical_history),
                     'essential_prior_expertise' => serialize($request->essential_prior_expertise),

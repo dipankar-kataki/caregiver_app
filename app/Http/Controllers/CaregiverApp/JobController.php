@@ -25,42 +25,56 @@ class JobController extends Controller
             return $this->error('Failed to fetch recomended jobs. Current date time not provided', null, 'null', 400);
         }else{
             $jobs = JobByAgency::with('user', 'agency_profile')->where('is_activate', 1)->where('job_status', JobStatus::Open)->orderBy('created_at', 'DESC')->paginate(5);
-            $new_details = [];   
-            foreach($jobs as $key => $item){
+            $new_details = [];
+            
+            if( isset($_GET['latitude']) == null || isset($_GET['longitude']) == null ){
+                return $this->error('Failed to fetch recomended jobs. Current location not found', null, 'null', 400);
+            }else{
 
-                $converted_start_time = $item->start_date_of_care.' '.date_create($item->start_time)->format('H:i');
-              
-                // Declare and define two dates
-                $current_time = strtotime($_GET['current_date_time']);
-                $start_time = strtotime($converted_start_time);
-                
+                foreach($jobs as $key => $item){
 
-                if($start_time >= $current_time){
-                    $details = [
-                        'id' => $item->id,
-                        'agency_name' => $item->user->business_name,
-                        'profile_image' =>  $item->agency_profile->profile_image,
-                        'job_title' => $item->job_title,
-                        'amount_per_hour' => $item->amount_per_hour,
-                        'care_type' => $item->care_type,
-                        'patient_age' => $item->patient_age,
-                        'start_date_of_care' => Carbon::parse($item->start_date_of_care)->format('m-d-Y'),
-                        'end_date_of_care' => Carbon::parse($item->end_date_of_care)->format('m-d-Y'),
-                        'start_time' => $item->start_time,
-                        'end_time' => $item->end_time,
-                        'location' => $item->street.', '. $item->city.', '. $item->state.', '.$item->zip_code,
-                        'job_description' =>  $item->job_description,
-                        'medical_history' => $item->medical_history,
-                        'essential_prior_expertise' => $item->essential_prior_expertise,
-                        'other_requirements' => $item->other_requirements,
-                        'created_at' => $item->created_at,
-                        
-                    ];
-                    array_push($new_details, $details);
+                    $converted_start_time = $item->start_date_of_care.' '.date_create($item->start_time)->format('H:i');
+                  
+                    // Declare and define two dates
+                    $current_time = strtotime($_GET['current_date_time']);
+                    $start_time = strtotime($converted_start_time);
+    
+                    $latitude1 = $_GET['latitude']; //26.1441154 ;
+                    $longitude1 = $_GET['longitude']; //91.7843398;
+                    $latitude2 = $item->latitude;
+                    $longitude2 = $item->longitude;
+                    
+                    $get_distance = get_distance_between_two_location($latitude1, $longitude1, $latitude2, $longitude2);
+                    $max_dist = 0;
+                    if($get_distance <= 10){
+                        if($start_time >= $current_time){
+                            $details = [
+                                'id' => $item->id,
+                                'agency_name' => $item->user->business_name,
+                                'profile_image' =>  $item->agency_profile->profile_image,
+                                'job_title' => $item->job_title,
+                                'amount_per_hour' => $item->amount_per_hour,
+                                'care_type' => $item->care_type,
+                                'patient_age' => $item->patient_age,
+                                'start_date_of_care' => Carbon::parse($item->start_date_of_care)->format('m-d-Y'),
+                                'end_date_of_care' => Carbon::parse($item->end_date_of_care)->format('m-d-Y'),
+                                'start_time' => $item->start_time,
+                                'end_time' => $item->end_time,
+                                'location' => $item->street.', '. $item->city.', '. $item->state.', '.$item->zip_code,
+                                'job_description' =>  $item->job_description,
+                                'medical_history' => $item->medical_history,
+                                'essential_prior_expertise' => $item->essential_prior_expertise,
+                                'other_requirements' => $item->other_requirements,
+                                'created_at' => $item->created_at,
+                                
+                            ];
+                            array_push($new_details, $details);
+                        }
+                    }                
                 }
-                
+                return $this->success('Recomended jobs fetched successfully.',   $new_details, 'null', 200);
             }
-            return $this->success('Recomended jobs fetched successfully.',   $new_details, 'null', 200);
+            
         }
     }
 
